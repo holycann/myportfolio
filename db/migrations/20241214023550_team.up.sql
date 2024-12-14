@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS team (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT UNSIGNED NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
+    `desc` TEXT,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_team_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS role (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `desc` TEXT,
+    PRIMARY KEY(`id`)
+)

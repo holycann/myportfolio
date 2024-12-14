@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS picture (
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `title` VARCHAR(50) NOT NULL,
+    `image_url` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+)
