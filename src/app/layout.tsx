@@ -3,11 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { BottomNavbar } from "@/components/ui/bottom-navbar";
 import { HiHome } from "react-icons/hi2";
-import {
-  FaLinkedinIn,
-  FaStackOverflow,
-  FaGithub,
-} from "react-icons/fa6";
+import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,10 +20,6 @@ const navItems = [
   {
     link: "/",
     icon: <HiHome className="text-neutral-500 dark:text-white" size={24} />,
-  },
-  {
-    name: "About",
-    link: "/about",
   },
   {
     name: "Experience",
@@ -76,7 +68,9 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`} // Tambahkan font Monserrat sebagai default
       >
         <BottomNavbar navItems={navItems} socialItems={socialItems} />
-        {children}
+        <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">
+          <div className="container mx-auto">{children}</div>
+        </div>
       </body>
     </html>
   );
