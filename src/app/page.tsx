@@ -36,7 +36,7 @@ export default function Home() {
           <h2 className="text-3xl sm:text-5xl font-bold text-gray-800 dark:text-white">
             Backend Developer
           </h2>
-          <h3 className="font-normal text-3xl font-semibold">& Crypto Enthusiast</h3>
+          <h3 className="text-3xl font-semibold">& Crypto Enthusiast</h3>
           <p className="text-gray-600 dark:text-gray-300 py-6 text-justify">
             I&apos;m passionate about building efficient and scalable systems
             using Golang and PostgreSQL. Outside of tech, I actively trade
