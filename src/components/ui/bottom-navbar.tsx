@@ -6,7 +6,7 @@ import Link from "next/link";
 import { RxDividerVertical } from "react-icons/rx";
 import { usePathname } from "next/navigation";
 import { AnimatedTooltip } from "./animated-tooltip";
-import { ContainerTextFlip } from "./container-text-flip";
+import { DarkModeToggle } from "../DarkModeToggle";
 
 export const BottomNavbar = ({
   navItems,
@@ -100,7 +100,9 @@ export const BottomNavbar = ({
                     </span>
                   </Link>
                 </motion.div>
-                {idx === 0 && <RxDividerVertical size={20} className="hidden sm:block" />}
+                {idx === 0 && (
+                  <RxDividerVertical size={20} className="hidden sm:block" />
+                )}
               </React.Fragment>
             ))}
           </motion.div>
@@ -139,14 +141,7 @@ export const BottomNavbar = ({
             transition={{ duration: 0.3 }}
             className="fixed bottom-2 left-4 sm:left-8 z-[5000] flex px-2 py-2 sm:px-4 sm:py-3 items-center space-x-1 sm:space-x-3 text-xs sm:text-sm"
           >
-            ©2025 - Muhamad Ramadhan Made
-            <ContainerTextFlip
-              words={["With Love", "With ❤️", "With 💖", "With 🤍", "With 😘", "With 😊", "With 😎", "With 😂", "With 😁", "with 🙃", "with 😵‍💫", "with 🤩", "with 🤗", "with 😘", "with 😍", "with 😚", "with 👌", "with 👏", "with 💪", "with 🙋‍♂️", "with 🙋‍♀️", "With 🥰"]}
-              className="ml-1 sm:ml-2"
-              textClassName="font-semibold"
-              interval={3000}
-              animationDuration={700}
-            />
+            <DarkModeToggle />
           </motion.div>
         </>
       )}
