@@ -4,6 +4,7 @@ import "./globals.css";
 import { BottomNavbar } from "@/components/ui/bottom-navbar";
 import { HiHome } from "react-icons/hi2";
 import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
+import { Analytics } from '@vercel/analytics/next';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -65,12 +66,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} antialiased`} // Tambahkan font Monserrat sebagai default
+        className={`${poppins.variable} antialiased`}
       >
         <BottomNavbar navItems={navItems} socialItems={socialItems} />
         <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">
           <div className="container mx-auto">{children}</div>
         </div>
+        <Analytics />
       </body>
     </html>
   );
