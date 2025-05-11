@@ -2,7 +2,7 @@ import { ContainerHoverAnimation } from "@/components/ui/container-hover-animati
 import Image from "next/image";
 import { MyButton } from "@/components/ui/mybutton";
 import { HiOutlineEye } from "react-icons/hi";
-import { CardDemo } from "@/components/ui/animated-card";
+import { FavTechStack } from "@/components/ui/animated-card";
 
 export default function Hero() {
   return (
@@ -44,14 +44,14 @@ export default function Hero() {
             modern tools.
           </p>
           <MyButton text="Resume" icon={<HiOutlineEye />} />
-          <button className="px-2 text-gray-600 dark:text-gray-300 dark:hover:text-white cursor-pointer transition duration-500">
-            Let's Connect
+          <button className="px-4 text-gray-600 dark:text-gray-300 dark:hover:text-white cursor-pointer transition duration-500">
+            Let&apos;s Connect
           </button>
         </div>
 
         <div className="w-full max-w-lg mx-auto">
           <h2 className="text-sm font-semibold text-center">Fav Tech Stack</h2>
-          <CardDemo />
+          <FavTechStack />
         </div>
       </div>
     </div>

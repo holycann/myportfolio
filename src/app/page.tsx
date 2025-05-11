@@ -1,12 +1,14 @@
-import Hero from "@/app/components/Hero";
-import Experience from "@/app/components/Experience";
+import Hero from "@/app/section/Hero";
+import Experience from "@/app/section/Experience";
 import { TextRevealCard } from "@/components/ui/text-reveal-card";
-import { Education } from "./components/Education";
-import { Project } from "./components/Project";
+import { Project } from "./section/Project";
+import { Contact } from "./section/Contact";
+import {HeroUIProvider} from "@heroui/system";
 
 export default function Home() {
   return (
-    <div className="pb-40">
+    <HeroUIProvider>
+    <div className="pb-4">
       <section className="mx-auto p-4 h-[100vh]" id="home">
         <Hero />
       </section>
@@ -22,13 +24,14 @@ export default function Home() {
         <Experience />
       </section>
 
-      <section className="mx-auto p-4" id="education">
-        <Education />
-      </section>
-
-      <section className="mx-auto p-4" id="project">
+      <section className="mx-auto p-4 mb-40" id="project">
         <Project />
       </section>
+
+      <section className="mx-auto p-4 m-40" id="contact">
+        <Contact />
+      </section>
     </div>
+    </HeroUIProvider>
   );
 }

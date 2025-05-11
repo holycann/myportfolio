@@ -5,8 +5,9 @@ import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { HiOutlineCalendarDateRange } from "react-icons/hi2";
+import { TextGenerateEffect } from './text-generate-effect';
 
-interface TimelineEntry {
+export interface TimelineEntry {
   role: string;
   company: string;
   logo: string;
@@ -32,7 +33,7 @@ export const Timeline = ({ title, data }: { title: string, data: TimelineEntry[]
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0%", "end 100%"],
+    offset: ["start 30%", "end 100%"],
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -41,9 +42,7 @@ export const Timeline = ({ title, data }: { title: string, data: TimelineEntry[]
   return (
     <div className="w-full md:px-10" ref={containerRef}>
       <div className="flex justify-center items-center py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-lg md:text-5xl mb-4 text-black text-center dark:text-white max-w-4xl">
-          {title}
-        </h2>
+        <TextGenerateEffect words={title} />
       </div>
 
       <div className="relative max-w-7xl mx-auto pb-20" ref={ref}>
