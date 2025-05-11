@@ -168,9 +168,9 @@ export function Contact() {
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <h4 className="font-semibold text-lg mb-2">Let's Connect</h4>
+              <h4 className="font-semibold text-lg mb-2">Let&apos;s Connect</h4>
               <p className="text-blue-100">
-                Fill out the form and I'll get back to you as soon as possible!
+                Fill out the form and I&apos;ll get back to you as soon as possible!
               </p>
             </motion.div>
           </motion.div>
@@ -206,7 +206,7 @@ export function Contact() {
                 Thank you!
               </h3>
               <p className="text-white">
-                Your message has been sent successfully. I'll get back to you
+                Your message has been sent successfully. I&apos;ll get back to you
                 soon!
               </p>
             </motion.div>
