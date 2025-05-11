@@ -4,7 +4,7 @@ import "./globals.css";
 import { BottomNavbar } from "@/components/ui/bottom-navbar";
 import { HiHome } from "react-icons/hi2";
 import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from "@vercel/analytics/next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,7 +14,37 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Muhamad Ramadhan",
-  description: "Portfolio Muhamad Ramadhan",
+  description:
+    "Portfolio Muhamad Ramadhan - Backend Developer dengan pengalaman dalam Node.js, Golang, dan PostgreSQL.",
+  metadataBase: new URL("https://holycan.dev"),
+  openGraph: {
+    title: "Muhamad Ramadhan",
+    description:
+      "Portfolio Backend Developer: Golang, Node.js, PostgreSQL, dan AWS.",
+    url: "https://holyycan.com",
+    siteName: "Muhamad Ramadhan Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Muhamad Ramadhan Portfolio",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Muhamad Ramadhan",
+    description:
+      "Portfolio Backend Developer: Golang, Node.js, dan PostgreSQL.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const navItems = [
@@ -64,10 +94,43 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${poppins.variable} antialiased`}
-      >
+    <html lang="en" dir="ltr">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Muhamad Ramadhan",
+              url: "https://holyycan.com",
+              image: "https://holyycan.com/_next/image?url=%2Fimages%2Fhero.png&w=828&q=75",
+              description:
+                "Portfolio profesional yang menampilkan karya dan proyek terbaik saya sebagai seorang backend developer, termasuk aplikasi web dan solusi teknis yang telah dikembangkan menggunakan teknologi terkini seperti Golang, Node.js, dan PostgreSQL.",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+62-851-7995-5480",
+                contactType: "WhatsApp Number",
+                areaServed: "ID",
+                availableLanguage: "Indonesian",
+              },
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Jatiwangi",
+                addressLocality: "Bekasi",
+                addressRegion: "West Java",
+                postalCode: "17530",
+                addressCountry: "ID",
+              },
+              sameAs: [
+                "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237",
+                "https://github.com/holycann",
+              ],
+            }),
+          }}
+        />
+      </head>
+      <body className={`${poppins.variable} antialiased`}>
         <BottomNavbar navItems={navItems} socialItems={socialItems} />
         <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">
           <div className="container mx-auto">{children}</div>
