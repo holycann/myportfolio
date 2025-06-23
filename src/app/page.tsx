@@ -1,13 +1,13 @@
-import Hero from "@/app/section/Hero";
-import Experience from "@/app/section/Experience";
+"use client";
+
+import Hero from "./section/Hero";
+import Experience from "./section/Experience";
 import { TextRevealCard } from "@/components/ui/text-reveal-card";
 import { Project } from "./section/Project";
-import { Contact } from "./section/Contact";
-import {HeroUIProvider} from "@heroui/system";
+import Contact from "./section/Contact";
 
 export default function Home() {
   return (
-    <HeroUIProvider>
     <div className="pb-4">
       <section className="mx-auto p-4 h-[100vh]" id="home">
         <Hero />
@@ -24,7 +24,7 @@ export default function Home() {
         <Experience />
       </section>
 
-      <section className="mx-auto p-4 mb-40" id="project">
+      <section className="mx-auto p-4" id="project">
         <Project />
       </section>
 
@@ -32,6 +32,5 @@ export default function Home() {
         <Contact />
       </section>
     </div>
-    </HeroUIProvider>
   );
 }

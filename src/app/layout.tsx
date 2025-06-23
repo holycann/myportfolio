@@ -5,6 +5,7 @@ import { BottomNavbar } from "@/components/ui/bottom-navbar";
 import { HiHome } from "react-icons/hi2";
 import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
 import { Analytics } from "@vercel/analytics/next";
+import { LenisProvider } from "@/components/LenisProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -49,20 +50,20 @@ export const metadata: Metadata = {
 
 const navItems = [
   {
-    link: "/",
+    link: "#hero",
     icon: <HiHome className="text-neutral-500 dark:text-white" size={24} />,
   },
   {
     name: "Experience",
-    link: "/experience",
+    link: "#experience",
   },
   {
     name: "Projects",
-    link: "/projects",
+    link: "#project",
   },
   {
     name: "Contact",
-    link: "/contact",
+    link: "#contact",
   },
 ];
 
@@ -131,11 +132,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} antialiased`}>
-        <BottomNavbar navItems={navItems} socialItems={socialItems} />
-        <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">
-          <div className="container mx-auto">{children}</div>
-        </div>
-        <Analytics />
+        <LenisProvider>
+          <BottomNavbar navItems={navItems} socialItems={socialItems} />
+          <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">
+            <div className="container mx-auto">{children}</div>
+          </div>
+          <Analytics />
+        </LenisProvider>
       </body>
     </html>
   );

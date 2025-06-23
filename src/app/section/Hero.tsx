@@ -1,57 +1,223 @@
+"use client";
+
 import { ContainerHoverAnimation } from "@/components/ui/container-hover-animation";
 import Image from "next/image";
 import { MyButton } from "@/components/ui/mybutton";
 import { HiOutlineEye } from "react-icons/hi";
 import { FavTechStack } from "@/components/ui/animated-card";
+import Lenis from "lenis";
+import { motion } from "motion/react";
 
 export default function Hero() {
-  return (
-    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-end justify-items-center">
-      <div className="flex flex-col overflow-hidden">
-        <ContainerHoverAnimation
-          titleComponent={
-            <>
-              <h1 className="text-4xl font-semibold text-black dark:text-white">
-                Hi, Im <br />
-                <span className="text-3xl md:text-[5rem] font-bold mt-1 leading-none">
-                  Muhamad Ramadhan
-                </span>
-              </h1>
-            </>
-          }
-        >
-          <Image
-            src="/images/hero.png"
-            width={800}
-            height={600}
-            alt="hero"
-            className="mx-auto rounded-2xl object-contain h-full object-center"
-            draggable={false}
-          />
-        </ContainerHoverAnimation>
-      </div>
+  const handleResumeClick = () => {
+    // Open resume in new tab
+    window.open("/resume.pdf", "_blank");
+  };
 
-      <div className="w-full max-w-xl text-center lg:text-left py-10">
-        <div className="py-20">
-          <h2 className="text-3xl sm:text-5xl font-bold text-gray-800 dark:text-white">
-            Backend Developer
-          </h2>
-          <h3 className="text-3xl font-semibold">& Crypto Enthusiast</h3>
-          <p className="text-gray-600 dark:text-gray-300 py-6 text-justify">
-            I&apos;m passionate about building efficient and scalable systems
-            using Golang and PostgreSQL. Outside of tech, I actively trade
-            crypto as an intraday trader, combining data-driven strategies with
-            modern tools.
-          </p>
-          <MyButton text="Resume" icon={<HiOutlineEye />} />
-          <button className="px-4 text-gray-600 dark:text-gray-300 dark:hover:text-white cursor-pointer transition duration-500">
-            Let&apos;s Connect
-          </button>
+  const handleConnectClick = () => {
+    // Smooth scroll to contact section using Lenis
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      const lenis = new Lenis();
+      lenis.scrollTo(contactSection, {
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    }
+  };
+
+  // Split text into characters for advanced animation
+  const AnimatedText = ({
+    children,
+    className = "",
+    delay = 0,
+    staggerDelay = 0.05,
+  }: {
+    children: string;
+    className?: string;
+    delay?: number;
+    staggerDelay?: number;
+  }) => {
+    return (
+      <span className={className}>
+        {children.split("").map((char, index) => (
+          <motion.span
+            key={index}
+            initial={{
+              opacity: 0,
+              y: 20,
+              filter: "blur(10px)",
+              scale: 0.8,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              scale: 1,
+              transition: {
+                delay: delay + index * staggerDelay,
+                duration: 0.6,
+                type: "spring",
+                stiffness: 100,
+                damping: 10,
+              },
+            }}
+            className="inline-block origin-bottom"
+            style={{
+              display: "inline-block",
+              transformOrigin: "bottom center",
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
+        ))}
+      </span>
+    );
+  };
+
+  return (
+    <div
+      id="hero"
+      className="relative flex flex-col justify-center items-center min-h-screen w-full overflow-hidden"
+    >
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-end justify-items-center">
+        <div className="flex flex-col overflow-hidden">
+          <ContainerHoverAnimation
+            titleComponent={
+              <>
+                <h1 className="text-4xl font-semibold text-black dark:text-white">
+                  Hi, Im <br />
+                  <AnimatedText
+                    className="text-3xl md:text-[5rem] font-bold mt-1 leading-none block"
+                    delay={0.5}
+                  >
+                    Muhamad
+                  </AnimatedText>
+                  <AnimatedText
+                    className="text-3xl md:text-[5rem] font-bold mt-1 leading-none block"
+                    delay={0.5}
+                  >
+                    Ramadhan
+                  </AnimatedText>
+                </h1>
+              </>
+            }
+          >
+            <Image
+              src="/images/hero.png"
+              width={800}
+              height={600}
+              alt="hero"
+              className="mx-auto rounded-2xl object-contain h-full object-center"
+              draggable={false}
+            />
+          </ContainerHoverAnimation>
         </div>
 
-        <div className="w-full max-w-lg mx-auto">
-          <h2 className="text-sm font-semibold text-center">Fav Tech Stack</h2>
-          <FavTechStack />
+        <div className="w-full max-w-xl text-center lg:text-left py-10">
+          <div className="py-20">
+            <motion.h2
+              initial={{ opacity: 0, x: -50 }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 0.6,
+                  delay: 0.8,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10,
+                },
+              }}
+              className="text-3xl sm:text-5xl font-bold text-gray-800 dark:text-white"
+            >
+              <AnimatedText delay={1}>Backend Developer</AnimatedText>
+            </motion.h2>
+            <motion.h3
+              initial={{ opacity: 0, x: -50 }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 0.6,
+                  delay: 1.2,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10,
+                },
+              }}
+              className="text-3xl font-semibold"
+            >
+              <AnimatedText delay={1.5}>& Crypto Enthusiast</AnimatedText>
+            </motion.h3>
+            <motion.p
+              initial={{ opacity: 0, y: 50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.6,
+                  delay: 1.6,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10,
+                },
+              }}
+              className="text-gray-600 dark:text-gray-300 py-6 text-justify"
+            >
+              I&apos;m passionate about building efficient and scalable systems
+              using Golang and PostgreSQL. Outside of tech, I actively trade
+              crypto as an intraday trader, combining data-driven strategies
+              with modern tools.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 0.6,
+                  delay: 2,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10,
+                },
+              }}
+            >
+              <MyButton
+                text="Resume"
+                icon={<HiOutlineEye />}
+                onClick={handleResumeClick}
+              />
+              <button
+                onClick={handleConnectClick}
+                className="px-4 text-gray-600 dark:text-gray-300 dark:hover:text-white cursor-pointer transition duration-500"
+              >
+                Let&apos;s Connect
+              </button>
+            </motion.div>
+          </div>
+
+          <div className="w-full max-w-lg mx-auto">
+            <motion.h2
+              initial={{ opacity: 0, y: 50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.6,
+                  delay: 2.4,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10,
+                },
+              }}
+              className="text-sm font-semibold text-center"
+            >
+              Fav Tech Stack
+            </motion.h2>
+            <FavTechStack />
+          </div>
         </div>
       </div>
     </div>

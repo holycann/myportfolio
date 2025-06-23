@@ -6,7 +6,6 @@ import Link from "next/link";
 import { RxDividerVertical } from "react-icons/rx";
 import { usePathname } from "next/navigation";
 import { AnimatedTooltip } from "./animated-tooltip";
-import { DarkModeToggle } from "../DarkModeToggle";
 
 export const BottomNavbar = ({
   navItems,
@@ -27,6 +26,7 @@ export const BottomNavbar = ({
 }) => {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState(navItems[0].link);
 
   useEffect(() => {
     const hasAnimated = sessionStorage.getItem("navbarAnimated");
@@ -39,6 +39,35 @@ export const BottomNavbar = ({
     } else {
       setVisible(true);
     }
+
+    // Intersection Observer to track active section
+    const sections = ['hero', 'experience', 'project', 'contact'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(`#${entry.target.id}`);
+          }
+        });
+      },
+      { 
+        root: null, 
+        threshold: 0.3 // Adjust this value to control when a section is considered active
+      }
+    );
+
+    // Observe each section
+    sections.forEach(sectionId => {
+      const section = document.getElementById(sectionId);
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) observer.unobserve(section);
+      });
+    };
   }, []);
 
   return (
@@ -67,12 +96,21 @@ export const BottomNavbar = ({
                   className="flex items-center"
                 >
                   <Link
-                    href={navItem.link}
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (typeof window !== 'undefined' && (window as any).smoothScrollTo) {
+                        (window as any).smoothScrollTo(navItem.link.replace('#', ''));
+                      }
+                    }}
                     className={cn(
                       "relative dark:text-neutral-50 text-neutral-600",
                       "hover:text-blue-500 dark:hover:text-blue-400",
                       "transition-colors duration-300",
-                      "flex items-center space-x-1 group"
+                      "flex items-center space-x-1 group",
+                      activeSection === navItem.link 
+                        ? "text-blue-500 dark:text-blue-400" 
+                        : ""
                     )}
                   >
                     <motion.span
@@ -84,7 +122,7 @@ export const BottomNavbar = ({
                     </motion.span>
                     <span className="hidden sm:inline text-sm relative">
                       {navItem.name}
-                      {idx !== 0 && pathname === navItem.link && (
+                      {activeSection === navItem.link && (
                         <motion.span
                           layoutId="underline"
                           className={cn(
@@ -141,7 +179,6 @@ export const BottomNavbar = ({
             transition={{ duration: 0.3 }}
             className="fixed bottom-2 left-4 sm:left-8 z-[5000] flex px-2 py-2 sm:px-4 sm:py-3 items-center space-x-1 sm:space-x-3 text-xs sm:text-sm"
           >
-            <DarkModeToggle />
           </motion.div>
         </>
       )}

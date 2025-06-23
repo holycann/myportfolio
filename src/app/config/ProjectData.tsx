@@ -1,10 +1,10 @@
 import { AnimatedProjectImage } from "@/components/ui/animated-testimonials";
 
 const projectImages = {
-  smartParkingSystem: [{ alt: "", src: "/images/project1.png" }],
-  studentEnrollmentSystem: [{ alt: "", src: "/images/project1.png" }],
-  todoApplication: [{ alt: "", src: "/images/project1.png" }],
-  agriMarket: [{ alt: "", src: "/images/project1.png" }],
+  smartParkingSystem: [{ alt: "Smart Parking System", src: "https://placehold.co/800x600/333/FFF?text=Smart+Parking+System" }],
+  studentEnrollmentSystem: [{ alt: "Student Enrollment System", src: "https://placehold.co/800x600/333/FFF?text=Student+Enrollment+System" }],
+  todoApplication: [{ alt: "Todo Application", src: "https://placehold.co/800x600/333/FFF?text=Todo+Application" }],
+  agriMarket: [{ alt: "Agri Market", src: "https://placehold.co/800x600/333/FFF?text=Agri+Market" }],
 };
 
 export const ProjectData = [

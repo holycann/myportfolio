@@ -4,7 +4,10 @@ import { ExperienceData as data } from "@/app/config/ExperienceData";
 
 export default function Experience() {
   return (
-    <div className="relative w-full overflow-clip">
+    <div 
+      id="experience"
+      className="relative w-full overflow-clip"
+    >
       <Timeline title={"Learning by Doing, Growing by Serving"} data={data} />
     </div>
   );

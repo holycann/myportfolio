@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState, memo } from "react";
-import { motion } from "motion/react";
+import React, { useEffect, useRef, useState, memo, useMemo } from "react";
+import { motion, useMotionValue, useTransform, animate } from "motion/react";
 import { twMerge } from "tailwind-merge";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +21,29 @@ export const TextRevealCard = ({
   const [localWidth, setLocalWidth] = useState(0);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
+  // Advanced reveal text animation with extended delay
+  const revealChars = useMemo(() => {
+    return revealText.split('').map((char, index) => ({
+      char,
+      index,
+      delay: index * 0.1, // Increased delay for slower reveal
+    }));
+  }, [revealText]);
+
+  // Advanced motion values for more dynamic interactions
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const scale = useMotionValue(1);
+
+  // Transform values for 3D effect
+  const boxShadow = useTransform(
+    [rotateX, rotateY],
+    ([rx, ry]) => `
+      ${-ry / 10}px ${rx / 10}px 20px rgba(0,0,0,0.1),
+      ${ry / 15}px ${-rx / 15}px 30px rgba(0,0,0,0.05)
+    `
+  );
+
   useEffect(() => {
     if (cardRef.current) {
       const { left, width: localWidth } =
@@ -32,7 +55,6 @@ export const TextRevealCard = ({
 
   function mouseMoveHandler(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
-
     const { clientX } = event;
     if (cardRef.current) {
       const relativeX = clientX - left;
@@ -43,10 +65,17 @@ export const TextRevealCard = ({
   function mouseLeaveHandler() {
     setIsMouseOver(false);
     setWidthPercentage(0);
+
+    // Reset motion values
+    animate(rotateX, 0, { duration: 0.5 });
+    animate(rotateY, 0, { duration: 0.5 });
+    animate(scale, 1, { duration: 0.5 });
   }
+
   function mouseEnterHandler() {
     setIsMouseOver(true);
   }
+
   function touchMoveHandler(event: React.TouchEvent<HTMLDivElement>) {
     event.preventDefault();
     const clientX = event.touches[0]!.clientX;
@@ -57,22 +86,34 @@ export const TextRevealCard = ({
   }
 
   const rotateDeg = (widthPercentage - 50) * 0.1;
+
   return (
-    <div
+    <motion.div
+      ref={cardRef}
+      style={{
+        rotateX,
+        rotateY,
+        scale,
+        boxShadow,
+        perspective: "1000px",
+        transformStyle: "preserve-3d",
+      }}
       onMouseEnter={mouseEnterHandler}
       onMouseLeave={mouseLeaveHandler}
       onMouseMove={mouseMoveHandler}
       onTouchStart={mouseEnterHandler}
       onTouchEnd={mouseLeaveHandler}
       onTouchMove={touchMoveHandler}
-      ref={cardRef}
       className={cn(
-        "rounded-lg p-8 relative overflow-hidden flex justify-center items-center w-full",
+        "rounded-2xl p-8 relative overflow-hidden flex justify-center items-center w-full cursor-pointer",
+        "transition-all duration-300 ease-out",
+        "bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700",
         className
       )}
     >
       {children}
 
+      {/* Enhanced Reveal Text Layer */}
       <motion.div
         style={{
           width: "100%",
@@ -88,17 +129,59 @@ export const TextRevealCard = ({
               }
         }
         transition={isMouseOver ? { duration: 0 } : { duration: 0.4 }}
-        className="absolute bg-[#1d1c20] z-20  will-change-transform"
+        className="absolute inset-0 z-20 will-change-transform"
       >
-        <p
-          style={{
-            textShadow: "4px 4px 15px rgba(0,0,0,0.5)",
+        {/* Overlay to fade out original text */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: isMouseOver ? 1 : 0,
+            transition: { 
+              duration: 0.3,
+              delay: isMouseOver ? 0.2 : 0 // Slight delay when revealing
+            }
           }}
-          className="text-center sm:text-[3rem] mx-10 font-bold text-white bg-clip-text bg-gradient-to-b from-white to-neutral-300"
-        >
-          {revealText}
-        </p>
+          className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700 z-10"
+        />
+
+        <div className="relative z-20 text-center sm:text-[3rem] mx-10 font-bold text-white h-full flex items-center justify-center px-4">
+          <div className="max-w-full break-words text-center">
+            {revealChars.map(({ char, index, delay }) => (
+              <motion.span
+                key={index}
+                initial={{ 
+                  opacity: 0, 
+                  y: 50,
+                  scale: 0.6,
+                  filter: 'blur(15px)'
+                }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  scale: 1,
+                  filter: 'blur(0px)'
+                }}
+                transition={{
+                  delay: delay + 0.3, // Added delay to match overlay fade
+                  duration: 0.8, // Slower animation
+                  type: "spring",
+                  stiffness: 70, // Softer spring
+                  damping: 12
+                }}
+                className="inline-block origin-bottom"
+                style={{
+                  display: 'inline-block',
+                  transformOrigin: 'bottom center'
+                }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
+          </div>
+        </div>
       </motion.div>
+
+      {/* Moving Gradient Line */}
       <motion.div
         animate={{
           left: `${widthPercentage}%`,
@@ -108,14 +191,17 @@ export const TextRevealCard = ({
         transition={isMouseOver ? { duration: 0 } : { duration: 0.4 }}
         className="h-40 w-[8px] bg-gradient-to-b from-transparent via-neutral-800 to-transparent absolute z-50 will-change-transform"
       ></motion.div>
+
+      {/* Stars Background */}
       <MemoizedStars />
 
+      {/* Base Text Layer */}
       <div className="overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]">
         <p className="text-base sm:text-[5rem] py-10 font-bold bg-clip-text text-transparent bg-[#323238]">
           {text}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -127,7 +213,10 @@ export const TextRevealCardTitle = ({
   className?: string;
 }) => {
   return (
-    <h2 className={twMerge("text-white text-lg mb-2", className)}>
+    <h2 className={twMerge(
+      "text-white text-lg mb-2 transition-colors duration-300 hover:text-blue-300", 
+      className
+    )}>
       {children}
     </h2>
   );
@@ -141,7 +230,12 @@ export const TextRevealCardDescription = ({
   className?: string;
 }) => {
   return (
-    <p className={twMerge("text-[#a9a9a9] text-sm", className)}>{children}</p>
+    <p className={twMerge(
+      "text-neutral-300 text-sm transition-colors duration-300 hover:text-purple-300", 
+      className
+    )}>
+      {children}
+    </p>
   );
 };
 
@@ -150,7 +244,7 @@ const Stars = () => {
   const randomOpacity = () => Math.random();
   const random = () => Math.random();
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 overflow-hidden">
       {[...Array(80)].map((_, i) => (
         <motion.span
           key={`star-${i}`}
