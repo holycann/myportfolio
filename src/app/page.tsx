@@ -1,15 +1,15 @@
 "use client";
 
-import Hero from "./section/Hero";
-import Experience from "./section/Experience";
+import Hero from "../components/section/Hero";
+import Experience from "../components/section/Experience";
 import { TextRevealCard } from "@/components/ui/text-reveal-card";
-import { Project } from "./section/Project";
-import Contact from "./section/Contact";
+import { Project } from "../components/section/Project";
+import Contact from "../components/section/Contact";
 
 export default function Home() {
   return (
     <div className="pb-4">
-      <section className="mx-auto p-4 h-[100vh]" id="home">
+      <section className="mx-auto p-4 h-screen" id="home">
         <Hero />
       </section>
 

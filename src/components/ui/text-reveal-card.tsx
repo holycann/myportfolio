@@ -9,11 +9,13 @@ export const TextRevealCard = ({
   revealText,
   children,
   className,
+  variant = 'default',
 }: {
   text: string;
   revealText: string;
   children?: React.ReactNode;
   className?: string;
+  variant?: 'default' | 'gradient' | 'dark' | 'light';
 }) => {
   const [widthPercentage, setWidthPercentage] = useState(0);
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -34,6 +36,32 @@ export const TextRevealCard = ({
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const scale = useMotionValue(1);
+
+  // Variant-based styling
+  const variantStyles = {
+    default: {
+      background: "bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700",
+      textColor: "text-white",
+      overlayGradient: "from-neutral-900 via-neutral-800 to-neutral-700",
+    },
+    gradient: {
+      background: "bg-gradient-brand",
+      textColor: "text-white",
+      overlayGradient: "from-brand-100 via-brand-200 to-brand-300",
+    },
+    dark: {
+      background: "bg-custom-300",
+      textColor: "text-custom-50",
+      overlayGradient: "from-custom-300 via-custom-200 to-custom-100",
+    },
+    light: {
+      background: "bg-custom-50",
+      textColor: "text-custom-300",
+      overlayGradient: "from-custom-50 via-custom-100 to-custom-200",
+    }
+  };
+
+  const currentVariant = variantStyles[variant];
 
   // Transform values for 3D effect
   const boxShadow = useTransform(
@@ -105,9 +133,11 @@ export const TextRevealCard = ({
       onTouchEnd={mouseLeaveHandler}
       onTouchMove={touchMoveHandler}
       className={cn(
-        "rounded-2xl p-8 relative overflow-hidden flex justify-center items-center w-full cursor-pointer",
+        "lg:rounded-3xl rounded-2xl p-6 md:p-8 relative overflow-hidden flex justify-center items-center w-full cursor-pointer lg:mx-12 mx-6 lg:mt-0 mt-12 h-20 lg:h-40",
         "transition-all duration-300 ease-out",
-        "bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700",
+        "group hover:scale-[1.02] hover:shadow-2xl",
+        "shadow-lg hover:shadow-xl",
+        currentVariant.background,
         className
       )}
     >
@@ -141,10 +171,10 @@ export const TextRevealCard = ({
               delay: isMouseOver ? 0.2 : 0 // Slight delay when revealing
             }
           }}
-          className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700 z-10"
+          className={`absolute inset-0 bg-gradient-to-br ${currentVariant.overlayGradient} z-10`}
         />
 
-        <div className="relative z-20 text-center sm:text-[3rem] mx-10 font-bold text-white h-full flex items-center justify-center px-4">
+        <div className={`relative z-20 text-center text-md md:text-5xl lg:text-3xl mx-4 md:mx-10 font-bold ${currentVariant.textColor} h-full flex items-center justify-center px-4`}>
           <div className="max-w-full break-words text-center">
             {revealChars.map(({ char, index, delay }) => (
               <motion.span
@@ -189,7 +219,7 @@ export const TextRevealCard = ({
           opacity: widthPercentage > 0 ? 1 : 0,
         }}
         transition={isMouseOver ? { duration: 0 } : { duration: 0.4 }}
-        className="h-40 w-[8px] bg-gradient-to-b from-transparent via-neutral-800 to-transparent absolute z-50 will-change-transform"
+        className="h-20 lg:h-40 w-[8px] bg-gradient-to-b from-transparent via-neutral-800 to-transparent absolute z-50 will-change-transform"
       ></motion.div>
 
       {/* Stars Background */}
@@ -197,7 +227,7 @@ export const TextRevealCard = ({
 
       {/* Base Text Layer */}
       <div className="overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]">
-        <p className="text-base sm:text-[5rem] py-10 font-bold bg-clip-text text-transparent bg-[#323238]">
+        <p className={`text-3xl lg:text-5xl py-10 font-bold bg-clip-text text-transparent ${variant === 'light' ? 'bg-[#040D12]' : 'bg-[#323238]'}`}>
           {text}
         </p>
       </div>
@@ -208,13 +238,23 @@ export const TextRevealCard = ({
 export const TextRevealCardTitle = ({
   children,
   className,
+  variant = 'default'
 }: {
   children: React.ReactNode;
   className?: string;
+  variant?: 'default' | 'gradient' | 'dark' | 'light';
 }) => {
+  const variantStyles = {
+    default: "text-white hover:text-blue-300",
+    gradient: "text-white hover:text-brand-50",
+    dark: "text-custom-50 hover:text-custom-100",
+    light: "text-custom-300 hover:text-custom-200"
+  };
+
   return (
     <h2 className={twMerge(
-      "text-white text-lg mb-2 transition-colors duration-300 hover:text-blue-300", 
+      "text-lg md:text-xl lg:text-2xl mb-2 transition-colors duration-300", 
+      variantStyles[variant],
       className
     )}>
       {children}
@@ -225,13 +265,23 @@ export const TextRevealCardTitle = ({
 export const TextRevealCardDescription = ({
   children,
   className,
+  variant = 'default'
 }: {
   children: React.ReactNode;
   className?: string;
+  variant?: 'default' | 'gradient' | 'dark' | 'light';
 }) => {
+  const variantStyles = {
+    default: "text-neutral-300 hover:text-purple-300",
+    gradient: "text-brand-50 hover:text-white",
+    dark: "text-custom-100 hover:text-custom-50",
+    light: "text-custom-200 hover:text-custom-300"
+  };
+
   return (
     <p className={twMerge(
-      "text-neutral-300 text-sm transition-colors duration-300 hover:text-purple-300", 
+      "text-sm md:text-base lg:text-lg transition-colors duration-300", 
+      variantStyles[variant],
       className
     )}>
       {children}
@@ -244,7 +294,7 @@ const Stars = () => {
   const randomOpacity = () => Math.random();
   const random = () => Math.random();
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden opacity-50 group-hover:opacity-70 transition-opacity duration-300">
       {[...Array(80)].map((_, i) => (
         <motion.span
           key={`star-${i}`}

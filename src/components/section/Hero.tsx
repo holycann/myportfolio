@@ -115,7 +115,7 @@ export default function Hero() {
         </div>
 
         <div className="w-full max-w-xl text-center lg:text-left py-10">
-          <div className="py-20">
+          <div className="lg:py-20">
             <motion.h2
               initial={{ opacity: 0, x: -50 }}
               animate={{
@@ -163,7 +163,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-gray-600 dark:text-gray-300 py-6 text-justify"
+              className="text-gray-600 dark:text-gray-300 p-6 lg:py-6 text-justify"
             >
               I&apos;m passionate about building efficient and scalable systems
               using Golang and PostgreSQL. Outside of tech, I actively trade
@@ -212,7 +212,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-sm font-semibold text-center"
+              className="text-sm font-semibold text-center pt-8 lg:pt-0"
             >
               Fav Tech Stack
             </motion.h2>

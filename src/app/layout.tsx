@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { BottomNavbar } from "@/components/ui/bottom-navbar";
-import { HiHome } from "react-icons/hi2";
+import { HiBriefcase, HiEnvelope, HiFolder, HiHome } from "react-icons/hi2";
 import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
 import { Analytics } from "@vercel/analytics/next";
 import { LenisProvider } from "@/components/LenisProvider";
@@ -50,20 +50,24 @@ export const metadata: Metadata = {
 
 const navItems = [
   {
+    name: "Home",
     link: "#hero",
     icon: <HiHome className="text-neutral-500 dark:text-white" size={24} />,
   },
   {
     name: "Experience",
     link: "#experience",
+    icon: <HiBriefcase className="text-neutral-500 dark:text-white" size={24} />,
   },
   {
     name: "Projects",
     link: "#project",
+    icon: <HiFolder className="text-neutral-500 dark:text-white" size={24} />,
   },
   {
     name: "Contact",
     link: "#contact",
+    icon: <HiEnvelope className="text-neutral-500 dark:text-white" size={24} />,
   },
 ];
 

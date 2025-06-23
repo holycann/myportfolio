@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { RxDividerVertical } from "react-icons/rx";
-import { usePathname } from "next/navigation";
 import { AnimatedTooltip } from "./animated-tooltip";
 
 export const BottomNavbar = ({
@@ -24,7 +23,6 @@ export const BottomNavbar = ({
   }[];
   className?: string;
 }) => {
-  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState(navItems[0].link);
 
@@ -118,7 +116,9 @@ export const BottomNavbar = ({
                       whileHover={{ rotate: 5 }}
                       transition={{ type: "spring", stiffness: 500 }}
                     >
-                      {navItem.icon}
+                      <div className="block md:hidden">
+                        {navItem.icon}
+                      </div>
                     </motion.span>
                     <span className="hidden sm:inline text-sm relative">
                       {navItem.name}

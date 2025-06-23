@@ -61,83 +61,86 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] text-white py-20 rounded-3xl">
-      <div className="container mx-auto px-6 max-w-6xl">
+    <div 
+      id="contact"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] text-white py-10 md:py-20 px-4 md:px-0 lg:rounded-3xl rounded-2xl"
+    >
+      <div className="container mx-auto max-w-6xl">
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-[#1A1A1A]/30 backdrop-blur-lg rounded-3xl overflow-hidden shadow-2xl"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 bg-[#1A1A1A]/30 backdrop-blur-lg rounded-3xl overflow-hidden shadow-2xl"
         >
           {/* Left Column - Contact Information */}
           <motion.div 
             variants={containerVariants}
-            className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1A1A] p-12 flex flex-col justify-center space-y-8 rounded-l-3xl"
+            className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1A1A] p-6 md:p-12 flex flex-col justify-center space-y-4 md:space-y-8 rounded-l-3xl"
           >
             <motion.h2 
               variants={itemVariants}
-              className="text-4xl font-bold mb-4"
+              className="text-2xl md:text-4xl font-bold mb-2 md:mb-4"
             >
               Get in Touch
             </motion.h2>
             
             <motion.p 
               variants={itemVariants}
-              className="text-gray-400 mb-6"
+              className="text-sm md:text-base text-gray-400 mb-4 md:mb-6"
             >
               Interested in collaborating on innovative tech projects or discussing potential opportunities? Let&apos;s connect and explore how we can create something amazing together.
             </motion.p>
 
             <motion.div 
               variants={containerVariants}
-              className="space-y-6"
+              className="space-y-4 md:space-y-6"
             >
               <motion.div 
                 variants={itemVariants}
-                className="flex items-center space-x-4"
+                className="flex items-center space-x-3 md:space-x-4"
               >
-                <FaClock className="text-2xl text-blue-500" />
+                <FaClock className="text-xl md:text-2xl text-blue-500" />
                 <div>
-                  <h4 className="font-semibold">Availability</h4>
-                  <p className="text-gray-400">Weekdays: 9 AM - 6 PM (GMT+7)</p>
+                  <h4 className="text-sm md:text-base font-semibold">Availability</h4>
+                  <p className="text-xs md:text-sm text-gray-400">Weekdays: 9 AM - 6 PM (GMT+7)</p>
                 </div>
               </motion.div>
 
               <motion.div 
                 variants={itemVariants}
-                className="flex items-center space-x-4"
+                className="flex items-center space-x-3 md:space-x-4"
               >
-                <FaMapMarkerAlt className="text-2xl text-green-500" />
+                <FaMapMarkerAlt className="text-xl md:text-2xl text-green-500" />
                 <div>
-                  <h4 className="font-semibold">Location</h4>
-                  <p className="text-gray-400">Bekasi, West Java, Indonesia</p>
+                  <h4 className="text-sm md:text-base font-semibold">Location</h4>
+                  <p className="text-xs md:text-sm text-gray-400">Bekasi, West Java, Indonesia</p>
                 </div>
               </motion.div>
 
               <motion.div 
                 variants={itemVariants}
-                className="flex items-center space-x-4"
+                className="flex items-center space-x-3 md:space-x-4"
               >
-                <FaEnvelope className="text-2xl text-purple-500" />
+                <FaEnvelope className="text-xl md:text-2xl text-purple-500" />
                 <div>
-                  <h4 className="font-semibold">Email</h4>
-                  <p className="text-gray-400">muhamad.ramadhan.dev@gmail.com</p>
+                  <h4 className="text-sm md:text-base font-semibold">Email</h4>
+                  <p className="text-xs md:text-sm text-gray-400 break-words">muhamad.ramadhan.dev@gmail.com</p>
                 </div>
               </motion.div>
             </motion.div>
 
             <motion.div 
               variants={itemVariants}
-              className="flex space-x-5 mt-8"
+              className="flex space-x-4 md:space-x-5 mt-4 md:mt-8 justify-center md:justify-start"
             >
               <a href="https://twitter.com/muhamadramadhan" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <FaTwitter size={24} />
+                <FaTwitter className="text-xl md:text-2xl" />
               </a>
               <a href="https://instagram.com/muhamadramadhan" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <FaInstagram size={24} />
+                <FaInstagram className="text-xl md:text-2xl" />
               </a>
               <a href="https://discordapp.com/users/muhamadramadhan" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                <FaDiscord size={24} />
+                <FaDiscord className="text-xl md:text-2xl" />
               </a>
             </motion.div>
           </motion.div>
@@ -145,73 +148,73 @@ export default function Contact() {
           {/* Right Column - Contact Form */}
           <motion.div 
             variants={containerVariants}
-            className="p-12 flex flex-col justify-center rounded-r-3xl"
+            className="p-6 md:p-12 flex flex-col justify-center rounded-r-3xl"
           >
             <motion.form 
               onSubmit={handleSubmit} 
               variants={containerVariants}
-              className="space-y-6"
+              className="space-y-4 md:space-y-6"
             >
               <motion.div 
                 variants={containerVariants}
-                className="grid grid-cols-2 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
               >
                 <motion.div variants={itemVariants}>
-                  <label className="block text-sm text-gray-400 mb-2">First name</label>
+                  <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">First name</label>
                   <input
                     type="text"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-[15px] placeholder-gray-600"
+                    className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
                     placeholder="Muhamad"
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <label className="block text-sm text-gray-400 mb-2">Last name</label>
+                  <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Last name</label>
                   <input
                     type="text"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-[15px] placeholder-gray-600"
+                    className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
                     placeholder="Ramadhan"
                   />
                 </motion.div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-sm text-gray-400 mb-2">Email</label>
+                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-[15px] placeholder-gray-600"
+                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
                   placeholder="muhamad.ramadhan.dev@gmail.com"
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-sm text-gray-400 mb-2">Phone number</label>
+                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Phone number</label>
                 <input
                   type="text"
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-[15px] placeholder-gray-600"
+                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
                   placeholder="+628172636451"
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-sm text-gray-400 mb-2">Message</label>
+                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Message</label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows={5}
-                  className="w-full p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-[15px] placeholder-gray-600 resize-none"
+                  rows={4}
+                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600 resize-none"
                   placeholder="Hey i have some interesting project for you..."
                 />
               </motion.div>
@@ -219,7 +222,7 @@ export default function Contact() {
               <motion.button
                 variants={itemVariants}
                 type="submit"
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-[15px] font-semibold transition-colors"
+                className="w-full py-2 md:py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-xs md:text-[15px] font-semibold transition-colors"
               >
                 Send message
               </motion.button>

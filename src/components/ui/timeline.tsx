@@ -41,7 +41,7 @@ export const Timeline = ({ title, data }: { title: string, data: TimelineEntry[]
 
   return (
     <div className="w-full md:px-10" ref={containerRef}>
-      <div className="flex justify-center items-center py-20 px-4 md:px-8 lg:px-10">
+      <div className="flex justify-center items-center lg:py-20 px-4 md:px-8 lg:px-10">
         <TextGenerateEffect words={title} />
       </div>
 

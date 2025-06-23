@@ -34,7 +34,7 @@ export const StickyScroll = ({
   // Scroll tracking for the entire page
   const { scrollYProgress, scrollY } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   });
 
   // Calculate content height
@@ -45,14 +45,14 @@ export const StickyScroll = ({
         Math.min(
           window.innerHeight * 0.8, // Maximum height (80% of viewport)
           content.reduce((max, item) => {
-            const tempDiv = document.createElement('div');
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.visibility = 'hidden';
-            tempDiv.style.width = 'calc(50% - 40px)';
+            const tempDiv = document.createElement("div");
+            tempDiv.style.position = "absolute";
+            tempDiv.style.visibility = "hidden";
+            tempDiv.style.width = "calc(50% - 40px)";
             tempDiv.innerHTML = `
               <h2>${item.title}</h2>
               <p>${item.description}</p>
-              <ul>${item.features.map(f => `<li>${f}</li>`).join('')}</ul>
+              <ul>${item.features.map((f) => `<li>${f}</li>`).join("")}</ul>
             `;
             document.body.appendChild(tempDiv);
             const height = tempDiv.scrollHeight;
@@ -66,8 +66,8 @@ export const StickyScroll = ({
     };
 
     calculateHeight();
-    window.addEventListener('resize', calculateHeight);
-    return () => window.removeEventListener('resize', calculateHeight);
+    window.addEventListener("resize", calculateHeight);
+    return () => window.removeEventListener("resize", calculateHeight);
   }, [content]);
 
   // Set up wheel event for controlled scrolling
@@ -98,12 +98,12 @@ export const StickyScroll = ({
     const container = containerRef.current;
     if (container) {
       // Using passive: false to allow preventDefault
-      container.addEventListener('wheel', handleWheel, { passive: false });
+      container.addEventListener("wheel", handleWheel, { passive: false });
     }
 
     return () => {
       if (container) {
-        container.removeEventListener('wheel', handleWheel);
+        container.removeEventListener("wheel", handleWheel);
       }
     };
   }, [isScrolling, isSnapping]);
@@ -114,35 +114,38 @@ export const StickyScroll = ({
       if (!containerRef.current || isSnapping) return;
 
       const containerHeight = contentHeight * content.length;
-      const scrollPosition = window.scrollY - (containerRef.current.offsetTop || 0);
+      const scrollPosition =
+        window.scrollY - (containerRef.current.offsetTop || 0);
       const currentSection = Math.round(scrollPosition / contentHeight);
-      
+
       if (currentSection >= 0 && currentSection < content.length) {
         setIsSnapping(true);
-        const targetScrollPosition = (containerRef.current.offsetTop || 0) + (currentSection * contentHeight);
-        
+        const targetScrollPosition =
+          (containerRef.current.offsetTop || 0) +
+          currentSection * contentHeight;
+
         window.scrollTo({
           top: targetScrollPosition,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
-        
+
         // After scrolling completes
         setTimeout(() => {
           setIsSnapping(false);
         }, 800); // Slightly longer than scroll animation
       }
     };
-    
+
     // Debounce scroll events
     let scrollDebounce: ReturnType<typeof setTimeout>;
     const handleScroll = () => {
       clearTimeout(scrollDebounce);
       scrollDebounce = setTimeout(handleScrollSnap, 50);
     };
-    
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       clearTimeout(scrollDebounce);
     };
   }, [content.length, contentHeight, isSnapping]);
@@ -151,17 +154,17 @@ export const StickyScroll = ({
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const cardLength = content.length;
     const cardHeight = 1 / cardLength;
-    
+
     // Calculate which card should be active based on scroll progress
     const newActiveCard = Math.min(
-      cardLength - 1, 
+      cardLength - 1,
       Math.floor(latest / cardHeight)
     );
 
     if (newActiveCard !== activeCard) {
       setIsScrolling(true);
       setActiveCard(newActiveCard);
-      
+
       // Reset scrolling state after animation
       setTimeout(() => {
         setIsScrolling(false);
@@ -170,260 +173,226 @@ export const StickyScroll = ({
   });
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative w-full"
-      style={{ 
-        height: `${contentHeight * content.length}px`, 
-        position: 'relative',
-        scrollSnapType: 'y mandatory',
-        scrollBehavior: 'smooth'
+      style={{
+        height: `${contentHeight * content.length}px`,
+        position: "relative",
+        scrollSnapType: "y mandatory",
+        scrollBehavior: "smooth",
       }}
     >
       {content.map((_, index) => (
-        <div 
+        <div
           key={`scroll-anchor-${index}`}
           className="absolute w-full"
           style={{
             top: `${index * contentHeight}px`,
-            height: '2px', 
-            scrollSnapAlign: 'start',
-            scrollSnapStop: 'always',
-            zIndex: -1
+            height: "2px",
+            scrollSnapAlign: "start",
+            scrollSnapStop: "always",
+            zIndex: -1,
           }}
         />
       ))}
-      <div 
+      <div
         ref={stickyRef}
         className="sticky w-full"
-        style={{ 
+        style={{
           height: `${contentHeight}px`,
-          position: 'sticky',
-          top: `calc(50% - ${contentHeight / 2}px)`
+          position: "sticky",
+          top: `calc(50% - ${contentHeight / 2}px)`,
         }}
       >
-        <div 
+        <div
           className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center space-x-0 md:space-x-10 py-10 px-4 md:px-10"
           style={{
-            height: '100%',
-            maxHeight: `${contentHeight}px`
+            height: "100%",
+            maxHeight: `${contentHeight}px`,
           }}
-    >
-          <div className="relative flex items-center px-2 md:px-4 w-full">
+        >
+          <div className="relative items-center px-2 md:px-4 w-full">
             <AnimatePresence mode="wait">
-          {content.map((item, index) => (
-                index === activeCard && (
-                  <motion.div 
-                    key={item.title + index}
-                initial={{
-                  opacity: 0,
-                      y: isScrolling ? (index > activeCard ? 50 : -50) : 20 
-                }}
-                animate={{
-                      opacity: 1,
-                      y: 0
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      y: isScrolling ? (index > activeCard ? -50 : 50) : -20 
-                    }}
-                    transition={{ 
-                      duration: 0.6,
-                      ease: "easeInOut"
-                    }}
-                    className={cn(
-                      "absolute inset-0 p-6 rounded-2xl transition-all duration-300 overflow-y-auto",
-                      "bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 shadow-2xl"
-                    )}
-                    style={{
-                      maxHeight: `${contentHeight}px`
-                    }}
-                  >
-                    <motion.h2
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                      className="text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 flex items-center"
-              >
-                {item.title}
-                      {item.githubUrl && (
-              <motion.a
-                href={item.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          className="ml-4 text-neutral-600 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400"
-              >
-                          <FaGithub size={24} />
-                        </motion.a>
+              {content.map(
+                (item, index) =>
+                  index === activeCard && (
+                    <motion.div
+                      key={item.title + index}
+                      initial={{
+                        opacity: 0,
+                        y: isScrolling ? (index > activeCard ? 50 : -50) : 20,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: isScrolling ? (index > activeCard ? -50 : 50) : -20,
+                      }}
+                      transition={{
+                        duration: 0.6,
+                        ease: "easeInOut",
+                      }}
+                      className={cn(
+                        "absolute inset-0 p-6 rounded-2xl transition-all duration-300 overflow-y-auto flex flex-col justify-center items-start",
+                        "bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 shadow-2xl"
                       )}
-                      {item.webUrl && (
-                        <motion.a
-                          href={item.webUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          className="ml-2 text-neutral-600 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400"
-                        >
-                          <FaLink size={24} />
-              </motion.a>
-                      )}
-                    </motion.h2>
-                    
-              <motion.p
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3, duration: 0.5 }}
-                      className="text-base mb-4 text-justify text-neutral-600 dark:text-neutral-300"
-              >
-                {item.description}
-              </motion.p>
-                    
-              <motion.h3
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.4, duration: 0.5 }}
-                      className="text-lg mb-2 font-semibold text-neutral-700 dark:text-neutral-200"
-              >
-                      Features:
-              </motion.h3>
-              <motion.ul
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5, duration: 0.5 }}
-                      className="text-base max-w-sm text-neutral-600 dark:text-neutral-300 mb-4 space-y-2"
-              >
-                      {item.features.map((feature, featureIndex) => (
-                        <motion.li 
-                          key={feature}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ 
-                            opacity: 1,
-                            x: 0
-                          }}
-                          transition={{ 
-                            delay: 0.5 + featureIndex * 0.1,
-                            duration: 0.3 
-                          }}
-                          className="flex items-center"
-                        >
-                          <FaCode className="mr-2 text-blue-500" />
-                    {feature}
-                        </motion.li>
-                ))}
-              </motion.ul>
-                    
-                    <div 
-                      className="flex flex-wrap gap-2 mb-6"
+                      style={{
+                        maxHeight: `${contentHeight}px`,
+                      }}
                     >
-                      {item.techStack.map((tech) => (
-                        <motion.div
-                          key={tech}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.7, duration: 0.5 }}
-                        >
-                          <MyButton 
-                            text={tech} 
-                            className="text-xs px-2 py-1" 
-                          />
-                        </motion.div>
-                ))}
-              </div>
-                    
-                    <div className="mt-6 flex justify-between items-center">
-                      <div className="text-sm text-neutral-500">
-                        {activeCard + 1} / {content.length}
-            </div>
-                      <div className="flex space-x-2">
-                        <button 
-                          onClick={() => {
-                            if (activeCard > 0) {
-                              const targetSection = activeCard - 1;
-                              const targetScrollPosition = (containerRef.current?.offsetTop || 0) + (targetSection * contentHeight);
-                              window.scrollTo({
-                                top: targetScrollPosition,
-                                behavior: 'smooth'
-                              });
-                            }
-                          }}
-                          disabled={activeCard === 0}
-                          className={`px-3 py-1 rounded-lg ${activeCard === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}
-                        >
-                          Previous
-                        </button>
-                        <button 
-                          onClick={() => {
-                            if (activeCard < content.length - 1) {
-                              const targetSection = activeCard + 1;
-                              const targetScrollPosition = (containerRef.current?.offsetTop || 0) + (targetSection * contentHeight);
-                              window.scrollTo({
-                                top: targetScrollPosition,
-                                behavior: 'smooth'
-                              });
-                            }
-                          }}
-                          disabled={activeCard === content.length - 1}
-                          className={`px-3 py-1 rounded-lg ${activeCard === content.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}
-                        >
-                          Next
-                        </button>
-        </div>
-      </div>
-                  </motion.div>
-                )
-              ))}
+                      <motion.h2
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2, duration: 0.5 }}
+                        className="text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 flex items-center"
+                      >
+                        {item.title}
+                        {item.githubUrl && (
+                          <motion.a
+                            href={item.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.1 }}
+                            className="ml-4 text-neutral-600 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400"
+                          >
+                            <FaGithub size={24} />
+                          </motion.a>
+                        )}
+                        {item.webUrl && (
+                          <motion.a
+                            href={item.webUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.1 }}
+                            className="ml-2 text-neutral-600 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400"
+                          >
+                            <FaLink size={24} />
+                          </motion.a>
+                        )}
+                      </motion.h2>
+
+                      <motion.p
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                        className="text-base mb-4 text-justify text-neutral-600 dark:text-neutral-300"
+                      >
+                        {item.description}
+                      </motion.p>
+
+                      <motion.h3
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                        className="text-lg mb-2 font-semibold text-neutral-700 dark:text-neutral-200"
+                      >
+                        Features:
+                      </motion.h3>
+                      <motion.ul
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5, duration: 0.5 }}
+                        className="text-base max-w-sm text-neutral-600 dark:text-neutral-300 mb-4 space-y-2"
+                      >
+                        {item.features.map((feature, featureIndex) => (
+                          <motion.li
+                            key={feature}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{
+                              opacity: 1,
+                              x: 0,
+                            }}
+                            transition={{
+                              delay: 0.5 + featureIndex * 0.1,
+                              duration: 0.3,
+                            }}
+                            className="flex items-center"
+                          >
+                            <FaCode className="mr-2 text-blue-500" />
+                            {feature}
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {item.techStack.map((tech) => (
+                          <motion.div
+                            key={tech}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.7, duration: 0.5 }}
+                          >
+                            <MyButton
+                              text={tech}
+                              className="text-xs px-2 py-1"
+                            />
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      <div className="flex justify-end items-center">
+                        <div className="text-sm text-neutral-500">
+                          {activeCard + 1} / {content.length}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )
+              )}
             </AnimatePresence>
           </div>
-          
-      <div
-        className={cn(
+
+          <div
+            className={cn(
               "sticky top-0 hidden w-full overflow-hidden rounded-3xl lg:block",
-          contentClassName
-        )}
+              contentClassName
+            )}
             style={{
-              height: `${contentHeight}px`
+              height: `${contentHeight}px`,
             }}
           >
             <AnimatePresence mode="wait">
-              {content.map((item, index) => (
-                index === activeCard && (
-                  <motion.div
-                    key={`content-${index}`}
-                    initial={{ 
-                      opacity: 0, 
-                      scale: 0.9,
-                      y: isScrolling ? (index > activeCard ? 50 : -50) : 0
-                    }}
-                    animate={{ 
-                      opacity: 1, 
-                      scale: 1,
-                      y: 0,
-                      backgroundImage: item.backgroundImage 
-                        ? `url(${item.backgroundImage})` 
-                        : 'none'
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      scale: 0.9,
-                      y: isScrolling ? (index > activeCard ? -50 : 50) : 0
-                    }}
-                    transition={{ 
-                      duration: 0.6,
-                      ease: "easeInOut"
-                    }}
-                    className="w-full h-full bg-cover bg-center rounded-3xl shadow-2xl"
-                    style={{
-                      height: `${contentHeight}px`
-                    }}
-                  >
-                    <div className="absolute bottom-4 right-4 bg-black/30 text-white px-2 py-1 rounded-lg text-sm backdrop-blur-sm">
-                      {activeCard + 1} / {content.length}
-                    </div>
-                    {item.content ?? null}
-                  </motion.div>
-                )
-              ))}
+              {content.map(
+                (item, index) =>
+                  index === activeCard && (
+                    <motion.div
+                      key={`content-${index}`}
+                      initial={{
+                        opacity: 0,
+                        scale: 0.9,
+                        y: isScrolling ? (index > activeCard ? 50 : -50) : 0,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        y: 0,
+                        backgroundImage: item.backgroundImage
+                          ? `url(${item.backgroundImage})`
+                          : "none",
+                      }}
+                      exit={{
+                        opacity: 0,
+                        scale: 0.9,
+                        y: isScrolling ? (index > activeCard ? -50 : 50) : 0,
+                      }}
+                      transition={{
+                        duration: 0.6,
+                        ease: "easeInOut",
+                      }}
+                      className="w-full h-full bg-cover bg-center rounded-3xl shadow-2xl"
+                      style={{
+                        height: `${contentHeight}px`,
+                      }}
+                    >
+                      <div className="absolute bottom-4 right-4 bg-black/30 text-white px-2 py-1 rounded-lg text-sm backdrop-blur-sm">
+                        {activeCard + 1} / {content.length}
+                      </div>
+                      {item.content ?? null}
+                    </motion.div>
+                  )
+              )}
             </AnimatePresence>
           </div>
         </div>
