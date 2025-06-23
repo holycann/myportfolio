@@ -4,106 +4,90 @@ import Image from "next/image";
 
 export const ExperienceData: ExperienceItem[] = [
   {
-    role: "Tech Support",
+    role: "Tech Support Intern",
     company: "eFishery",
     logo: "/images/company/efishery.png",
     jobType: "Internship",
     start: "Sep 2023",
     end: "Jan 2024",
-    location: "Bandung",
+    location: "Bandung, Indonesia",
     arragement: "Hybrid",
     content: (
       <div>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <Image
-            src="https://placehold.co/500x500/333/FFF.png?text=eFishery+1"
-            alt="eFishery experience 1"
+            src="https://placehold.co/500x500/333/FFF.png?text=eFishery+Tech+Support"
+            alt="eFishery tech support workspace"
             width={500}
             height={500}
-            className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
+            className="h-20 w-full rounded-lg object-cover shadow-lg md:h-44 lg:h-60"
           />
           <Image
-            src="https://placehold.co/500x500/333/FFF.png?text=eFishery+2"
-            alt="eFishery experience 2"
+            src="https://placehold.co/500x500/333/FFF.png?text=eFishery+Team"
+            alt="eFishery team collaboration"
             width={500}
             height={500}
-            className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
+            className="h-20 w-full rounded-lg object-cover shadow-lg md:h-44 lg:h-60"
           />
         </div>
-        <p className="mb-4 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200 text-justify">
-          Lorem Ipsum has been the industry&apos;s standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it
-          to make a type specimen book. It has survived not only five centuries,
-          but also the leap into electronic typesetting, remaining essentially
-          unchanged.
+        <p className="mb-4 text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify">
+          Worked as a Tech Support Intern at eFishery, Indonesia&apos;s leading aquaculture technology platform, 
+          providing critical technical assistance and customer support for digital farming solutions.
         </p>
-        <ul className="list-disc list-inside ml-4 text-sm mb-4">
-          <li>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </li>
-          <li>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </li>
-          <li>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </li>
+        <ul className="list-disc list-inside ml-4 text-sm mb-4 space-y-2">
+          <li>Resolved 50+ technical issues daily, maintaining a 95% customer satisfaction rate</li>
+          <li>Collaborated with development team to document and escalate complex technical problems</li>
+          <li>Developed internal documentation and knowledge base to streamline support processes</li>
         </ul>
-        <MyButton text="NodeJs" />
+        <div className="flex flex-wrap gap-2">
+          <MyButton text="Customer Support" />
+          <MyButton text="Technical Troubleshooting" />
+          <MyButton text="Documentation" />
+        </div>
       </div>
     ),
   },
   {
-    role: "Wordpress Builder",
+    role: "WordPress Developer",
     company: "PT Asamedia",
     logo: "/images/company/asamedia.png",
     jobType: "Freelance",
-    start: "5 Dec 2024",
-    end: "11 Dec 2024",
-    location: "Indonesia",
+    start: "Dec 2023",
+    end: "Jan 2024",
+    location: "Remote, Indonesia",
     arragement: "Remote",
     content: (
       <div>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <Image
-            src="https://placehold.co/500x500/333/FFF.png?text=Asamedia+1"
-            alt="Asamedia experience 1"
+            src="https://placehold.co/500x500/333/FFF.png?text=WordPress+Dev"
+            alt="WordPress website development"
             width={500}
             height={500}
-            className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
+            className="h-20 w-full rounded-lg object-cover shadow-lg md:h-44 lg:h-60"
           />
           <Image
-            src="https://placehold.co/500x500/333/FFF.png?text=Asamedia+2"
-            alt="Asamedia experience 2"
+            src="https://placehold.co/500x500/333/FFF.png?text=Web+Design"
+            alt="Web design mockup"
             width={500}
             height={500}
-            className="h-20 w-full rounded-lg object-cover shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] md:h-44 lg:h-60"
+            className="h-20 w-full rounded-lg object-cover shadow-lg md:h-44 lg:h-60"
           />
         </div>
-        <p className="mb-4 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200 text-justify">
-          Lorem Ipsum has been the industry&apos;s standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it
-          to make a type specimen book. It has survived not only five centuries,
-          but also the leap into electronic typesetting, remaining essentially
-          unchanged.
+        <p className="mb-4 text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify">
+          Freelance WordPress Developer for PT Asamedia, creating responsive and visually appealing 
+          websites with custom themes and plugins to enhance client online presence.
         </p>
-        <ul className="list-disc list-inside ml-4 text-sm mb-4">
-          <li>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </li>
-          <li>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </li>
-          <li>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </li>
+        <ul className="list-disc list-inside ml-4 text-sm mb-4 space-y-2">
+          <li>Designed and implemented 2 custom WordPress websites with responsive layouts</li>
+          <li>Optimized website performance, improving page load times by 40%</li>
+          <li>Integrated SEO best practices and implemented custom WordPress plugins</li>
         </ul>
-        <MyButton text="NodeJs" />
+        <div className="flex flex-wrap gap-2">
+          <MyButton text="WordPress" />
+          <MyButton text="Web Design" />
+          <MyButton text="SEO Optimization" />
+        </div>
       </div>
     ),
   },

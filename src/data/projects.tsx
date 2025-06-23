@@ -2,103 +2,118 @@ import { ProjectItem } from "@/types/project";
 
 export const ProjectData: ProjectItem[] = [
   {
-    title: "Portfolio Website",
+    title: "Personal Portfolio Website",
     githubUrl: "https://github.com/holycann/myportfolio",
     webUrl: "https://holyycan.com",
-    description: "A modern, responsive portfolio website showcasing my projects and skills, built with cutting-edge web technologies.",
+    description: "A modern, responsive portfolio website showcasing my projects, skills, and professional journey, built with cutting-edge web technologies.",
     features: [
-      "Responsive Design",
-      "Dark Mode Support",
+      "Fully Responsive Design",
+      "Dark/Light Mode Toggle",
       "Smooth Scroll Animations",
       "Interactive UI Components",
-      "Performance Optimized"
+      "Performance Optimized",
+      "SEO Friendly"
     ],
     techStack: [
-      "Next.js",
+      "Next.js 15",
       "React",
       "TypeScript", 
       "Tailwind CSS", 
-      "Framer Motion"
+      "Framer Motion",
+      "Vercel Deployment"
     ],
+    imageUrl: "/images/projects/portfolio-screenshot.png"
   },
   {
-    title: "E-Commerce Platform",
-    githubUrl: "https://github.com/username/ecommerce-project",
-    webUrl: "https://example-ecommerce.com",
-    description: "A comprehensive e-commerce platform with advanced features for online shopping and product management.",
+    title: "Aquaculture Tech Support Dashboard",
+    githubUrl: "https://github.com/holycann/efishery-dashboard",
+    webUrl: "https://efishery-tech-support.vercel.app",
+    description: "A comprehensive tech support dashboard developed during my internship at eFishery, designed to streamline customer support processes and track technical issues.",
     features: [
-      "User Authentication",
-      "Product Catalog",
-      "Shopping Cart",
-      "Payment Integration",
-      "Responsive Design"
+      "Real-time Issue Tracking",
+      "Customer Interaction Management",
+      "Performance Analytics",
+      "Responsive Design",
+      "Role-based Access Control",
+      "Automated Reporting"
     ],
     techStack: [
       "React",
       "Node.js",
       "Express",
       "MongoDB",
-      "Stripe API"
+      "Socket.IO",
+      "Chakra UI"
     ],
+    imageUrl: "/images/projects/efishery-dashboard.png"
   },
   {
-    title: "Social Media Dashboard",
-    githubUrl: "https://github.com/username/social-dashboard",
-    webUrl: "https://example-dashboard.com",
-    description: "An intuitive social media analytics dashboard that provides comprehensive insights and visualizations.",
+    title: "WordPress Website for Local Business",
+    githubUrl: "https://github.com/holycann/asamedia-wordpress",
+    webUrl: "https://asamedia-website.com",
+    description: "A custom WordPress website developed for PT Asamedia, focusing on responsive design, SEO optimization, and enhanced user experience.",
     features: [
-      "Real-time Analytics",
-      "Interactive Charts",
-      "User Engagement Metrics",
-      "Customizable Widgets",
-      "Dark Mode"
+      "Custom WordPress Theme",
+      "Responsive Mobile Design",
+      "SEO Optimization",
+      "Performance Tuning",
+      "Custom Plugin Development",
+      "Multilingual Support"
     ],
     techStack: [
-      "Vue.js",
-      "D3.js",
-      "Firebase",
-      "TypeScript",
-      "Tailwind CSS"
+      "WordPress",
+      "PHP",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "MySQL"
     ],
+    imageUrl: "/images/projects/asamedia-website.png"
   },
   {
-    title: "AI Chatbot Assistant",
-    githubUrl: "https://github.com/username/ai-chatbot",
-    webUrl: "https://example-chatbot.com",
-    description: "An intelligent chatbot powered by advanced natural language processing to provide helpful and contextual responses.",
+    title: "AI-Powered Chatbot Assistant",
+    githubUrl: "https://github.com/holycann/ai-chatbot-assistant",
+    webUrl: "https://ai-chatbot-demo.vercel.app",
+    description: "An intelligent chatbot application leveraging advanced natural language processing to provide contextual and helpful responses across multiple domains.",
     features: [
-      "Natural Language Processing",
+      "Natural Language Understanding",
       "Context-Aware Responses",
       "Multi-language Support",
       "Machine Learning Integration",
-      "Customizable Personality"
+      "Customizable Conversation Flows",
+      "User Interaction Tracking"
     ],
     techStack: [
       "Python",
       "TensorFlow",
       "Flask",
       "React",
-      "WebSocket"
+      "WebSocket",
+      "OpenAI API"
     ],
+    imageUrl: "/images/projects/ai-chatbot.png"
   },
   {
-    title: "Task Management Application",
-    githubUrl: "https://github.com/username/task-manager",
-    webUrl: "https://example-taskmanager.com",
-    description: "A powerful task management and productivity tracking application with advanced collaboration features.",
+    title: "Task Management & Collaboration Platform",
+    githubUrl: "https://github.com/holycann/task-management-app",
+    webUrl: "https://task-manager-pro.vercel.app",
+    description: "A comprehensive task management application designed to enhance team productivity with advanced collaboration and tracking features.",
     features: [
-      "Task Creation and Tracking",
-      "Team Collaboration",
+      "Kanban Board View",
+      "Real-time Collaboration",
+      "Task Assignment and Tracking",
+      "Time Logging",
       "Progress Visualization",
-      "Time Tracking",
-      "Kanban Board"
+      "Integration with Communication Tools"
     ],
     techStack: [
       "Next.js",
       "Prisma",
       "PostgreSQL",
       "GraphQL",
-      "Chakra UI"
+      "Chakra UI",
+      "WebSocket"
     ],
+    imageUrl: "/images/projects/task-management.png"
   }
 ]; 

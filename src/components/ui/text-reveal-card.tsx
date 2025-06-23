@@ -66,10 +66,13 @@ export const TextRevealCard = ({
   // Transform values for 3D effect
   const boxShadow = useTransform(
     [rotateX, rotateY],
-    ([rx, ry]) => `
-      ${-ry / 10}px ${rx / 10}px 20px rgba(0,0,0,0.1),
-      ${ry / 15}px ${-rx / 15}px 30px rgba(0,0,0,0.05)
-    `
+    (input: number[]) => {
+      const [rx, ry] = input as [number, number];
+      return `
+        ${-ry / 10}px ${rx / 10}px 20px rgba(0,0,0,0.1),
+        ${ry / 15}px ${-rx / 15}px 30px rgba(0,0,0,0.05)
+      `;
+    }
   );
 
   useEffect(() => {

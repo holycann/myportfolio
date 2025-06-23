@@ -1,6 +1,6 @@
+import { motion } from "framer-motion";
 import { MyButton } from "@/components/ui/mybutton";
 import Image from "next/image";
-import { motion } from "motion/react";
 
 export const ExperienceData = [
   {
