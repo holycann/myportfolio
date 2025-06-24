@@ -9,8 +9,7 @@
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
-    "optimize": "npm run clean && npm run build && npm run start",
-    "postbuild": "next-sitemap && npx pagespeed-insights https://holyycan.com"
+    "optimize": "npm run clean && npm run build && npm run start"
   },
   "dependencies": {
     "@react-three/drei": "^10.0.7",
@@ -52,7 +51,6 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
-    "pagespeed-insights": "^1.0.2",
     "prettier": "^3.6.0",
     "tailwindcss": "^4",
     "typescript": "^5"

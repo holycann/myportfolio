@@ -9,9 +9,7 @@ const nextConfig: NextConfig = {
     compress: true,
     poweredByHeader: false,
     reactStrictMode: true,
-    swcMinify: true,
     productionBrowserSourceMaps: false,
-    optimizeFonts: true,
     experimental: {
         optimizePackageImports: ['@/components', '@/data'],
         optimisticClientCache: true,
