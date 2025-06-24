@@ -163,7 +163,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-gray-600 dark:text-gray-300 p-6 lg:py-6 text-justify"
+              className="text-gray-600 dark:text-gray-300 p-6 lg:py-6 lg:px-0 text-justify"
             >
               I&apos;m passionate about building efficient and scalable systems
               using Golang and PostgreSQL. Outside of tech, I actively trade

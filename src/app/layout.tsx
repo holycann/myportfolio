@@ -6,6 +6,7 @@ import { HiBriefcase, HiEnvelope, HiFolder, HiHome } from "react-icons/hi2";
 import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
 import { Analytics } from "@vercel/analytics/next";
 import { LenisProvider } from "@/components/LenisProvider";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -136,6 +137,15 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} antialiased`}>
+        <Toaster 
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          }}
+        />
         <LenisProvider>
           <BottomNavbar navItems={navItems} socialItems={socialItems} />
           <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">

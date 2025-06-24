@@ -2,7 +2,8 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { FaTwitter, FaInstagram, FaDiscord, FaClock, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaDiscord, FaClock, FaMapMarkerAlt, FaEnvelope, FaPaperPlane, FaCheck } from "react-icons/fa";
+import { toast, Toaster } from "react-hot-toast";
 
 interface FormData {
   firstName: string;
@@ -20,6 +21,30 @@ export default function Contact() {
     phoneNumber: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+
+  const validateForm = () => {
+    const newErrors: Partial<FormData> = {};
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First name is required";
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -29,11 +54,47 @@ export default function Contact() {
       ...prev,
       [name]: value,
     }));
+    
+    // Clear error when user starts typing
+    if (errors[name as keyof FormData]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
+    
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields correctly");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate form submission (replace with actual API call)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setIsSubmitted(true);
+      toast.success("Message sent successfully!");
+      
+      // Reset form after successful submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        message: "",
+      });
+    } catch (error) {
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(false);
+    }
   };
 
   const containerVariants = {
@@ -65,6 +126,15 @@ export default function Contact() {
       id="contact"
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] text-white py-10 md:py-20 px-4 md:px-0 lg:rounded-3xl rounded-2xl"
     >
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        }}
+      />
       <div className="container mx-auto max-w-6xl">
         <motion.div 
           initial="hidden"
@@ -133,10 +203,10 @@ export default function Contact() {
               variants={itemVariants}
               className="flex space-x-4 md:space-x-5 mt-4 md:mt-8 justify-center md:justify-start"
             >
-              <a href="https://twitter.com/muhamadramadhan" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://twitter.com/ehhramaa_" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <FaTwitter className="text-xl md:text-2xl" />
               </a>
-              <a href="https://instagram.com/muhamadramadhan" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/ehhramaa_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <FaInstagram className="text-xl md:text-2xl" />
               </a>
               <a href="https://discordapp.com/users/muhamadramadhan" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
@@ -160,15 +230,22 @@ export default function Contact() {
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
               >
                 <motion.div variants={itemVariants}>
-                  <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">First name</label>
+                  <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">First name *</label>
                   <input
                     type="text"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
+                    className={`w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border ${
+                      errors.firstName 
+                        ? 'border-red-500' 
+                        : 'border-[#2A2A2A] focus:border-blue-500'
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600`}
                     placeholder="Muhamad"
                   />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+                  )}
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Last name</label>
@@ -184,15 +261,22 @@ export default function Contact() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Email</label>
+                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Email *</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
+                  className={`w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border ${
+                    errors.email 
+                      ? 'border-red-500' 
+                      : 'border-[#2A2A2A] focus:border-blue-500'
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600`}
                   placeholder="muhamad.ramadhan.dev@gmail.com"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </motion.div>
 
               <motion.div variants={itemVariants}>
@@ -208,23 +292,45 @@ export default function Contact() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Message</label>
+                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Message *</label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600 resize-none"
+                  className={`w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border ${
+                    errors.message 
+                      ? 'border-red-500' 
+                      : 'border-[#2A2A2A] focus:border-blue-500'
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600 resize-none`}
                   placeholder="Hey i have some interesting project for you..."
                 />
+                {errors.message && (
+                  <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+                )}
               </motion.div>
 
-              <motion.button
+              <motion.button 
                 variants={itemVariants}
                 type="submit"
-                className="w-full py-2 md:py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-xs md:text-[15px] font-semibold transition-colors"
+                disabled={isSubmitting}
+                className={`w-full py-2 md:py-3 rounded-lg text-xs md:text-[15px] font-semibold transition-all duration-300 flex items-center justify-center space-x-2 ${
+                  isSubmitting 
+                    ? 'bg-blue-800 text-gray-400 cursor-not-allowed' 
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
               >
-                Send message
+                {isSubmitting ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-white"></div>
+                ) : isSubmitted ? (
+                  <>
+                    <FaCheck className="mr-2" /> Sent
+                  </>
+                ) : (
+                  <>
+                    <FaPaperPlane className="mr-2" /> Send message
+                  </>
+                )}
               </motion.button>
             </motion.form>
           </motion.div>

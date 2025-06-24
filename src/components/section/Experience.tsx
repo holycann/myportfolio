@@ -1,6 +1,6 @@
 import React from "react";
 import { Timeline } from "@/components/ui/timeline";
-import { ExperienceData as data } from "@/app/config/ExperienceData";
+import { ExperienceData as data } from "@/data/experiences";
 
 export default function Experience() {
   return (

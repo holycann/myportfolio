@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 import { TextGenerateEffect } from '../ui/text-generate-effect';
-import { ProjectData } from "../../app/config/ProjectData";
+import { ProjectData } from "@/data/projects";
 
 export const Project = () => {
   const AnimatedProjectTitle = () => {

@@ -19,6 +19,8 @@ export const StickyScroll = ({
     techStack: string[];
     content?: React.ReactNode;
     backgroundImage?: string;
+    githubIcon?: React.ReactNode;
+    webIcon?: React.ReactNode;
   }[];
   contentClassName?: string;
 }) => {
@@ -250,28 +252,28 @@ export const StickyScroll = ({
                         className="text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 flex items-center"
                       >
                         {item.title}
-                        {item.githubUrl && (
-                          <motion.a
-                            href={item.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.1 }}
-                            className="ml-4 text-neutral-600 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400"
-                          >
-                            <FaGithub size={24} />
-                          </motion.a>
-                        )}
-                        {item.webUrl && (
-                          <motion.a
-                            href={item.webUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.1 }}
-                            className="ml-2 text-neutral-600 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400"
-                          >
-                            <FaLink size={24} />
-                          </motion.a>
-                        )}
+                        <div className="ml-4 flex space-x-3">
+                          {item.githubUrl && (
+                            <a 
+                              href={item.githubUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="hover:scale-110 transition-transform"
+                            >
+                              {item.githubIcon || <FaGithub className="text-2xl text-gray-800 dark:text-white hover:text-blue-600" />}
+                            </a>
+                          )}
+                          {item.webUrl && (
+                            <a 
+                              href={item.webUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="hover:scale-110 transition-transform"
+                            >
+                              {item.webIcon || <FaLink className="text-2xl text-gray-800 dark:text-white hover:text-green-600" />}
+                            </a>
+                          )}
+                        </div>
                       </motion.h2>
 
                       <motion.p
