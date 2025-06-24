@@ -6,7 +6,7 @@ import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 import { TextGenerateEffect } from '../ui/text-generate-effect';
 import { ProjectData } from "@/data/projects";
 
-export const Project = () => {
+export default function Project() {
   const AnimatedProjectTitle = () => {
     const title = "A finished project is only the visible peak";
     const subtitle = "of a mountain built on learning and experience.";
@@ -18,7 +18,7 @@ export const Project = () => {
         className="text-center mb-8 px-4"
       >
         <motion.h2
-          className="text-4xl font-bold text-gray-800 dark:text-white"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white"
           variants={{
             hidden: { opacity: 0, x: -50 },
             visible: { 
@@ -56,7 +56,7 @@ export const Project = () => {
           ))}
         </motion.h2>
         <motion.h3
-          className="text-xl text-gray-600 dark:text-gray-300 mt-2"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mt-2"
           initial={{ opacity: 0, x: 50 }}
           animate={{ 
             opacity: 1, 

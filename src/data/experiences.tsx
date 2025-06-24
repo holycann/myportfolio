@@ -2,10 +2,194 @@ import { motion } from "framer-motion";
 import { MyButton } from "@/components/ui/mybutton";
 import Image from "next/image";
 import { ExperienceItem } from "@/types/experience";
+import {
+  FaHeadset,
+  FaUsers,
+  FaBook,
+  FaWordpress,
+  FaPaintBrush,
+  FaSearchengin,
+} from "react-icons/fa";
+import { MdSupportAgent, MdBugReport, MdDocumentScanner } from "react-icons/md";
+import { BsSpeedometer } from "react-icons/bs";
 
 export const ExperienceData: ExperienceItem[] = [
   {
-    role: "Tech Support Intern",
+    role: "Full Stack Web Developer",
+    company: "Freelance",
+    logo: "/images/company/kawasandigital.png",
+    jobType: "Remote",
+    start: "Jan 2024",
+    end: "Current",
+    location: "Remote",
+    arragement: "Remote",
+    content: (
+      <div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mb-4 text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
+        >
+          Used Javascript, SQL and HTML to develop app-solutions. Increased
+          website performance by optimizing front-end and back-end code for
+          faster loading times. Applied responsive design principles to ensure
+          consistent display and functionality across a wide range of devices,
+          including mobile phones, tablets, and desktop computers.
+        </motion.p>
+        <motion.ul
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="list-none ml-4 text-sm mb-4 space-y-2"
+        >
+          {[
+            "Created easy-to-use APIs for third-party integrations, enhancing the functionality of existing applications without compromising on performance or security.",
+            "Developed user-friendly web forms with validation and error handling.",
+            "Developed functional databases, applications and servers to support websites on back-end.",
+            "Worked with back-end developers to design APIs.",
+            "Used NodeJS, ORM and SQL/No-SQL to develop and manage databases.",
+            "Reviewed code, debugged problems, and corrected issues.",
+          ].map((feature, index) => (
+            <motion.li
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-blue-500"
+            >
+              {feature}
+            </motion.li>
+          ))}
+        </motion.ul>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-2"
+        >
+          {[
+            "JavaScript",
+            "SQL",
+            "HTML",
+            "NodeJS",
+            "API",
+            "Responsive Design",
+          ].map((tech) => (
+            <MyButton
+              key={tech}
+              text={tech}
+              className="text-xs px-2 py-1 bg-gradient-to-r from-blue-500 to-green-500 text-white hover:from-blue-600 hover:to-green-600 transition-all duration-300"
+            />
+          ))}
+        </motion.div>
+      </div>
+    ),
+  },
+  {
+    role: "WordPress Designer",
+    company: "PT Asamedia",
+    logo: "/images/company/asamedia.png",
+    jobType: "Remote",
+    start: "Dec 2024",
+    end: "Dec 2024",
+    location: "Remote",
+    arragement: "Remote",
+    content: (
+      <div>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <Image
+              src="/images/experience/web_asamedia.png"
+              alt="WordPress Designer"
+              width={500}
+              height={500}
+              className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-[1.02]"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <Image
+              src="/images/experience/web_asamedia_2.png"
+              alt="Web Design"
+              width={500}
+              height={500}
+              className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-transform duration-300 hover:scale-[1.02]"
+            />
+          </motion.div>
+        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mb-4 text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
+        >
+          Developed user-friendly web forms with validation and error handling.
+          Proved successful working within tight deadlines and a fast-paced
+          environment. Optimized web applications for speed, scalability and
+          security.
+        </motion.p>
+        <motion.ul
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="list-none ml-4 text-sm mb-4 space-y-2"
+        >
+          {[
+            "Collected, defined and translated user requirements into project designs and implementation plans.",
+            "Provided front-end website development using WordPress, Hubspot, and other editing software.",
+            "Adhered to SEO best practices while designing sites.",
+            "Implemented custom post types and taxonomies to organize content effectively on various WordPress websites.",
+          ].map((feature, index) => (
+            <motion.li
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-purple-500"
+            >
+              {feature}
+            </motion.li>
+          ))}
+        </motion.ul>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-2"
+        >
+          {["WordPress", "Web Design", "SEO", "Front-end", "Hubspot"].map(
+            (tech) => (
+              <MyButton
+                key={tech}
+                text={tech}
+                className="text-xs px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
+              />
+            )
+          )}
+        </motion.div>
+      </div>
+    ),
+  },
+  {
+    role: "Technical Support Intern",
     company: "eFishery",
     logo: "/images/company/efishery.png",
     jobType: "Internship",
@@ -23,29 +207,14 @@ export const ExperienceData: ExperienceItem[] = [
             viewport={{ once: true }}
           >
             <Image
-              src="https://placehold.co/600x400/blue/white.png?text=eFishery+Tech+Support+1"
+              src="/images/experience/efishery.jpg"
               alt="eFishery tech support workspace"
               width={500}
               height={500}
               className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-transform duration-300 hover:scale-[1.02]"
             />
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Image
-              src="https://placehold.co/600x400/green/white.png?text=eFishery+Team+Collaboration"
-              alt="eFishery team collaboration"
-              width={500}
-              height={500}
-              className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(16,178,130,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-            />
-          </motion.div>
         </div>
-        
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,10 +222,12 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="mb-4 text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
         >
-          Worked as a Tech Support Intern at eFishery, Indonesia&apos;s leading aquaculture technology platform, 
-          providing critical technical assistance and customer support for digital farming solutions.
+          Generated reports to track performance and analyze trends. Tested new
+          software and hardware prior to deployment. Researched and identified
+          solutions to technical problems. Collaborated with cross-functional
+          teams to identify, analyze, and resolve software defects, improving
+          overall product quality.
         </motion.p>
-        
         <motion.ul
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -64,24 +235,21 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="list-none ml-4 text-sm mb-4 space-y-2"
         >
-          {[
-            "Resolved 50+ technical issues daily, maintaining a 95% customer satisfaction rate",
-            "Collaborated with development team to document and escalate complex technical problems",
-            "Developed internal documentation and knowledge base to streamline support processes"
-          ].map((feature, index) => (
-            <motion.li
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-              viewport={{ once: true }}
-              className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-blue-500"
-            >
-              {feature}
-            </motion.li>
-          ))}
+          {["Build Whatsapp Bot Reminder", "Build SLA Scrapper Slack Bot"].map(
+            (feature, index) => (
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+                viewport={{ once: true }}
+                className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-green-500"
+              >
+                {feature}
+              </motion.li>
+            )
+          )}
         </motion.ul>
-        
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -89,111 +257,15 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="flex flex-wrap gap-2"
         >
-          {["Customer Support", "Technical Troubleshooting", "Documentation"].map((tech) => (
-            <MyButton 
+          {["Technical Support", "Reporting", "Bot Development"].map((tech) => (
+            <MyButton
               key={tech}
-              text={tech} 
-              className="text-xs px-2 py-1 bg-gradient-to-r from-blue-500 to-green-500 text-white hover:from-blue-600 hover:to-green-600 transition-all duration-300" 
+              text={tech}
+              className="text-xs px-2 py-1 bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600 transition-all duration-300"
             />
           ))}
         </motion.div>
       </div>
     ),
   },
-  {
-    role: "WordPress Developer",
-    company: "PT Asamedia",
-    logo: "/images/company/asamedia.png",
-    jobType: "Freelance",
-    start: "Dec 2023",
-    end: "Jan 2024",
-    location: "Remote, Indonesia",
-    arragement: "Remote",
-    content: (
-      <div>
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <Image
-              src="https://placehold.co/600x400/purple/white.png?text=WordPress+Development"
-              alt="WordPress website development"
-              width={500}
-              height={500}
-              className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-            />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Image
-              src="https://placehold.co/600x400/orange/white.png?text=Web+Design+Mockup"
-              alt="Web design mockup"
-              width={500}
-              height={500}
-              className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-            />
-          </motion.div>
-        </div>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mb-4 text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
-        >
-          Freelance WordPress Developer for PT Asamedia, creating responsive and visually appealing 
-          websites with custom themes and plugins to enhance client online presence.
-        </motion.p>
-        
-        <motion.ul
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="list-none ml-4 text-sm mb-4 space-y-2"
-        >
-          {[
-            "Designed and implemented 2 custom WordPress websites with responsive layouts",
-            "Optimized website performance, improving page load times by 40%",
-            "Integrated SEO best practices and implemented custom WordPress plugins"
-          ].map((feature, index) => (
-            <motion.li
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-              viewport={{ once: true }}
-              className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-purple-500"
-            >
-              {feature}
-            </motion.li>
-          ))}
-        </motion.ul>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap gap-2"
-        >
-          {["WordPress", "Web Design", "SEO Optimization"].map((tech) => (
-            <MyButton 
-              key={tech}
-              text={tech} 
-              className="text-xs px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-300" 
-            />
-          ))}
-        </motion.div>
-      </div>
-    ),
-  },
-]; 
+];

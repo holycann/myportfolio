@@ -1,157 +1,100 @@
-import { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { BottomNavbar } from "@/components/ui/bottom-navbar";
-import { HiBriefcase, HiEnvelope, HiFolder, HiHome } from "react-icons/hi2";
-import { FaLinkedinIn, FaStackOverflow, FaGithub } from "react-icons/fa6";
-import { Analytics } from "@vercel/analytics/next";
 import { LenisProvider } from "@/components/LenisProvider";
 import { Toaster } from "react-hot-toast";
+import { defaultMeta, generateSeoMeta, generateJsonLd } from "@/lib/seo";
+import Head from "next/head";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Muhamad Ramadhan",
-  description:
-    "Portfolio Muhamad Ramadhan - Backend Developer dengan pengalaman dalam Node.js, Golang, dan PostgreSQL.",
-  metadataBase: new URL("https://holycan.dev"),
+  title: defaultMeta.title,
+  description: defaultMeta.description,
   openGraph: {
-    title: "Muhamad Ramadhan",
-    description:
-      "Portfolio Backend Developer: Golang, Node.js, PostgreSQL, dan AWS.",
-    url: "https://holyycan.com",
-    siteName: "Muhamad Ramadhan Portfolio",
+    title: defaultMeta.title,
+    description: defaultMeta.description,
+    url: defaultMeta.url,
     images: [
       {
-        url: "/og-image.png",
+        url: defaultMeta.image,
         width: 1200,
         height: 630,
-        alt: "Muhamad Ramadhan Portfolio",
+        alt: defaultMeta.title,
       },
     ],
-    locale: "id_ID",
+    siteName: defaultMeta.siteName,
     type: "website",
+    locale: defaultMeta.locale,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Muhamad Ramadhan",
-    description:
-      "Portfolio Backend Developer: Golang, Node.js, dan PostgreSQL.",
-    images: ["/og-image.png"],
+    title: defaultMeta.title,
+    description: defaultMeta.description,
+    site: defaultMeta.twitterHandle,
+    creator: defaultMeta.twitterHandle,
+    images: [defaultMeta.image],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: defaultMeta.robots,
+  metadataBase: new URL(defaultMeta.url),
 };
 
-const navItems = [
-  {
-    name: "Home",
-    link: "#hero",
-    icon: <HiHome className="text-neutral-500 dark:text-white" size={24} />,
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Muhamad Ramadhan",
+  url: defaultMeta.url,
+  image: defaultMeta.image,
+  sameAs: [
+    "https://twitter.com/muhamadramadhan",
+    "https://instagram.com/muhamadramadhan"
+  ],
+  jobTitle: "Backend Developer & Crypto Enthusiast",
+  worksFor: {
+    "@type": "Organization",
+    name: "Freelance"
   },
-  {
-    name: "Experience",
-    link: "#experience",
-    icon: <HiBriefcase className="text-neutral-500 dark:text-white" size={24} />,
-  },
-  {
-    name: "Projects",
-    link: "#project",
-    icon: <HiFolder className="text-neutral-500 dark:text-white" size={24} />,
-  },
-  {
-    name: "Contact",
-    link: "#contact",
-    icon: <HiEnvelope className="text-neutral-500 dark:text-white" size={24} />,
-  },
-];
-
-const socialItems = [
-  {
-    name: "Github",
-    link: "https://github.com/holycann",
-    icon: <FaGithub className="text-neutral-500 dark:text-white" size={24} />,
-  },
-  {
-    name: "Linkedin",
-    link: "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/",
-    icon: (
-      <FaLinkedinIn className="text-neutral-500 dark:text-white" size={24} />
-    ),
-  },
-  {
-    name: "Stack Overflow",
-    link: "https://stackoverflow.com/users/21961396/holycan",
-    icon: (
-      <FaStackOverflow className="text-neutral-500 dark:text-white" size={24} />
-    ),
-  },
-];
+  description: defaultMeta.description,
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { meta } = generateSeoMeta({});
   return (
-    <html lang="en" dir="ltr">
-      <head>
+    <html lang="en" suppressHydrationWarning>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0A0A0A" />
+        <meta name="author" content="Muhamad Ramadhan" />
+        <meta name="keywords" content="Backend Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind" />
+        {meta.map((m, i) => {
+          if (m.name) return <meta key={i} name={m.name} content={m.content} />;
+          if (m.property) return <meta key={i} property={m.property} content={m.content} />;
+          return null;
+        })}
+        {/* Canonical link */}
+        <link rel="canonical" href={defaultMeta.url} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Muhamad Ramadhan",
-              url: "https://holyycan.com",
-              image: "https://holyycan.com/_next/image?url=%2Fimages%2Fhero.png&w=828&q=75",
-              description:
-                "Portfolio profesional yang menampilkan karya dan proyek terbaik saya sebagai seorang backend developer, termasuk aplikasi web dan solusi teknis yang telah dikembangkan menggunakan teknologi terkini seperti Golang, Node.js, dan PostgreSQL.",
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+62-851-7995-5480",
-                contactType: "WhatsApp Number",
-                areaServed: "ID",
-                availableLanguage: "Indonesian",
-              },
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Jatiwangi",
-                addressLocality: "Bekasi",
-                addressRegion: "West Java",
-                postalCode: "17530",
-                addressCountry: "ID",
-              },
-              sameAs: [
-                "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237",
-                "https://github.com/holycann",
-              ],
-            }),
-          }}
+          dangerouslySetInnerHTML={generateJsonLd(structuredData)}
         />
-      </head>
-      <body className={`${poppins.variable} antialiased`}>
-        <Toaster 
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: '#333',
-              color: '#fff',
-            },
-          }}
-        />
+      </Head>
+      <body className={`${inter.className} dark`}>
         <LenisProvider>
-          <BottomNavbar navItems={navItems} socialItems={socialItems} />
-          <div className="bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800">
-            <div className="container mx-auto">{children}</div>
-          </div>
-          <Analytics />
+          {children}
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: '#333',
+                color: '#fff',
+              },
+            }}
+          />
         </LenisProvider>
       </body>
     </html>

@@ -64,7 +64,7 @@ const Skeleton = () => {
     });
   }, []);
   return (
-    <div className="p-8 overflow-hidden h-full relative flex items-center justify-center">
+    <div className="p-8 pb-0 lg:pb-8 overflow-hidden h-full relative flex items-center justify-center">
       <div className="flex flex-row shrink-0 justify-center items-center gap-2">
         <Container className="h-8 w-8 circle-1">
           <FaPython className="h-4 w-4 " />

@@ -3,13 +3,13 @@
 import Hero from "../components/section/Hero";
 import Experience from "../components/section/Experience";
 import { TextRevealCard } from "@/components/ui/text-reveal-card";
-import { Project } from "../components/section/Project";
+import Project from "../components/section/Project";
 import Contact from "../components/section/Contact";
 
 export default function Home() {
   return (
     <div className="pb-4">
-      <section className="mx-auto p-4 h-screen" id="home">
+      <section className="mx-auto p-4 lg:h-screen h-auto" id="home">
         <Hero />
       </section>
 
@@ -20,7 +20,7 @@ export default function Home() {
         ></TextRevealCard>
       </div>
 
-      <section className="mx-auto p-4 mb-40" id="experience">
+      <section className="mx-auto p-4 mb-20 md:mb-40" id="experience">
         <Experience />
       </section>
 
@@ -28,7 +28,7 @@ export default function Home() {
         <Project />
       </section>
 
-      <section className="mx-auto p-4 m-40" id="contact">
+      <section className="mx-auto p-4 md:m-20" id="contact">
         <Contact />
       </section>
     </div>

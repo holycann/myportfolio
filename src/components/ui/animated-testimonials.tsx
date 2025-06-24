@@ -43,7 +43,7 @@ export const AnimatedProjectImage = ({
             <AnimatePresence>
               {projectImage.map((image, index) => (
                 <motion.div
-                  key={image.src}
+                  key={`${image.src}-${index}`}
                   initial={{
                     opacity: 0,
                     scale: 0.9,

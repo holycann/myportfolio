@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { toast, Toaster } from "react-hot-toast";
 import emailjs from "emailjs-com";
+import { MyButton } from "@/components/ui/mybutton";
 
 interface FormData {
   firstName: string;
@@ -183,14 +184,14 @@ export default function Contact() {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-2xl md:text-4xl font-bold mb-2 md:mb-4"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4"
             >
               Get in Touch
             </motion.h2>
 
             <motion.p
               variants={itemVariants}
-              className="text-sm md:text-base text-gray-400 mb-4 md:mb-6"
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 mb-4 md:mb-6"
             >
               Interested in collaborating on innovative tech projects or
               discussing potential opportunities? Let&apos;s connect and explore
@@ -291,7 +292,7 @@ export default function Contact() {
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
               >
                 <motion.div variants={itemVariants}>
-                  <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">
+                  <label className="block text-xs sm:text-sm md:text-base text-gray-400 mb-1 md:mb-2">
                     First name *
                   </label>
                   <input
@@ -303,7 +304,7 @@ export default function Contact() {
                       errors.firstName
                         ? "border-red-500"
                         : "border-[#2A2A2A] focus:border-blue-500"
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600`}
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm md:text-base placeholder-gray-600`}
                     placeholder="Muhamad"
                   />
                   {errors.firstName && (
@@ -313,7 +314,7 @@ export default function Contact() {
                   )}
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">
+                  <label className="block text-xs sm:text-sm md:text-base text-gray-400 mb-1 md:mb-2">
                     Last name
                   </label>
                   <input
@@ -321,14 +322,14 @@ export default function Contact() {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
+                    className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm md:text-base placeholder-gray-600"
                     placeholder="Ramadhan"
                   />
                 </motion.div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">
+                <label className="block text-xs sm:text-sm md:text-base text-gray-400 mb-1 md:mb-2">
                   Email *
                 </label>
                 <input
@@ -340,7 +341,7 @@ export default function Contact() {
                     errors.email
                       ? "border-red-500"
                       : "border-[#2A2A2A] focus:border-blue-500"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600`}
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm md:text-base placeholder-gray-600`}
                   placeholder="muhamad.ramadhan.dev@gmail.com"
                 />
                 {errors.email && (
@@ -349,7 +350,7 @@ export default function Contact() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">
+                <label className="block text-xs sm:text-sm md:text-base text-gray-400 mb-1 md:mb-2">
                   Phone number
                 </label>
                 <input
@@ -357,13 +358,13 @@ export default function Contact() {
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleChange}
-                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
+                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm md:text-base placeholder-gray-600"
                   placeholder="+628172636451"
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">
+                <label className="block text-xs sm:text-sm md:text-base text-gray-400 mb-1 md:mb-2">
                   Subject
                 </label>
                 <input
@@ -371,13 +372,13 @@ export default function Contact() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600"
+                  className="w-full p-2 md:p-3 rounded-lg bg-[#0A0A0A] border border-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm md:text-base placeholder-gray-600"
                   placeholder="Job Opportunity"
                 />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">
+                <label className="block text-xs sm:text-sm md:text-base text-gray-400 mb-1 md:mb-2">
                   Message *
                 </label>
                 <textarea
@@ -389,7 +390,7 @@ export default function Contact() {
                     errors.message
                       ? "border-red-500"
                       : "border-[#2A2A2A] focus:border-blue-500"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs md:text-[15px] placeholder-gray-600 resize-none`}
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm md:text-base placeholder-gray-600 resize-none`}
                   placeholder="Hey i have some interesting project for you..."
                 />
                 {errors.message && (
@@ -397,28 +398,11 @@ export default function Contact() {
                 )}
               </motion.div>
 
-              <motion.button
-                variants={itemVariants}
+              <MyButton
+                text="Send Message"
                 type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-2 md:py-3 rounded-lg text-xs md:text-[15px] font-semibold transition-all duration-300 flex items-center justify-center space-x-2 ${
-                  isSubmitting
-                    ? "bg-blue-800 text-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700 text-white"
-                }`}
-              >
-                {isSubmitting ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-white"></div>
-                ) : isSubmitted ? (
-                  <>
-                    <FaCheck className="mr-2" /> Sent
-                  </>
-                ) : (
-                  <>
-                    <FaPaperPlane className="mr-2" /> Send message
-                  </>
-                )}
-              </motion.button>
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900"
+              />
             </motion.form>
           </motion.div>
         </motion.div>

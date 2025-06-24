@@ -85,16 +85,16 @@ export default function Hero() {
           <ContainerHoverAnimation
             titleComponent={
               <>
-                <h1 className="text-4xl font-semibold text-black dark:text-white">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-black dark:text-white">
                   Hi, Im <br />
                   <AnimatedText
-                    className="text-3xl md:text-[5rem] font-bold mt-1 leading-none block"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-[5rem] font-bold mt-1 leading-none block"
                     delay={0.5}
                   >
                     Muhamad
                   </AnimatedText>
                   <AnimatedText
-                    className="text-3xl md:text-[5rem] font-bold mt-1 leading-none block"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-[5rem] font-bold mt-1 leading-none block"
                     delay={0.5}
                   >
                     Ramadhan
@@ -105,16 +105,18 @@ export default function Hero() {
           >
             <Image
               src="/images/hero.png"
-              width={800}
-              height={600}
-              alt="hero"
+              alt="Hero Image"
+              width={500}
+              height={500}
+              priority
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAIQAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANv/bAEMAFA4PEg8NFBIQEhcVFBgeMiEeHBwZIS0iJjFHLDRCRy9LUUxbRkdCN0FMWU5QX1VXbWVvZDRAYmJiZWJlf//bAEMBFRcXHhoeNyEhNWxsZGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbP/AABEIAAUACgMBIgACEQEDEQH/xAAVAAEBAAAAAAAAAAAAAAAAAAAABf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AlgAH/9k="
               className="mx-auto rounded-2xl object-contain h-full object-center"
-              draggable={false}
             />
           </ContainerHoverAnimation>
         </div>
 
-        <div className="w-full max-w-xl text-center lg:text-left py-10">
+        <div className="w-full max-w-xl text-center lg:text-left py-6 lg:py-10">
           <div className="lg:py-20">
             <motion.h2
               initial={{ opacity: 0, x: -50 }}
@@ -129,7 +131,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-3xl sm:text-5xl font-bold text-gray-800 dark:text-white"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white"
             >
               <AnimatedText delay={1}>Backend Developer</AnimatedText>
             </motion.h2>
@@ -146,7 +148,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-3xl font-semibold"
+              className="text-xl sm:text-2xl md:text-3xl font-semibold"
             >
               <AnimatedText delay={1.5}>& Crypto Enthusiast</AnimatedText>
             </motion.h3>
@@ -163,7 +165,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-gray-600 dark:text-gray-300 p-6 lg:py-6 lg:px-0 text-justify"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 p-6 lg:py-6 lg:px-0 text-justify"
             >
               I&apos;m passionate about building efficient and scalable systems
               using Golang and PostgreSQL. Outside of tech, I actively trade
@@ -191,7 +193,7 @@ export default function Hero() {
               />
               <button
                 onClick={handleConnectClick}
-                className="px-4 text-gray-600 dark:text-gray-300 dark:hover:text-white cursor-pointer transition duration-500"
+                className="px-4 text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-300 dark:hover:text-white cursor-pointer transition duration-500"
               >
                 Let&apos;s Connect
               </button>
@@ -212,7 +214,7 @@ export default function Hero() {
                   damping: 10,
                 },
               }}
-              className="text-sm font-semibold text-center pt-8 lg:pt-0"
+              className="text-xs sm:text-sm md:text-base font-semibold text-center pt-8 lg:pt-0"
             >
               Fav Tech Stack
             </motion.h2>

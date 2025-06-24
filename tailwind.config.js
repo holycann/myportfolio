@@ -9,10 +9,11 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/sections/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   
   // Enable dark mode and custom theme switching
-  darkMode: ['class', '[data-mode="dark"]'],
+  darkMode: 'class',
   
   // Base Theme Configuration
   theme: {
@@ -163,6 +164,10 @@ module.exports = {
           '0%': { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
       },
       
       // Extended Opacity Levels
@@ -239,9 +244,8 @@ module.exports = {
     }),
     
     // Optional: Add more plugins
-    // require('@tailwindcss/forms'),
-    // require('@tailwindcss/typography'),
-    // require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
+    require('tailwind-scrollbar-hide')
   ],
   
   // Safelist for dynamic classes
@@ -249,5 +253,20 @@ module.exports = {
     {
       pattern: /(bg|text|border)-(primary|secondary|success|error|warning|info)/,
     }
-  ]
+  ],
+  
+  variants: {
+    extend: {
+      opacity: ['disabled'],
+      cursor: ['disabled'],
+    }
+  },
+  
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  
+  experimental: {
+    optimizeUniversalDefaults: true,
+  }
 }

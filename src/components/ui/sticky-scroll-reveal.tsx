@@ -6,22 +6,34 @@ import { cn } from "@/lib/utils";
 import { FaGithub, FaLink, FaCode } from "react-icons/fa6";
 import { MyButton } from "./mybutton";
 
+interface Feature {
+  text: string;
+  icon: React.ReactNode;
+}
+
+interface TechStack {
+  name: string;
+  icon: React.ReactNode;
+}
+
+interface ContentItem {
+  title: string;
+  githubUrl?: string;
+  webUrl?: string;
+  description: string;
+  features: Feature[];
+  techStack: TechStack[];
+  content?: React.ReactNode;
+  backgroundImage?: string;
+  githubIcon?: React.ReactNode;
+  webIcon?: React.ReactNode;
+}
+
 export const StickyScroll = ({
   content,
   contentClassName,
 }: {
-  content: {
-    title: string;
-    githubUrl?: string;
-    webUrl?: string;
-    description: string;
-    features: string[];
-    techStack: string[];
-    content?: React.ReactNode;
-    backgroundImage?: string;
-    githubIcon?: React.ReactNode;
-    webIcon?: React.ReactNode;
-  }[];
+  content: ContentItem[];
   contentClassName?: string;
 }) => {
   const [activeCard, setActiveCard] = useState(0);
@@ -32,6 +44,7 @@ export const StickyScroll = ({
   const [isSnapping, setIsSnapping] = useState(false);
   const lastScrollTime = useRef(Date.now());
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Scroll tracking for the entire page
   const { scrollYProgress, scrollY } = useScroll({
@@ -174,6 +187,73 @@ export const StickyScroll = ({
     }
   });
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div className="w-full px-4 py-6 space-y-10">
+        {content.map((item, index) => (
+          <motion.div
+            key={item.title + index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
+            className="bg-white/5 backdrop-blur-lg rounded-xl p-6 shadow-lg"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-800 dark:text-neutral-100">
+                {item.title}
+              </h2>
+              <div className="flex space-x-3">
+                {item.githubUrl && (
+                  <a 
+                    href={item.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:scale-110 transition-transform"
+                  >
+                    {item.githubIcon || <FaGithub className="text-2xl text-gray-800 dark:text-white hover:text-blue-600" />}
+                  </a>
+                )}
+                {item.webUrl && (
+                  <a 
+                    href={item.webUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:scale-110 transition-transform"
+                  >
+                    {item.webIcon || <FaLink className="text-2xl text-gray-800 dark:text-white hover:text-green-600" />}
+                  </a>
+                )}
+              </div>
+            </div>
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 text-justify text-neutral-600 dark:text-neutral-300">
+              {item.description}
+            </p>
+            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-200 mb-2">
+              Features:
+            </h3>
+            <ul className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 space-y-2">
+              {item.features.map((feature: Feature, featureIndex: number) => (
+                <li key={`${item.title}-feature-${featureIndex}-${feature.text}`} className="flex items-center">
+                  {feature.icon}
+                  <span className="ml-2">{feature.text}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={containerRef}
@@ -238,7 +318,7 @@ export const StickyScroll = ({
                         ease: "easeInOut",
                       }}
                       className={cn(
-                        "absolute inset-0 p-6 rounded-2xl transition-all duration-300 overflow-y-auto flex flex-col justify-center items-start",
+                        "absolute inset-0 p-10 rounded-2xl transition-all duration-300 overflow-y-auto flex flex-col justify-center items-start",
                         "bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 shadow-2xl"
                       )}
                       style={{
@@ -249,30 +329,30 @@ export const StickyScroll = ({
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.2, duration: 0.5 }}
-                        className="text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 flex items-center"
+                        className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-800 dark:text-neutral-100 mb-4 flex items-center"
                       >
                         {item.title}
                         <div className="ml-4 flex space-x-3">
-                          {item.githubUrl && (
+                        {item.githubUrl && (
                             <a 
-                              href={item.githubUrl} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
+                            href={item.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                               className="hover:scale-110 transition-transform"
-                            >
+                          >
                               {item.githubIcon || <FaGithub className="text-2xl text-gray-800 dark:text-white hover:text-blue-600" />}
                             </a>
-                          )}
-                          {item.webUrl && (
+                        )}
+                        {item.webUrl && (
                             <a 
-                              href={item.webUrl} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
+                            href={item.webUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                               className="hover:scale-110 transition-transform"
-                            >
+                          >
                               {item.webIcon || <FaLink className="text-2xl text-gray-800 dark:text-white hover:text-green-600" />}
                             </a>
-                          )}
+                        )}
                         </div>
                       </motion.h2>
 
@@ -280,7 +360,7 @@ export const StickyScroll = ({
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3, duration: 0.5 }}
-                        className="text-base mb-4 text-justify text-neutral-600 dark:text-neutral-300"
+                        className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 text-justify text-neutral-600 dark:text-neutral-300"
                       >
                         {item.description}
                       </motion.p>
@@ -289,7 +369,7 @@ export const StickyScroll = ({
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.4, duration: 0.5 }}
-                        className="text-lg mb-2 font-semibold text-neutral-700 dark:text-neutral-200"
+                        className="text-base sm:text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-200 mb-2"
                       >
                         Features:
                       </motion.h3>
@@ -297,11 +377,11 @@ export const StickyScroll = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5, duration: 0.5 }}
-                        className="text-base max-w-sm text-neutral-600 dark:text-neutral-300 mb-4 space-y-2"
+                        className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-300 mb-4 space-y-2"
                       >
-                        {item.features.map((feature, featureIndex) => (
+                        {item.features.map((feature: Feature, featureIndex: number) => (
                           <motion.li
-                            key={feature}
+                            key={`${item.title}-feature-${featureIndex}-${feature.text}`}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{
                               opacity: 1,
@@ -313,30 +393,31 @@ export const StickyScroll = ({
                             }}
                             className="flex items-center"
                           >
-                            <FaCode className="mr-2 text-blue-500" />
-                            {feature}
+                            {feature.icon}
+                            <span className="ml-2">{feature.text}</span>
                           </motion.li>
                         ))}
                       </motion.ul>
 
-                      <div className="flex flex-wrap gap-2 mb-6">
+                      <div className="flex flex-wrap gap-2">
                         {item.techStack.map((tech) => (
                           <motion.div
-                            key={tech}
+                            key={tech.name}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.7, duration: 0.5 }}
                           >
                             <MyButton
-                              text={tech}
-                              className="text-xs px-2 py-1"
+                              text={tech.name}
+                              icon={tech.icon}
+                              className="bg-gradient-to-r from-slate-800 to-slate-900 dark:from-slate-800 dark:to-slate-900 hover:from-slate-700 hover:to-slate-800"
                             />
                           </motion.div>
                         ))}
                       </div>
 
                       <div className="flex justify-end items-center">
-                        <div className="text-sm text-neutral-500">
+                        <div className="text-sm text-neutral-500 py-4">
                           {activeCard + 1} / {content.length}
                         </div>
                       </div>

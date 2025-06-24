@@ -136,9 +136,11 @@ export const TextRevealCard = ({
       onTouchEnd={mouseLeaveHandler}
       onTouchMove={touchMoveHandler}
       className={cn(
-        "lg:rounded-3xl rounded-2xl p-6 md:p-8 relative overflow-hidden flex justify-center items-center w-full cursor-pointer lg:mx-12 mx-6 lg:mt-0 mt-12 h-20 lg:h-40",
+        "rounded-2xl p-4 md:p-6 lg:p-8 relative overflow-hidden flex justify-center items-center w-full cursor-pointer",
+        "mx-4 md:mx-auto max-w-full lg:max-w-[calc(100%-6rem)] xl:max-w-[calc(100%-8rem)]",
+        "my-4 lg:my-6",
         "transition-all duration-300 ease-out",
-        "group hover:scale-[1.02] hover:shadow-2xl",
+        "group hover:scale-[1.01] hover:shadow-2xl",
         "shadow-lg hover:shadow-xl",
         currentVariant.background,
         className
@@ -177,8 +179,8 @@ export const TextRevealCard = ({
           className={`absolute inset-0 bg-gradient-to-br ${currentVariant.overlayGradient} z-10`}
         />
 
-        <div className={`relative z-20 text-center text-md md:text-5xl lg:text-3xl mx-4 md:mx-10 font-bold ${currentVariant.textColor} h-full flex items-center justify-center px-4`}>
-          <div className="max-w-full break-words text-center">
+        <div className={`relative z-20 text-center mx-4 md:mx-10 font-bold ${currentVariant.textColor} h-full flex items-center justify-center px-4`}>
+          <div className="max-w-full break-words text-center text-lg sm:text-xl md:text-3xl lg:text-5xl">
             {revealChars.map(({ char, index, delay }) => (
               <motion.span
                 key={index}

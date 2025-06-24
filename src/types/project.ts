@@ -1,14 +1,21 @@
 import { ReactNode } from 'react';
 
+interface TechStack {
+  name: string;
+  icon: ReactNode;
+}
+
 export interface ProjectItem {
   title: string;
-  githubUrl: string;
-  webUrl: string;
   description: string;
-  features: string[];
-  techStack: string[];
-  imageUrl?: string; // Optional image for the project
-  content?: ReactNode; // Optional content for the project
-  githubIcon?: ReactNode; // Optional custom GitHub icon
-  webIcon?: ReactNode; // Optional custom web icon
+  content: React.ReactNode;
+  features: {
+    text: string;
+    icon: React.ReactNode;
+  }[];
+  techStack: TechStack[];
+  githubUrl?: string;
+  webUrl?: string;
+  githubIcon?: React.ReactNode;
+  webIcon?: React.ReactNode;
 } 
