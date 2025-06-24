@@ -133,7 +133,7 @@ export default function Hero() {
               }}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white"
             >
-              <AnimatedText delay={1}>Backend Developer</AnimatedText>
+              <AnimatedText delay={1}>Fullstack Developer</AnimatedText>
             </motion.h2>
             <motion.h3
               initial={{ opacity: 0, x: -50 }}
@@ -167,8 +167,7 @@ export default function Hero() {
               }}
               className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 p-6 lg:py-6 lg:px-0 text-justify"
             >
-              I&apos;m passionate about building efficient and scalable systems
-              using Golang and PostgreSQL. Outside of tech, I actively trade
+              Professional junior web developer with experience creating and maintaining responsive, user-friendly web applications. Strong focus on team collaboration and delivering results. Skilled in JavaScript, HTML, CSS, React, Node.js, Go and database management. Known for adaptability and reliability in dynamic environments.Outside of tech, I actively trade
               crypto as an intraday trader, combining data-driven strategies
               with modern tools.
             </motion.p>

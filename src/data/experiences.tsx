@@ -122,11 +122,11 @@ export const ExperienceData: ExperienceItem[] = [
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <Image
+          <Image
               src="/images/experience/web_asamedia_2.png"
               alt="Web Design"
-              width={500}
-              height={500}
+            width={500}
+            height={500}
               className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-transform duration-300 hover:scale-[1.02]"
             />
           </motion.div>
@@ -206,13 +206,13 @@ export const ExperienceData: ExperienceItem[] = [
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <Image
+          <Image
               src="/images/experience/efishery.jpg"
               alt="eFishery tech support workspace"
-              width={500}
-              height={500}
+            width={500}
+            height={500}
               className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-            />
+          />
           </motion.div>
         </div>
         <motion.p
@@ -268,4 +268,4 @@ export const ExperienceData: ExperienceItem[] = [
       </div>
     ),
   },
-];
+]; 

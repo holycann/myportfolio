@@ -1,6 +1,6 @@
 export const defaultMeta = {
-  title: 'Muhamad Ramadhan - Backend Developer & Crypto Enthusiast',
-  description: 'Portfolio of Muhamad Ramadhan, showcasing backend development skills and crypto trading expertise.',
+  title: 'Muhamad Ramadhan - Fullstack Developer & Crypto Enthusiast',
+  description: 'Portfolio of Muhamad Ramadhan, showcasing Fullstack development skills and crypto trading expertise.',
   url: 'https://holyycan.com',
   image: '/images/hero.png',
   type: 'website',
@@ -9,7 +9,7 @@ export const defaultMeta = {
   robots: 'index, follow',
   locale: 'en_US',
   author: 'Muhamad Ramadhan',
-  keywords: 'Backend Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind',
+  keywords: 'Fullstack Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind',
   themeColor: '#0A0A0A',
   viewport: 'width=device-width, initial-scale=1',
 };

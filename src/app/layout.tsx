@@ -49,7 +49,7 @@ const structuredData = {
     "https://twitter.com/muhamadramadhan",
     "https://instagram.com/muhamadramadhan"
   ],
-  jobTitle: "Backend Developer & Crypto Enthusiast",
+  jobTitle: "Fullstack Developer & Crypto Enthusiast",
   worksFor: {
     "@type": "Organization",
     name: "Freelance"
@@ -70,7 +70,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0A0A0A" />
         <meta name="author" content="Muhamad Ramadhan" />
-        <meta name="keywords" content="Backend Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind" />
+        <meta name="keywords" content="Fullstack Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind" />
         {meta.map((m, i) => {
           if (m.name) return <meta key={i} name={m.name} content={m.content} />;
           if (m.property) return <meta key={i} property={m.property} content={m.content} />;
