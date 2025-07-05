@@ -12,7 +12,7 @@ import { MyButton } from "../ui/mybutton";
 const techStacks: FeaturedSectionProps[] = [
   {
     title: "Frontend Technologies",
-    description: "Teknologi frontend yang saya kuasai",
+    description: "Frontend technologies I use",
     icon: <IconBrowser />,
     children: (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
@@ -26,7 +26,7 @@ const techStacks: FeaturedSectionProps[] = [
   },
   {
     title: "Backend Technologies",
-    description: "Teknologi backend yang saya kuasai",
+    description: "Backend technologies I use",
     icon: <IconServer2 />,
     children: (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
@@ -38,7 +38,7 @@ const techStacks: FeaturedSectionProps[] = [
   },
   {
     title: "Frameworks",
-    description: "Kerangka kerja yang saya gunakan",
+    description: "Frameworks I use",
     icon: <IconBrandFramer />,
     children: (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
@@ -52,7 +52,7 @@ const techStacks: FeaturedSectionProps[] = [
   },
   {
     title: "Database Systems",
-    description: "Sistem basis data yang saya kuasai",
+    description: "Database systems I use",
     icon: <IconDatabase />,
     children: (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
@@ -65,7 +65,7 @@ const techStacks: FeaturedSectionProps[] = [
   },
   {
     title: "Platforms & CMS",
-    description: "Platform dan Sistem Manajemen Konten",
+    description: "Platforms and Content Management Systems",
     icon: <IconCloud />,
     children: (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
@@ -78,7 +78,7 @@ const techStacks: FeaturedSectionProps[] = [
   },
   {
     title: "Development Tools",
-    description: "Alat pengembangan dan workflow",
+    description: "Development and workflow tools",
     icon: <IconTools />,
     children: (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
