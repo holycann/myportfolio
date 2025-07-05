@@ -189,7 +189,7 @@ export const StickyScroll = ({
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // md breakpoint
+      setIsMobile(window.innerWidth < 1024); // md breakpoint
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -288,7 +288,7 @@ export const StickyScroll = ({
         }}
       >
         <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center space-x-0 md:space-x-10 py-10 px-4 md:px-10"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-center space-x-0 md:space-x-10 py-10 px-4 md:px-10"
           style={{
             height: "100%",
             maxHeight: `${contentHeight}px`,

@@ -1,4 +1,4 @@
-import { AnimatedProjectImage } from "@/components/ui/animated-testimonials";
+import { AnimatedProjectImage } from "@/components/ui/animated-project-image";
 import { ProjectItem } from "@/types/project";
 import { FaGithub, FaExternalLinkAlt, FaCar, FaUserGraduate, FaTasks, FaStore, FaReact, FaNodeJs, FaDatabase, FaChrome } from "react-icons/fa";
 import { IoMdTimer } from "react-icons/io";

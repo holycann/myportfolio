@@ -1,7 +1,7 @@
 // tailwind.config.js
+import colors from 'tailwindcss/colors'
 import fontFamily from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
-import colors from 'tailwindcss/colors'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

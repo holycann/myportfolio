@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { FaDocker, FaGolang, FaPython } from "react-icons/fa6";
 import { BiLogoPostgresql } from "react-icons/bi";
-import { SiVite } from "react-icons/si";
+import { SiFirebase, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
 
 export function FavTechStack() {
   return <Skeleton />;
@@ -67,7 +67,7 @@ const Skeleton = () => {
     <div className="p-8 pb-0 lg:pb-8 overflow-hidden h-full relative flex items-center justify-center">
       <div className="flex flex-row shrink-0 justify-center items-center gap-2">
         <Container className="h-8 w-8 circle-1">
-          <FaPython className="h-4 w-4 " />
+          <SiFirebase className="h-4 w-4 " />
         </Container>
         <Container className="h-12 w-12 circle-2">
           <BiLogoPostgresql className="h-6 w-6 dark:text-white" />
@@ -76,10 +76,10 @@ const Skeleton = () => {
           <FaGolang className="h-8 w-8 dark:text-white" />
         </Container>
         <Container className="h-12 w-12 circle-4">
-          <SiVite className="h-6 w-6 " />
+          <SiNextdotjs className="h-6 w-6 " />
         </Container>
         <Container className="h-8 w-8 circle-5">
-          <FaDocker className="h-4 w-4 " />
+          <SiTailwindcss className="h-4 w-4 " />
         </Container>
       </div>
     </div>

@@ -1,5 +1,5 @@
 export const defaultMeta = {
-  title: 'Muhamad Ramadhan - Fullstack Developer & Crypto Enthusiast',
+  title: 'Muhamad Ramadhan - Fullstack Developer & Automation Engineer',
   description: 'Portfolio of Muhamad Ramadhan, showcasing Fullstack development skills and crypto trading expertise.',
   url: 'https://holyycan.com',
   image: '/images/hero.png',

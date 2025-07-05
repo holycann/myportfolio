@@ -1,36 +1,31 @@
 "use client";
 
-import Hero from "../components/section/Hero";
-import Experience from "../components/section/Experience";
+import Hero from "../components/sections/Hero";
+import Experience from "../components/sections/Experience";
 import { TextRevealCard } from "@/components/ui/text-reveal-card";
-import Project from "../components/section/Project";
-import Contact from "../components/section/Contact";
+import Project from "../components/sections/Project";
+import Contact from "../components/sections/Contact";
+import About from "@/components/sections/About";
+import TechStack from '../components/sections/TechStack';
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
     <div className="pb-4">
-      <section className="mx-auto p-4 lg:h-screen h-auto" id="home">
-        <Hero />
-      </section>
-
-      <div className="flex items-center justify-center">
+      <Hero />
+      <div className="flex items-center justify-center md:py-20">
         <TextRevealCard
           text="Code →"
-          revealText="Tentang logika, kegagalan, pencarian solusi, dan kemenangan kecil yang tak terlihat"
+          revealText="About logic, failure, the pursuit of solutions, and the unseen small victories."
+          className="font-['Cascadia_Code']"
         ></TextRevealCard>
       </div>
-
-      <section className="mx-auto p-4 mb-20 md:mb-40" id="experience">
-        <Experience />
-      </section>
-
-      <section className="mx-auto p-4" id="project">
-        <Project />
-      </section>
-
-      <section className="mx-auto p-4 md:m-20" id="contact">
-        <Contact />
-      </section>
+      <About />
+      <TechStack />
+      <Experience />
+      <Project />
+      <Contact />
+      <Footer />
     </div>
   );
 }
