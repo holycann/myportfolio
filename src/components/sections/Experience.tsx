@@ -6,7 +6,7 @@ export default function Experience() {
   return (
     <div
       id="experience"
-      className="container mx-auto w-full overflow-clip px-8"
+      className="container mx-auto w-full overflow-clip px-8 lg:py-20"
     >
       <div className="flex flex-col gap-2 justify-start">
         <h1 className="text-4xl md:text-6xl leading-none block drop-shadow-[6px_6px_0px_rgba(0,0,0,0.3)] dark:drop-shadow-[6px_6px_0px_rgba(255,255,255,0.2)] font-['Cascadia_Code'] relative">

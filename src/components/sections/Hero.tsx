@@ -10,7 +10,6 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import {
   TypewriterEffect,
-  TypewriterEffectSmooth,
   TypewriterWord,
 } from "../ui/typewriter-effect";
 import Badge from "../ui/badge";
@@ -22,28 +21,38 @@ export default function Hero() {
   };
 
   const handleConnectClick = () => {
-    // Smooth scroll to contact section using Lenis
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      const lenis = new Lenis();
-      lenis.scrollTo(contactSection, {
+    // Use global smoothScrollTo method from Lenis provider
+    if ((window as any).smoothScrollTo) {
+      (window as any).smoothScrollTo('contact', {
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        offset: 100,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      });
+    }
+  };
+
+  const handleScrollToAbout = () => {
+    // Use global smoothScrollTo method from Lenis provider
+    if ((window as any).smoothScrollTo) {
+      (window as any).smoothScrollTo('about', {
+        duration: 1.2,
+        offset: 100,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
       });
     }
   };
 
   const words: TypewriterWord[] = [
     {
-      text: "🚀 Currently Study At",
+      text: "Currently Study At",
       className: "text-sm md:text-2xl",
     },
     {
-      text: "🎓 Widyatama Univesity",
+      text: "Widyatama Univesity",
       className: "text-sm md:text-2xl",
     },
     {
-      text: "💻 Bachelor Of Information System",
+      text: "Bachelor Of Information System",
       className: "text-sm md:text-2xl",
     },
   ];
@@ -99,7 +108,7 @@ export default function Hero() {
 
   return (
     <div
-      id="#"
+      id="hero"
       className="container mx-auto relative flex flex-col justify-center items-center min-h-screen w-full overflow-hidden py-25 lg:py-0"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center">
@@ -392,17 +401,8 @@ export default function Hero() {
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => {
-            const aboutSection = document.getElementById("about");
-            if (aboutSection) {
-              const lenis = new Lenis();
-              lenis.scrollTo(aboutSection, {
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-              });
-            }
-          }}
-          className="cursor-pointer p-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-md border border-cyan-400/30 hover:from-cyan-400/30 hover:to-blue-400/30 hover:border-cyan-300/50 transition-all duration-300 shadow-lg hover:shadow-cyan-500/25"
+          onClick={handleScrollToAbout}
+          className="hidden lg:flex cursor-pointer p-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-md border border-cyan-400/30 hover:from-cyan-400/30 hover:to-blue-400/30 hover:border-cyan-300/50 transition-all duration-300 shadow-lg hover:shadow-cyan-500/25"
         >
           <motion.div
             animate={{

@@ -7,6 +7,8 @@ import { Toaster } from "react-hot-toast";
 import { GlowingStarsBackground } from "../components/ui/glowing-stars";
 import Navbar from "./components/Nav";
 import "./globals.css";
+import { ThemeProvider } from "@/app/providers";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -93,20 +95,28 @@ export default function RootLayout({
         />
       </Head>
       <body className={`${inter.className} dark`}>
-        <LenisProvider>
-          <Navbar />
-          <GlowingStarsBackground />
-          {children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              style: {
-                background: "#333",
-                color: "#fff",
-              },
-            }}
-          />
-        </LenisProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LenisProvider>
+            <Navbar />
+            <GlowingStarsBackground />
+            {children}
+            <ScrollToTop />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: "#333",
+                  color: "#fff",
+                },
+              }}
+            />
+          </LenisProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

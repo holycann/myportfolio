@@ -2,6 +2,7 @@
 import { AboutImages, AnimatedImageAbout } from "./../ui/animated-about-image";
 import { Carousel } from './../ui/carousel';
 import { TypewriterEffectSmooth, TypewriterWord } from '../ui/typewriter-effect';
+import { motion } from 'motion/react';
 
 const images: AboutImages[] = [
   {
@@ -73,12 +74,24 @@ export default function About() {
       </div>
       <AnimatedImageAbout images={images}>
         <div className="space-y-4 px-6 flex flex-col justify-center">
-          <p className="text-lg text-center :text-2xl leading-relaxed font-extrabold font-['Cascadia_Code'] md:text-start md:py-6">
+          <p className="text-lg text-center :text-2xl lg:text-3xl leading-relaxed font-extrabold font-['Cascadia_Code'] md:text-start md:py-6">
             Hi there, I'm{" "}
             <span className="font-bold text-cyan-600 animate-pulse">
               Muhamad Ramadhan
             </span>{" "}
-            <span className="text-2xl">👋</span>
+            <motion.span 
+              className="text-2xl inline-block"
+              animate={{
+                rotate: [0, 15, -15, 0],
+                transition: {
+                  duration: 0.5,
+                  repeat: Infinity,
+                  repeatType: "loop"
+                }
+              }}
+            >
+              👋
+            </motion.span>
             <br />
             <span className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent font-semibold">
               7th semester Information Systems student

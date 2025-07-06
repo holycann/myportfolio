@@ -1,11 +1,12 @@
 "use client";
 import React, { JSX } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { AnimatedTooltip } from "./animated-tooltip";
 
 export const SocialFloatingButton = ({
   socialItems,
+  className = "",
 }: {
   socialItems?: {
     name?: string;
@@ -15,44 +16,39 @@ export const SocialFloatingButton = ({
   className?: string;
 }) => {
   return (
-    <AnimatePresence mode="wait">
-        <>
-          {socialItems?.length ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="fixed bottom-2 right-4 sm:right-8 z-[5000] flex border border-transparent dark:border-white/[0.2] rounded-full dark:bg-black bg-white shadow px-3 py-2 sm:px-4 sm:py-3 items-center space-x-2 sm:space-x-3"
+    <div 
+      className={`fixed bottom-4 left-4 z-[9999] w-auto ${className}`}
+    >
+      {socialItems?.length ? (
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, type: "spring" }}
+          className="flex items-center space-x-3 bg-white/30 dark:bg-black/30 
+          backdrop-blur-md rounded-full p-2 border border-gray-200 dark:border-gray-800 
+          shadow-lg"
+        >
+          {socialItems.map((item, idx) => (
+            <Link 
+              key={idx} 
+              href={item.link} 
+              target="_blank" 
+              aria-label={item.name}
+              className="text-neutral-600 dark:text-neutral-300 
+              hover:text-blue-500 dark:hover:text-blue-400 
+              transition-all duration-300 ease-in-out"
             >
-              <AnimatedTooltip
-                items={socialItems.map((item, idx) => ({
-                  id: idx,
-                  name: item.name || "",
-                  designation: "",
-                  element: (
-                    <Link href={item.link} target="_blank">
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="text-neutral-500 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 text-xs"
-                      >
-                        {item.icon}
-                      </motion.div>
-                    </Link>
-                  ),
-                }))}
-              />
-            </motion.div>
-          ) : null}
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-2 left-4 sm:left-8 z-[5000] flex px-2 py-2 sm:px-4 sm:py-3 items-center space-x-1 sm:space-x-3 text-xs sm:text-sm"
-          >
-          </motion.div>
-        </>
-    </AnimatePresence>
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                className="text-xl"
+              >
+                {item.icon}
+              </motion.div>
+            </Link>
+          ))}
+        </motion.div>
+      ) : null}
+    </div>
   );
 };

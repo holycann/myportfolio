@@ -10,14 +10,15 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    // Create Lenis instance with performance optimizations
+    // Create Lenis instance with enhanced smoothness
     const lenisInstance = new Lenis({
-      duration: 0.6, // Reduced duration for faster scrolling
-      easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t)), // Optimized easing
+      duration: 1.2, // Increased duration for smoother scroll
+      easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t)), // Soft easing
       smoothWheel: true,
+      syncTouch: true, // Smooth scrolling for touch devices
       infinite: false,
-      lerp: 0.1, // Lower lerp for smoother scrolling
-      wheelMultiplier: 0.8, // Reduced multiplier for more controlled scrolling
+      lerp: 0.08, // Even smoother lerp
+      wheelMultiplier: 0.7, // Controlled wheel sensitivity
     });
 
     // Raf for smooth scrolling with performance optimization
@@ -31,20 +32,31 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     // Store instance to prevent multiple initializations
     (window as any).lenisInstance = lenisInstance;
 
-    // Optional: Add global scroll method with performance considerations
-    (window as any).smoothScrollTo = (target: string | number) => {
+    // Enhanced global scroll method with more robust handling
+    (window as any).smoothScrollTo = (target: string | number, options?: { 
+      offset?: number, 
+      duration?: number,
+      easing?: (t: number) => number 
+    }) => {
+      const offset = options?.offset || 80; // Default navbar offset
+      const duration = options?.duration ?? 1.2; // Default duration
+      const easing = options?.easing || ((t) => Math.min(1, 1 - Math.pow(2, -10 * t)));
+
       if (typeof target === 'string') {
         const element = document.getElementById(target);
         if (element) {
-          lenisInstance.scrollTo(element, { 
-            duration: 0.6,
-            easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t))
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - offset;
+
+          lenisInstance.scrollTo(offsetPosition, { 
+            duration,
+            easing
           });
         }
       } else {
         lenisInstance.scrollTo(target, { 
-          duration: 0.6,
-          easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t))
+          duration,
+          easing
         });
       }
     };

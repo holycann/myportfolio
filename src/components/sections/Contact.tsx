@@ -133,22 +133,17 @@ export default function Contact() {
   const socialLinks = [
     { 
       icon: FaLinkedin, 
-      href: 'https://linkedin.com/in/yourusername', 
+      href: 'https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/', 
       label: 'LinkedIn' 
     },
     { 
       icon: FaGithub, 
-      href: 'https://github.com/yourusername', 
+      href: 'https://github.com/holycann', 
       label: 'GitHub' 
     },
     { 
-      icon: FaTwitter, 
-      href: 'https://twitter.com/yourusername', 
-      label: 'Twitter' 
-    },
-    { 
       icon: FaInstagram, 
-      href: 'https://instagram.com/yourusername', 
+      href: 'https://instagram.com/ehhramaa_', 
       label: 'Instagram' 
     },
   ];
@@ -184,7 +179,7 @@ export default function Contact() {
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <FaEnvelope className="text-2xl text-cyan-500" />
-                <span className="text-sm md:text-base">muhamadramadhan@example.com</span>
+                <span className="text-sm md:text-base">muhamad.ramadhan.dev@gmail.com</span>
               </div>
               <div className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-2xl text-cyan-500" />

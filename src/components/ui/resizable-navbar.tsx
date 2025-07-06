@@ -25,6 +25,7 @@ interface NavItemsProps {
   items: {
     name: string;
     link: string;
+    onClick?: (event?: React.MouseEvent<HTMLAnchorElement>) => void;
   }[];
   className?: string;
   onItemClick?: () => void;
@@ -163,7 +164,10 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
       {items.map((item, idx) => (
         <a
           onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
+          onClick={(event) => {
+            item.onClick?.(event);
+            onItemClick?.();
+          }}
           className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
           key={`link-${idx}`}
           href={item.link}
@@ -270,14 +274,23 @@ export const NavbarLogo = ({
   link = "#",
   image,
   title,
+  onClick,
 }: {
   link?: string;
   image: string;
   title: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <a
       href={link}
+      onClick={handleClick}
       className="relative z-20 mr-4 flex items-center space-x-2 py-1 text-sm font-normal text-black"
     >
       <img
