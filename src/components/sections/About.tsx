@@ -74,7 +74,7 @@ export default function About() {
       </div>
       <AnimatedImageAbout images={images}>
         <div className="space-y-4 px-6 flex flex-col justify-center">
-          <p className="text-lg text-center :text-2xl lg:text-3xl leading-relaxed font-extrabold font-['Cascadia_Code'] md:text-start md:py-6">
+          <p className="text-lg text-center :text-2xl lg:text-3xl leading-relaxed font-extrabold font-['Cascadia_Code'] md:text-start md:py-2">
             Hi there, I'm{" "}
             <span className="font-bold text-cyan-600 animate-pulse">
               Muhamad Ramadhan

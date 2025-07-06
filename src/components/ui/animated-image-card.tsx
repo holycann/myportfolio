@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 type ImageProps = {
@@ -11,8 +11,29 @@ type ImageProps = {
   height: number;
 };
 
+// Utility function to generate consistent random rotation
+const getConsistentRandomRotation = (seed: string, maxRotation: number = 5) => {
+  // Simple hash function to generate a consistent "random" number
+  const hashCode = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+  };
+
+  // Use the hash to generate a consistent rotation between -maxRotation and +maxRotation
+  const rotation = (hashCode(seed) % (maxRotation * 2)) - maxRotation;
+  return rotation;
+};
+
 export const AnimatedImageCard = ({ images }: { images: ImageProps[] }) => {
   const [active, setActive] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleActive = useCallback(() => {
     setActive((prev) => (prev + 1) % images.length);
@@ -22,18 +43,48 @@ export const AnimatedImageCard = ({ images }: { images: ImageProps[] }) => {
     return index === active;
   };
 
-  const randomRotate = () => {
-    return Math.floor(Math.random() * 21) - 10;
-  };
+  // Use Intersection Observer to only animate when visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (images.length <= 0) return;
-    const timer = setInterval(handleActive, 5000);
-    return () => clearInterval(timer);
-  }, [handleActive, images.length]);
+    
+    // Only animate when visible
+    if (isVisible) {
+      timerRef.current = setInterval(handleActive, 5000);
+    } else if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [handleActive, images.length, isVisible]);
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-10 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12">
+    <div 
+      className="mx-auto max-w-sm px-4 py-10 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12"
+      ref={containerRef}
+    >
       <div className="relative">
         <div>
           <div className="relative h-120 w-80">
@@ -41,37 +92,35 @@ export const AnimatedImageCard = ({ images }: { images: ImageProps[] }) => {
               {images.map((image, i) => (
                 <motion.div
                   key={image.src}
-                  initial={{
-                    opacity: 0,
+                  initial={{ 
+                    opacity: 0, 
                     scale: 0.9,
-                    z: -100,
-                    rotate: randomRotate(),
+                    rotateY: getConsistentRandomRotation(image.src)
                   }}
                   animate={{
-                    opacity: isActive(i) ? 1 : 0.7,
+                    opacity: isActive(i) ? 1 : 0,
                     scale: isActive(i) ? 1 : 0.95,
-                    z: isActive(i) ? 0 : -100,
-                    rotate: isActive(i) ? 0 : randomRotate(),
-                    zIndex: isActive(i) ? 40 : images.length + 2 - i,
-                    y: isActive(i) ? [0, -80, 0] : 0,
+                    zIndex: isActive(i) ? 40 : 0,
+                    rotateY: isActive(i) ? 0 : getConsistentRandomRotation(image.src)
                   }}
-                  exit={{
-                    opacity: 0,
+                  exit={{ 
+                    opacity: 0, 
                     scale: 0.9,
-                    z: 100,
-                    rotate: randomRotate(),
+                    rotateY: getConsistentRandomRotation(image.src)
                   }}
                   transition={{
                     duration: 0.4,
                     ease: "easeInOut",
                   }}
                   className="absolute inset-0 origin-bottom"
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <Image
                     src={image.src}
                     alt={image.alt}
                     width={image.width || 800}
                     height={image.height || 600}
+                    loading={i === 0 ? "eager" : "lazy"}
                     draggable={false}
                     className="h-full w-full rounded-3xl object-cover object-center"
                   />

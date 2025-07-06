@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 
 export type AboutImages = {
   url: string;
@@ -19,6 +19,9 @@ export const AnimatedImageAbout = ({
   children?: React.ReactNode;
 }) => {
   const [active, setActive] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleNext = () => {
     setActive((prev) => (prev + 1) % images.length);
@@ -29,17 +32,54 @@ export const AnimatedImageAbout = ({
   };
 
   useEffect(() => {
-    if (autoplay) {
-      const interval = setInterval(handleNext, 5000);
-      return () => clearInterval(interval);
-    }
-  }, [autoplay]);
+    // Use Intersection Observer to only animate when visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
 
-  const randomRotateY = () => {
-    return Math.floor(Math.random() * 21) - 10;
-  };
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    // Only start autoplay when component is visible
+    if (autoplay && isVisible) {
+      intervalRef.current = setInterval(handleNext, 5000);
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    }
+    
+    // Clear interval when not visible
+    if (!isVisible && intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [autoplay, isVisible]);
+
+  // Simplified animation - removed complex transforms
   return (
-    <div className="mx-auto max-w-sm px-4 pt-10 md:pt-30 font-sans antialiased md:max-w-7xl">
+    <div 
+      className="mx-auto max-w-sm px-4 pt-10 md:pt-30 font-sans antialiased md:max-w-7xl"
+      ref={containerRef}
+    >
       <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
         <div>
           <div className="relative h-96 md:h-[36rem] w-full">
@@ -50,34 +90,29 @@ export const AnimatedImageAbout = ({
                   initial={{
                     opacity: 0,
                     scale: 0.9,
-                    z: -100,
-                    rotate: randomRotateY(),
                   }}
                   animate={{
-                    opacity: isActive(index) ? 1 : 0.7,
+                    opacity: isActive(index) ? 1 : 0,
                     scale: isActive(index) ? 1 : 0.95,
-                    z: isActive(index) ? 0 : -100,
-                    rotate: isActive(index) ? 0 : randomRotateY(),
-                    zIndex: isActive(index) ? 40 : images.length + 2 - index,
-                    y: isActive(index) ? [0, -80, 0] : 0,
+                    zIndex: isActive(index) ? 40 : 0,
                   }}
                   exit={{
                     opacity: 0,
                     scale: 0.9,
-                    z: 100,
-                    rotate: randomRotateY(),
                   }}
                   transition={{
                     duration: 0.4,
                     ease: "easeInOut",
                   }}
                   className="absolute inset-0 origin-bottom"
+                  style={{ willChange: 'transform, opacity' }}
                 >
-                  <img
+                  <Image
                     src={image.url}
                     alt={image.alt}
                     width={500}
                     height={500}
+                    loading={index === 0 ? "eager" : "lazy"}
                     draggable={false}
                     className="h-full w-full rounded-3xl object-cover object-center"
                   />

@@ -1,50 +1,29 @@
-import { LenisProvider } from "@/providers/LenisProvider";
-import { defaultMeta, generateJsonLd, generateSeoMeta } from "@/lib/seo";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import { GlowingStarsBackground } from "../components/ui/glowing-stars";
 import Navbar from "./components/Nav";
-import "./globals.css";
-import { ThemeProvider } from "@/app/providers";
+import { getSEO, generateJsonLd, defaultMeta } from "@/lib/seo";
+import { Providers, ThemeProvider } from "./providers";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { LenisProvider } from "@/providers/LenisProvider";
+import { LoadingProvider } from "@/providers/LoadingProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+});
 
-export const metadata: Metadata = {
-  title: defaultMeta.title,
-  description: defaultMeta.description,
-  icons: {
-    icon: '/favicon.png',
-  },
-  openGraph: {
-    title: defaultMeta.title,
-    description: defaultMeta.description,
-    url: defaultMeta.url,
-    images: [
-      {
-        url: defaultMeta.image,
-        width: 1200,
-        height: 630,
-        alt: defaultMeta.title,
-      },
-    ],
-    siteName: defaultMeta.siteName,
-    type: "website",
-    locale: defaultMeta.locale,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: defaultMeta.title,
-    description: defaultMeta.description,
-    site: defaultMeta.twitterHandle,
-    creator: defaultMeta.twitterHandle,
-    images: [defaultMeta.image],
-  },
-  robots: defaultMeta.robots,
-  metadataBase: new URL(defaultMeta.url),
-};
+export const metadata: Metadata = getSEO({
+  title: "My Portfolio",
+  description: "My personal portfolio website",
+  keywords: ["portfolio", "developer", "web", "frontend", "backend"],
+  url: process.env.NEXT_PUBLIC_URL || "https://myportfolio.com",
+  themeColor: "#000000",
+});
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -53,7 +32,7 @@ const structuredData = {
   url: defaultMeta.url,
   image: defaultMeta.image,
   sameAs: [
-    "https://twitter.com/muhamadramadhan",
+    "https://twitter.com/ehhramaa_",
     "https://instagram.com/ehhramaa_",
   ],
   jobTitle: "Fullstack Developer & Automation Engineer",
@@ -66,27 +45,19 @@ const structuredData = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const { meta } = generateSeoMeta({});
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0A0A0A" />
         <meta name="author" content="Muhamad Ramadhan" />
         <meta
           name="keywords"
           content="Fullstack Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind"
         />
-        {meta.map((m, i) => {
-          if (m.name) return <meta key={i} name={m.name} content={m.content} />;
-          if (m.property)
-            return <meta key={i} property={m.property} content={m.content} />;
-          return null;
-        })}
         {/* Canonical link */}
         <link rel="canonical" href={defaultMeta.url} />
         <script
@@ -95,28 +66,33 @@ export default function RootLayout({
         />
       </Head>
       <body className={`${inter.className} dark`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <LenisProvider>
-            <Navbar />
-            <GlowingStarsBackground />
-            {children}
-            <ScrollToTop />
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                style: {
-                  background: "#333",
-                  color: "#fff",
-                },
-              }}
-            />
-          </LenisProvider>
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <LenisProvider>
+              <LoadingProvider>
+                <Navbar />
+                <GlowingStarsBackground />
+                {children}
+                <ScrollToTop />
+                <Toaster
+                  position="top-right"
+                  toastOptions={{
+                    duration: 3000,
+                    style: {
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  }}
+                />
+              </LoadingProvider>
+            </LenisProvider>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

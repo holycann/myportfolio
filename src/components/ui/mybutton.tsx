@@ -50,9 +50,9 @@ export const MyButton = ({
       className={`relative inline-flex overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 transition-transform duration-300 hover:scale-105 ${className || ''} ${buttonClassName || ''}`}
     >
       <span className={`absolute inset-[-1000%] animate-[spin_2s_linear_infinite] ${colorGradients[color]} ${gradientClassName || ''}`} />
-      <span className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full ${backgroundColors[color]} px-4 py-1 backdrop-blur-3xl space-x-2 transition-all duration-300 hover:bg-opacity-90 group ${backgroundClassName || ''}`}>
-        <span className={`text-xs font-medium text-white transition-all duration-300 group-hover:translate-x-0.5 ${textClassName || ''}`}>{text}</span>
-        {icon && <span className={`text-base sm:text-lg md:text-xl lg:text-2xl text-white transition-all duration-300 group-hover:translate-x-0.5 group-hover:scale-110 ${iconClassName || ''}`}>{icon}</span>}
+      <span className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full ${backgroundColors[color]} px-3 py-1 sm:px-4 sm:py-1.5 backdrop-blur-3xl space-x-2 transition-all duration-300 hover:bg-opacity-90 group ${backgroundClassName || ''}`}>
+        <span className={`text-[10px] sm:text-xs font-medium text-white transition-all duration-300 group-hover:translate-x-0.5 ${textClassName || ''}`}>{text}</span>
+        {icon && <span className={`text-base sm:text-lg md:text-xl text-white transition-all duration-300 group-hover:translate-x-0.5 group-hover:scale-110 ${iconClassName || ''}`}>{icon}</span>}
       </span>
     </button>
   );

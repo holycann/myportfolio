@@ -42,6 +42,10 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
+    name: "Home",
+    link: "#hero",
+  },
+  {
     name: "About",
     link: "#about",
   },

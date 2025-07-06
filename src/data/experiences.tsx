@@ -22,11 +22,16 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="mb-4 text-xs md:text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
         >
-          Used Javascript, SQL and HTML to develop app-solutions. Increased
-          website performance by optimizing front-end and back-end code for
-          faster loading times. Applied responsive design principles to ensure
-          consistent display and functionality across a wide range of devices,
-          including mobile phones, tablets, and desktop computers.
+          As a freelance Full Stack Developer, I worked on several client and
+          internal projects ranging from landing pages, dashboards,
+          service-based systems, and mobile apps. I used technologies like HTML,
+          CSS, JavaScript, Laravel, WordPress, and React Native Expo. I built
+          both SQL (MariaDB) and NoSQL (Firebase/Firestore) integrations
+          depending on use case. I implemented component-based frontend
+          structures, and backend with separation of concerns and clean
+          architecture, often applying SOLID and DRY principles to ensure
+          maintainability. I also hosted bots and apps on AWS and explored
+          Docker for Golang deployment.
         </motion.p>
         <motion.ul
           initial={{ opacity: 0 }}
@@ -36,12 +41,13 @@ export const ExperienceData: ExperienceItem[] = [
           className="list-none ml-4 text-xs md:text-sm mb-4 space-y-2"
         >
           {[
-            "Created easy-to-use APIs for third-party integrations, enhancing the functionality of existing applications without compromising on performance or security.",
-            "Developed user-friendly web forms with validation and error handling.",
+            "Delivered multiple small to mid scale freelance projects with working results.",
+            "Designed and deployed a media storage solution using Cloudinary for client projects.",
+            "Developed user friendly web forms with validation and error handling.",
             "Developed functional databases, applications and servers to support websites on back-end.",
-            "Worked with back-end developers to design APIs.",
-            "Used NodeJS, ORM and SQL/No-SQL to develop and manage databases.",
-            "Reviewed code, debugged problems, and corrected issues.",
+            "Used SQL and NoSQL in different use cases to support client requirements.",
+            "Initiated component based architecture on frontend and modular structure on backend (Node Js, Laravel & Golang).",
+            "Collaborated with clients remotely via iterative feedback cycles, improving delivery accuracy and timeline.",
           ].map((feature, index) => (
             <motion.li
               key={index}
@@ -63,122 +69,26 @@ export const ExperienceData: ExperienceItem[] = [
           className="flex flex-wrap gap-2"
         >
           {[
-            "JavaScript",
-            "SQL",
             "HTML",
-            "NodeJS",
-            "API",
+            "CSS",
+            "JavaScript",
+            "Tailwind CSS",
+            "Wordpress",
+            "React Native (Expo)",
             "Responsive Design",
+            "Laravel",
+            "MariaDB",
+            "Firebase Auth",
+            "Firestore",
+            "Git",
+            "Github",
           ].map((tech) => {
-            return (
-              <MyButton
-                key={tech}
-                text={tech}
-              />
-            );
+            return <MyButton key={tech} text={tech} />;
           })}
         </motion.div>
       </div>
     ),
   },
-  // {
-  //   role: "WordPress Designer",
-  //   company: "PT Asamedia",
-  //   logo: "/images/company/asamedia.png",
-  //   jobType: "Remote",
-  //   start: "Dec 2024",
-  //   end: "Dec 2024",
-  //   location: "Remote",
-  //   arragement: "Remote",
-  //   content: (
-  //     <div>
-  //       <div className="grid grid-cols-2 gap-4 mb-4">
-  //         <motion.div
-  //           initial={{ opacity: 0, scale: 0.9 }}
-  //           whileInView={{ opacity: 1, scale: 1 }}
-  //           transition={{ duration: 0.5 }}
-  //           viewport={{ once: true }}
-  //         >
-  //           <Image
-  //             src="/images/experience/web_asamedia.png"
-  //             alt="WordPress Designer"
-  //             width={500}
-  //             height={500}
-  //             className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-  //           />
-  //         </motion.div>
-  //         <motion.div
-  //           initial={{ opacity: 0, scale: 0.9 }}
-  //           whileInView={{ opacity: 1, scale: 1 }}
-  //           transition={{ duration: 0.5, delay: 0.2 }}
-  //           viewport={{ once: true }}
-  //         >
-  //         <Image
-  //             src="/images/experience/web_asamedia_2.png"
-  //             alt="Web Design"
-  //           width={500}
-  //           height={500}
-  //             className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-  //           />
-  //         </motion.div>
-  //       </div>
-  //       <motion.p
-  //         initial={{ opacity: 0, y: 20 }}
-  //         whileInView={{ opacity: 1, y: 0 }}
-  //         transition={{ duration: 0.5, delay: 0.4 }}
-  //         viewport={{ once: true }}
-  //         className="mb-4 text-xs md:text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
-  //       >
-  //         Developed user-friendly web forms with validation and error handling.
-  //         Proved successful working within tight deadlines and a fast-paced
-  //         environment. Optimized web applications for speed, scalability and
-  //         security.
-  //       </motion.p>
-  //       <motion.ul
-  //         initial={{ opacity: 0 }}
-  //         whileInView={{ opacity: 1 }}
-  //         transition={{ duration: 0.5, delay: 0.6 }}
-  //         viewport={{ once: true }}
-  //         className="list-none ml-4 text-xs md:text-sm mb-4 space-y-2"
-  //       >
-  //         {[
-  //           "Collected, defined and translated user requirements into project designs and implementation plans.",
-  //           "Provided front-end website development using WordPress, Hubspot, and other editing software.",
-  //           "Adhered to SEO best practices while designing sites.",
-  //           "Implemented custom post types and taxonomies to organize content effectively on various WordPress websites.",
-  //         ].map((feature, index) => (
-  //           <motion.li
-  //             key={index}
-  //             initial={{ opacity: 0, x: -20 }}
-  //             whileInView={{ opacity: 1, x: 0 }}
-  //             transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-  //             viewport={{ once: true }}
-  //             className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-purple-500"
-  //           >
-  //             {feature}
-  //           </motion.li>
-  //         ))}
-  //       </motion.ul>
-  //       <motion.div
-  //         initial={{ opacity: 0 }}
-  //         whileInView={{ opacity: 1 }}
-  //         transition={{ duration: 0.5, delay: 0.8 }}
-  //         viewport={{ once: true }}
-  //         className="flex flex-wrap gap-2"
-  //       >
-  //         {["WordPress", "Web Design", "SEO", "Front-end", "Hubspot"].map(
-  //           (tech) => (
-  //             <MyButton
-  //               key={tech}
-  //               text={tech}
-  //               className="text-xs px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
-  //             />
-  //           )
-  //         )}
-  //       </motion.div>
-  //     </div>
-  //   ),
-  // },
   {
     role: "Technical Support Intern",
     company: "eFishery",
@@ -197,13 +107,13 @@ export const ExperienceData: ExperienceItem[] = [
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-          <Image
+            <Image
               src="/images/experience/efishery.jpg"
               alt="eFishery tech support workspace"
-            width={500}
-            height={500}
+              width={500}
+              height={500}
               className="w-full rounded-lg object-cover shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-transform duration-300 hover:scale-[1.02]"
-          />
+            />
           </motion.div>
         </div>
         <motion.p
@@ -213,11 +123,14 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="mb-4 text-xs md:text-sm font-normal text-neutral-700 dark:text-neutral-300 text-justify"
         >
-          Generated reports to track performance and analyze trends. Tested new
-          software and hardware prior to deployment. Researched and identified
-          solutions to technical problems. Collaborated with cross-functional
-          teams to identify, analyze, and resolve software defects, improving
-          overall product quality.
+          At eFishery, I served as the first level tech support for both system
+          and operational field issues, providing initial handling based on
+          documentation or self analysis before escalating to the engineering
+          team. I managed defect tracking and reporting using ClickUp, conducted
+          monthly analyses, measured SLA performance, and collaborated with the
+          team to identify recurring issues. I also contributed to black box
+          testing and developed a WhatsApp automation bot that improved the
+          consistency and timeliness of issue reporting by field teams.
         </motion.p>
         <motion.ul
           initial={{ opacity: 0 }}
@@ -226,20 +139,24 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="list-none ml-4 text-xs md:text-sm mb-4 space-y-2"
         >
-          {["Build Whatsapp Bot Reminder", "Build SLA Scrapper Slack Bot"].map(
-            (feature, index) => (
-              <motion.li
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-green-500"
-              >
-                {feature}
-              </motion.li>
-            )
-          )}
+          {[
+            "Handled 100+ bug reports with a 60% - 70% resolution rate at the first level.",
+            "Reduced average escalation time by 40% through accurate initial analysis.",
+            "Built a WhatsApp bot reminder using Node.js and AWS to remind field teams to submit daily reports.",
+            "Helped increase reporting compliance in field operations by an estimated 30–40% after bot implementation.",
+            "Contributed to improving the defect handling process through better documentation and automation.",
+          ].map((feature, index) => (
+            <motion.li
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-green-500"
+            >
+              {feature}
+            </motion.li>
+          ))}
         </motion.ul>
         <motion.div
           initial={{ opacity: 0 }}
@@ -248,14 +165,20 @@ export const ExperienceData: ExperienceItem[] = [
           viewport={{ once: true }}
           className="flex flex-wrap gap-2"
         >
-          {["Technical Support", "Reporting", "Bot Development"].map((tech) => (
-            <MyButton
-              key={tech}
-              text={tech}
-            />
+          {[
+            "ClickUp",
+            "Google Sheets",
+            "Google Cloud Console",
+            "Node.js",
+            "JavaScript",
+            "Black Box Testing",
+            "Postman",
+            "AWS",
+          ].map((tech) => (
+            <MyButton key={tech} text={tech} />
           ))}
         </motion.div>
       </div>
     ),
   },
-]; 
+];

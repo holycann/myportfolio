@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ReactElement } from "react";
+import React, { useState, ReactElement, useCallback } from "react";
 import {
   motion,
   useTransform,
@@ -8,6 +8,18 @@ import {
   useMotionValue,
   useSpring,
 } from "motion/react";
+
+// Throttle function to limit execution frequency
+const throttle = (func: Function, limit: number) => {
+  let inThrottle: boolean;
+  return function(this: any, ...args: any[]) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+};
 
 export const AnimatedTooltip = ({
   items,
@@ -23,22 +35,25 @@ export const AnimatedTooltip = ({
   const springConfig = { stiffness: 100, damping: 5 };
   const x = useMotionValue(0);
 
+  // Use lighter spring animation
   const rotate = useSpring(
-    useTransform(x, [-100, 100], [-45, 45]),
+    useTransform(x, [-100, 100], [-20, 20]), // Reduced rotation range
     springConfig
   );
   const translateX = useSpring(
-    useTransform(x, [-100, 100], [-50, 50]),
+    useTransform(x, [-100, 100], [-25, 25]), // Reduced translation range
     springConfig
   );
 
-  const handleMouseMove = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    const target = event.currentTarget;
-    const halfWidth = target.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
-  };
+  // Throttled mouse move handler
+  const handleMouseMove = useCallback(
+    throttle((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const target = event.currentTarget;
+      const halfWidth = target.offsetWidth / 2;
+      x.set(event.nativeEvent.offsetX - halfWidth);
+    }, 16), // ~60fps
+    [x]
+  );
 
   return (
     <>
@@ -69,6 +84,7 @@ export const AnimatedTooltip = ({
                   translateX,
                   rotate,
                   whiteSpace: "nowrap",
+                  willChange: "transform, opacity",
                 }}
                 className="absolute -top-16 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center justify-center rounded-md bg-black px-4 py-2 text-xs shadow-xl"
               >
@@ -80,7 +96,10 @@ export const AnimatedTooltip = ({
             )}
           </AnimatePresence>
 
-          <div className="transition group-hover:scale-105 group-hover:z-30">
+          <div 
+            className="transition group-hover:scale-105 group-hover:z-30"
+            style={{ willChange: hoveredIndex === item.id ? "transform" : "auto" }}
+          >
             {item.element}
           </div>
         </div>

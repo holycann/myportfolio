@@ -232,6 +232,12 @@ export default function Hero() {
                     placeholder="blur"
                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAIQAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANv/bAEMAFA4PEg8NFBIQEhcVFBgeMiEeHBwZIS0iJjFHLDRCRy9LUUxbRkdCN0FMWU5QX1VXbWVvZDRAYmJiZWJlf//bAEMBFRcXHhoeNyEhNWxsZGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbP/AABEIAAUACgMBIgACEQEDEQH/xAAVAAEBAAAAAAAAAAAAAAAAAAAABf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AlgAH/9k="
                     className="h-96 object-contain object-center"
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    quality={85}
+                    loading="eager"
+                    style={{
+                      willChange: 'transform',
+                    }}
                   />
                 </div>
               </div>
@@ -306,7 +312,7 @@ export default function Hero() {
               Dedicated to building systems that are efficient, maintainable,
               and scalable through smart, automated solutions.
             </motion.p>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{
                 opacity: 1,
@@ -327,7 +333,7 @@ export default function Hero() {
                 cursorClassName="lg:h-6 bg-cyan-600"
                 className="font-['Cascadia_Code']"
               />
-            </motion.p>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{

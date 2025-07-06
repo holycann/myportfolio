@@ -1,75 +1,123 @@
+import type { Metadata } from "next";
+
+// Default metadata for the site
 export const defaultMeta = {
-  title: 'Muhamad Ramadhan - Fullstack Developer & Automation Engineer',
-  description: 'Portfolio of Muhamad Ramadhan, showcasing Fullstack development skills and crypto trading expertise.',
-  url: 'https://holyycan.com',
-  image: '/images/hero.png',
-  type: 'website',
-  siteName: 'Muhamad Ramadhan Portfolio',
-  twitterHandle: '@muhamadramadhan',
-  robots: 'index, follow',
-  locale: 'en_US',
-  author: 'Muhamad Ramadhan',
-  keywords: 'Fullstack Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind',
-  themeColor: '#0A0A0A',
-  viewport: 'width=device-width, initial-scale=1',
+  title: "My Portfolio",
+  description: "Personal portfolio website showcasing my work and skills",
+  keywords: ["portfolio", "developer", "web", "frontend", "backend"],
+  url: process.env.NEXT_PUBLIC_URL || "https://myportfolio.com",
+  image: "/images/og-image.jpg",
+  twitterHandle: "@username",
+  author: "Your Name",
 };
 
-export function generateSeoMeta({
-  title = defaultMeta.title,
-  description = defaultMeta.description,
-  url = defaultMeta.url,
-  image = defaultMeta.image,
-  type = defaultMeta.type,
-  siteName = defaultMeta.siteName,
-  twitterHandle = defaultMeta.twitterHandle,
-  robots = defaultMeta.robots,
-  locale = defaultMeta.locale,
-  author = defaultMeta.author,
-  keywords = defaultMeta.keywords,
-  themeColor = defaultMeta.themeColor,
-  viewport = defaultMeta.viewport,
-  canonical,
-  publishedTime,
-  modifiedTime,
-  structuredData,
-}: Partial<typeof defaultMeta> & {
-  canonical?: string;
-  publishedTime?: string;
-  modifiedTime?: string;
-  structuredData?: object;
-} = {}) {
-  const meta = [
-    { name: 'description', content: description },
-    { name: 'robots', content: robots },
-    { name: 'author', content: author },
-    { name: 'keywords', content: keywords },
-    { name: 'theme-color', content: themeColor },
-    { name: 'viewport', content: viewport },
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
-    { property: 'og:type', content: type },
-    { property: 'og:url', content: url },
-    { property: 'og:image', content: image },
-    { property: 'og:site_name', content: siteName },
-    { property: 'og:locale', content: locale },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description },
-    { name: 'twitter:image', content: image },
-    { name: 'twitter:site', content: twitterHandle },
-    { name: 'twitter:creator', content: twitterHandle },
-  ];
-  if (publishedTime) {
-    meta.push({ property: 'article:published_time', content: publishedTime });
-  }
-  if (modifiedTime) {
-    meta.push({ property: 'article:modified_time', content: modifiedTime });
-  }
-  return { meta, structuredData };
+// Define OpenGraph type locally
+type OpenGraphType = "website" | "article" | "profile";
+
+// Interface for SEO parameters
+interface SeoParams {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  url?: string;
+  type?: OpenGraphType; // Restricted to valid OG types
+  author?: string;
+  themeColor?: string;
 }
 
-export function generateJsonLd(structuredData: object) {
+/**
+ * Generate metadata for Next.js pages
+ */
+export function getSEO({
+  title = defaultMeta.title,
+  description = defaultMeta.description,
+  keywords = defaultMeta.keywords,
+  image = defaultMeta.image,
+  url = defaultMeta.url,
+  type = "website" as OpenGraphType,
+  author = defaultMeta.author,
+  themeColor = "#000000",
+}: SeoParams = {}): Metadata {
+  // Construct full title
+  const fullTitle = title === defaultMeta.title ? title : `${title} | ${defaultMeta.title}`;
+  
+  // Ensure absolute URL for image
+  const absoluteImageUrl = image.startsWith("http") ? image : `${url}${image}`;
+
   return {
-    __html: JSON.stringify(structuredData),
+    title: fullTitle,
+    description,
+    keywords,
+    authors: [{ name: author }],
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 5,
+    },
+    robots: "index, follow",
+    themeColor,
+    openGraph: {
+      type,
+      locale: "en_US",
+      url,
+      title: fullTitle,
+      description,
+      siteName: defaultMeta.title,
+      images: [
+        {
+          url: absoluteImageUrl,
+          width: 1200,
+          height: 630,
+          alt: fullTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: defaultMeta.twitterHandle,
+      creator: defaultMeta.twitterHandle,
+      title: fullTitle,
+      description,
+      images: [absoluteImageUrl],
+    },
+  };
+}
+
+/**
+ * Generate SEO meta tags for older Next.js versions or custom head elements
+ */
+export function generateSeoMeta({ 
+  title = defaultMeta.title,
+  description = defaultMeta.description,
+  image = defaultMeta.image,
+  url = defaultMeta.url,
+}: SeoParams = {}) {
+  const fullTitle = title === defaultMeta.title ? title : `${title} | ${defaultMeta.title}`;
+  const absoluteImageUrl = image.startsWith("http") ? image : `${url}${image}`;
+  
+  return {
+    title: fullTitle,
+    meta: [
+      { name: "description", content: description },
+      { property: "og:title", content: fullTitle },
+      { property: "og:description", content: description },
+      { property: "og:image", content: absoluteImageUrl },
+      { property: "og:url", content: url },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: fullTitle },
+      { name: "twitter:description", content: description },
+      { name: "twitter:image", content: absoluteImageUrl },
+    ],
+  };
+}
+
+/**
+ * Generate JSON-LD structured data
+ */
+export function generateJsonLd(data: any) {
+  return {
+    __html: JSON.stringify(data),
   };
 } 

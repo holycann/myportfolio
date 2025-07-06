@@ -151,7 +151,7 @@ export default function Contact() {
   return (
     <div
       id="contact"
-      className="lg:min-h-screen lg:mx-10 rounded-2xl flex items-center justify-center bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] text-white py-10 lg:py-20 px-4 lg:px-0"
+      className="lg:min-h-screen lg:mx-10 rounded-2xl flex items-center justify-center bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-[#0A0A0A] text-white py-10 lg:py-20 px-4 lg:px-10"
     >
       <Toaster
         position="top-right"

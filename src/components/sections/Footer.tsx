@@ -35,10 +35,10 @@ const Footer: React.FC = () => {
             <SiVercel className="inline-block mx-1" title="Hosted on Vercel" />
             <span>Hosted on Vercel</span>
           </p>
-          <div className="flex items-center space-x-1">
+          <div className="flex lg:hidden items-center space-x-1">
             <span>Made with</span>
-            <span className="text-red-500 animate-bounce">❤️</span>
           </div>
+          <span className="text-red-500 animate-bounce">❤️</span>
         </div>
         <div className="text-center text-sm text-gray-400 flex flex-col items-center space-y-2">
           <div className="w-screen h-0.5 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-30 absolute left-0"></div>
