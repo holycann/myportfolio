@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import { TextGenerateEffect } from "./text-generate-effect";
+import { createPlaceHolder } from "@/lib/utils";
 
 export interface TimelineEntry {
   role: string;
@@ -50,7 +51,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs md:w-8 lg:max-w-sm lg:w-full">
               <div className="h-10 relative left-3 md:left-4 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
                 <Image
-                  src={item.logo}
+                  src={item.logo === "" ? createPlaceHolder(item.company || "Default Image") : item.logo}
                   alt={item.company}
                   width={56}
                   height={28}

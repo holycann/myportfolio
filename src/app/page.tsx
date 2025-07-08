@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from "react";
 
 // Import Hero component with proper error boundary
-import Hero from "@/components/sections/Hero";
+import Hero from "@/app/(hero)/Hero";
 import { useLoading } from "@/providers/LoadingProvider";
 
 // Create a simple loading component
@@ -18,32 +18,32 @@ const LoadingSection = ({ text }: { text: string }) => (
 );
 
 // Lazy load sections below the fold
-const About = dynamic(() => import("@/components/sections/About"), {
+const About = dynamic(() => import("@/app/(about)/About"), {
   loading: () => <LoadingSection text="Loading About..." />,
   ssr: true,
 });
 
-const TechStack = dynamic(() => import("@/components/sections/TechStack"), {
+const TechStack = dynamic(() => import("@/app/(tech-stack)/TechStack"), {
   loading: () => <LoadingSection text="Loading Tech Stack..." />,
   ssr: true,
 });
 
-const Experience = dynamic(() => import("@/components/sections/Experience"), {
+const Experience = dynamic(() => import("@/app/(experience)/Experience"), {
   loading: () => <LoadingSection text="Loading Experience..." />,
   ssr: false, // Complex animations, load client-side only
 });
 
-const Project = dynamic(() => import("@/components/sections/Project"), {
+const Project = dynamic(() => import("@/app/(projects)/Projects"), {
   loading: () => <LoadingSection text="Loading Projects..." />,
   ssr: false, // Complex animations, load client-side only
 });
 
-const Contact = dynamic(() => import("@/components/sections/Contact"), {
+const Contact = dynamic(() => import("@/app/(contacts)/Contact"), {
   loading: () => <LoadingSection text="Loading Contact..." />,
   ssr: true,
 });
 
-const Footer = dynamic(() => import("@/components/sections/Footer"), {
+const Footer = dynamic(() => import("@/app/components/Footer"), {
   loading: () => <div className="h-40 flex items-center justify-center">Loading Footer...</div>,
   ssr: true,
 });

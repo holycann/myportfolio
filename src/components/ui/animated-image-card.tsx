@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { createPlaceHolder } from "@/lib/utils";
 
 type ImageProps = {
   src: string;
@@ -116,7 +117,7 @@ export const AnimatedImageCard = ({ images }: { images: ImageProps[] }) => {
                   style={{ willChange: 'transform, opacity' }}
                 >
                   <Image
-                    src={image.src}
+                    src={image.src === "" ? createPlaceHolder(image.alt || "Default Image") : image.src}
                     alt={image.alt}
                     width={image.width || 800}
                     height={image.height || 600}

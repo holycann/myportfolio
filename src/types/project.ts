@@ -1,21 +1,49 @@
 import { ReactNode } from 'react';
 
-interface TechStack {
+export type DevelopmentStatus = 
+  | 'Alpha' 
+  | 'Beta' 
+  | 'MVP' 
+  | 'Scaling' 
+  | 'Completed';
+
+export type ProgressStatus = 
+  | 'In Progress' 
+  | 'In Revision' 
+  | 'On Hold' 
+  | 'Delivered' 
+  | 'Completed';
+
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  device: 'browser' | 'phone' | 'window';
+  deviceColor: string;
+}
+
+export interface ProjectTechStack {
   name: string;
+  icon: ReactNode;
+}
+
+export interface ProjectFeature {
+  text: string;
   icon: ReactNode;
 }
 
 export interface ProjectItem {
   title: string;
+  subtitle: string;
   description: string;
-  content: React.ReactNode;
-  features: {
-    text: string;
-    icon: React.ReactNode;
-  }[];
-  techStack: TechStack[];
+  category: string;
   githubUrl?: string;
   webUrl?: string;
-  githubIcon?: React.ReactNode;
-  webIcon?: React.ReactNode;
-} 
+  githubIcon?: ReactNode;
+  webIcon?: ReactNode;
+  images: ProjectImage[];
+  techStack: ProjectTechStack[];
+  features: ProjectFeature[];
+  developmentStatus: DevelopmentStatus;
+  progressStatus: ProgressStatus;
+  progressPercentage: number; // New field for progress percentage
+}

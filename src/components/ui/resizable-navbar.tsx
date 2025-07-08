@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, createPlaceHolder } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import {
   AnimatePresence,
@@ -294,7 +294,7 @@ export const NavbarLogo = ({
       className="relative z-20 mr-4 flex items-center space-x-2 py-1 text-sm font-normal text-black"
     >
       <img
-        src={image}
+        src={image === "" ? createPlaceHolder(title || "Default Image") : image}
         alt="logo"
         width={36}
         height={36}

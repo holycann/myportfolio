@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio Website
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This is a modern, responsive personal portfolio website built with Next.js, TypeScript, and Tailwind CSS. The project showcases my professional projects, skills, and experiences with a focus on clean design and smooth animations.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tech Stack
+
+- **Framework**: Next.js 14
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animation**: Framer Motion
+- **Deployment**: Vercel
+
+## Project Structure
+
+```
+myportfolio/
+├── public/
+│   ├── images/
+│   │   ├── projects/     # Project screenshots
+│   │   └── tech/         # Technology icons
+├── src/
+│   ├── app/              # Next.js app router
+│   ├── components/       # Reusable UI components
+│   ├── data/             # Static project and experience data
+│   ├── lib/              # Utility functions
+│   ├── providers/        # Context providers
+│   └── types/            # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Data Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Projects
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Each project is defined in `src/data/projects.tsx` with a comprehensive structure:
 
-## Learn More
+- **Title & Description**: Concise project overview
+- **Technologies**: Tech stack used
+- **Features**: Key project capabilities
+- **Images**: Screenshots across different devices
+- **Status**: Development and progress tracking
 
-To learn more about Next.js, take a look at the following resources:
+### Example Project Object
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```typescript
+{
+  title: "Project Name",
+  subtitle: "Short Description",
+  description: "Detailed Project Overview",
+  category: "Project Type",
+  githubUrl: "https://github.com/username/project",
+  webUrl: "https://project-demo.com",
+  images: [
+    {
+      src: "/images/projects/project/screenshot.png",
+      alt: "Project Screenshot",
+      device: "browser",
+      deviceColor: "blue"
+    }
+  ],
+  techStack: [
+    { name: "Next.js", icon: "/images/tech/nextjs.png" }
+  ],
+  features: [
+    { text: "Feature Description", icon: <FeatureIcon /> }
+  ],
+  developmentStatus: "Beta",
+  progressStatus: "In Progress"
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Performance Optimizations
 
-## Deploy on Vercel
+- Lazy loading of images
+- Code splitting
+- Minimal external dependencies
+- Efficient animations with Framer Motion
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Accessibility & SEO
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Semantic HTML
+- ARIA attributes
+- Responsive design
+- Optimized meta tags
+- Sitemap generation
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Setup
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run development server: `npm run dev`
+4. Build for production: `npm run build`
+
+## Deployment
+
+Deployed on Vercel with automatic CI/CD from the main branch.
+
+## License
+
+[MIT License](LICENSE)
+
+## Contact
+
+- Email: [your-email@example.com]
+- LinkedIn: [Your LinkedIn Profile]
+- GitHub: [Your GitHub Profile]
