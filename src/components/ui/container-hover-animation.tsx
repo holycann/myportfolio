@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion, MotionValue, useMotionValue, useSpring } from "framer-motion";
+import { motion, MotionValue, useMotionValue, useSpring } from "motion/react";
 
 export const ContainerHoverAnimation = ({
   titleComponent,

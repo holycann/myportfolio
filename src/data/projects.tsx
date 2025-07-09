@@ -439,46 +439,4 @@ export const projects = [
     progressStatus: "On Hold",
     progressPercentage: 45, // Added progress percentage
   },
-  // {
-  //   title: "Todo App",
-  //   subtitle: "Productivity Task Manager",
-  //   description:
-  //     "A modern, feature-rich todo application with advanced task management, collaboration, and productivity tracking.",
-  //   category: "Productivity",
-  //   githubUrl: "https://github.com/yourusername/todo-app",
-  //   webUrl: "https://todoapp.com",
-  //   githubIcon: ProjectIcons.default.github,
-  //   webIcon: ProjectIcons.default.web,
-  //   images: [
-  //     {
-  //       alt: "Todo App",
-  //       src: "/images/projects/todo-app/todo-reminder-list.png",
-  //       device: "phone",
-  //       deviceColor: "border-purple-500",
-  //     },
-  //     {
-  //       alt: "Todo App Upcoming Tasks",
-  //       src: "/images/projects/todo-app/todo-upcoming-tasks.png",
-  //       device: "window",
-  //       deviceColor: "border-blue-500",
-  //     },
-  //   ],
-  //   techStack: [
-  //     { name: "Next.js", icon: ProjectIcons.tech["Next.js"] },
-  //     { name: "TypeScript", icon: ProjectIcons.tech.TypeScript },
-  //     { name: "Radix UI", icon: <SiRadixui className="text-purple-500" /> },
-  //   ],
-  //   features: [
-  //     {
-  //       text: "Task Collaboration",
-  //       icon: <FaUserShield className="text-blue-500" />,
-  //     },
-  //     {
-  //       text: "Progress Tracking",
-  //       icon: <MdOutlineAnalytics className="text-green-500" />,
-  //     },
-  //   ],
-  //   developmentStatus: "Beta",
-  //   progressStatus: "In Progress",
-  // },
 ];

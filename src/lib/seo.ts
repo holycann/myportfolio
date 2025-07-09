@@ -2,13 +2,24 @@ import type { Metadata } from "next";
 
 // Default metadata for the site
 export const defaultMeta = {
-  title: "My Portfolio",
-  description: "Personal portfolio website showcasing my work and skills",
-  keywords: ["portfolio", "developer", "web", "frontend", "backend"],
-  url: process.env.NEXT_PUBLIC_URL || "https://myportfolio.com",
-  image: "/images/og-image.jpg",
-  twitterHandle: "@username",
-  author: "Your Name",
+  title: "Muhamad Ramadhan — Full Stack Developer & Automation Engineer",
+  description:
+    "Explore the personal portfolio of Muhamad Ramadhan, a Full Stack Developer and Automation Engineer specializing in scalable web applications, backend systems, and automation tools.",
+  keywords: [
+    "Muhamad Ramadhan",
+    "full stack developer portfolio",
+    "backend developer",
+    "web developer",
+    "automation engineer",
+    "Golang developer",
+    "Node.js developer",
+    "React developer",
+    "Next.js portfolio",
+  ],
+  url: "https://holyycan.com",
+  image: "https://holyycan.com/images/hero.png",
+  twitterHandle: "@ehhramaa_",
+  author: "Muhamad Ramadhan",
 };
 
 // Define OpenGraph type locally
@@ -40,8 +51,9 @@ export function getSEO({
   themeColor = "#000000",
 }: SeoParams = {}): Metadata {
   // Construct full title
-  const fullTitle = title === defaultMeta.title ? title : `${title} | ${defaultMeta.title}`;
-  
+  const fullTitle =
+    title === defaultMeta.title ? title : `${title} | ${defaultMeta.title}`;
+
   // Ensure absolute URL for image
   const absoluteImageUrl = image.startsWith("http") ? image : `${url}${image}`;
 
@@ -51,7 +63,7 @@ export function getSEO({
     keywords,
     authors: [{ name: author }],
     viewport: {
-      width: 'device-width',
+      width: "device-width",
       initialScale: 1,
       maximumScale: 5,
     },
@@ -87,15 +99,16 @@ export function getSEO({
 /**
  * Generate SEO meta tags for older Next.js versions or custom head elements
  */
-export function generateSeoMeta({ 
+export function generateSeoMeta({
   title = defaultMeta.title,
   description = defaultMeta.description,
   image = defaultMeta.image,
   url = defaultMeta.url,
 }: SeoParams = {}) {
-  const fullTitle = title === defaultMeta.title ? title : `${title} | ${defaultMeta.title}`;
+  const fullTitle =
+    title === defaultMeta.title ? title : `${title} | ${defaultMeta.title}`;
   const absoluteImageUrl = image.startsWith("http") ? image : `${url}${image}`;
-  
+
   return {
     title: fullTitle,
     meta: [
@@ -120,4 +133,4 @@ export function generateJsonLd(data: any) {
   return {
     __html: JSON.stringify(data),
   };
-} 
+}

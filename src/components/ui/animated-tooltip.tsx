@@ -12,7 +12,7 @@ import {
 // Throttle function to limit execution frequency
 const throttle = (func: Function, limit: number) => {
   let inThrottle: boolean;
-  return function(this: any, ...args: any[]) {
+  return function (this: any, ...args: any[]) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -27,7 +27,7 @@ export const AnimatedTooltip = ({
   items: {
     id: number;
     name: string;
-    designation: string;
+    designation?: string;
     element: ReactElement;
   }[];
 }) => {
@@ -96,9 +96,11 @@ export const AnimatedTooltip = ({
             )}
           </AnimatePresence>
 
-          <div 
+          <div
             className="transition group-hover:scale-105 group-hover:z-30"
-            style={{ willChange: hoveredIndex === item.id ? "transform" : "auto" }}
+            style={{
+              willChange: hoveredIndex === item.id ? "transform" : "auto",
+            }}
           >
             {item.element}
           </div>

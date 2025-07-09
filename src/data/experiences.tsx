@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { MyButton } from "@/components/ui/mybutton";
 import Image from "next/image";
 import { ExperienceItem } from "@/types/experience";
@@ -41,12 +41,11 @@ export const ExperienceData: ExperienceItem[] = [
           className="list-none ml-4 text-xs md:text-sm mb-4 space-y-2"
         >
           {[
-            "Delivered multiple small to mid scale freelance projects with working results.",
+            "Developed and delivered various client projects including websites and applications using HTML, CSS, JavaScript, Laravel, and WordPress.",
             "Designed and deployed a media storage solution using Cloudinary for client projects.",
-            "Developed user friendly web forms with validation and error handling.",
-            "Developed functional databases, applications and servers to support websites on back-end.",
+            "Developed user-friendly web forms with validation and error handling.",
+            "Developed functional databases, applications, and servers to support websites on the back-end.",
             "Used SQL and NoSQL in different use cases to support client requirements.",
-            "Initiated component based architecture on frontend and modular structure on backend (Node Js, Laravel & Golang).",
             "Collaborated with clients remotely via iterative feedback cycles, improving delivery accuracy and timeline.",
           ].map((feature, index) => (
             <motion.li
@@ -140,11 +139,12 @@ export const ExperienceData: ExperienceItem[] = [
           className="list-none ml-4 text-xs md:text-sm mb-4 space-y-2"
         >
           {[
-            "Handled 100+ bug reports with a 60% - 70% resolution rate at the first level.",
+            "Managed defect tracking and documentation using ClickUp, including monthly analysis, SLA measurement, and collaboration with the team to identify recurring issues and drive process improvements.",
+            "Handled 50+ bug reports with a 50% - 80% resolution rate at the first level.",
             "Reduced average escalation time by 40% through accurate initial analysis.",
             "Built a WhatsApp bot reminder using Node.js and AWS to remind field teams to submit daily reports.",
-            "Helped increase reporting compliance in field operations by an estimated 30–40% after bot implementation.",
-            "Contributed to improving the defect handling process through better documentation and automation.",
+            "Helped increase reporting compliance in field operations by an estimated 20-30% after bot implementation.",
+            "Participated in black box testing for internal applications to ensure functionality and user experience before deployment.",
           ].map((feature, index) => (
             <motion.li
               key={index}

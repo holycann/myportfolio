@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { ProjectItem } from "@/types/project";
 import { cn } from "@/lib/utils";
 import { FaGithub, FaLink } from "react-icons/fa";
@@ -1127,7 +1127,7 @@ export const StickyScroll = ({
             {/* Animated Tech Stack with Curved Layout */}
             <AnimatedTechStack
               techStack={item.techStack}
-              className="flex relative xl:top-8 gap-12"
+              className="flex relative xl:top-8 gap-10"
               iconSize="md"
             />
           </motion.div>
@@ -1303,7 +1303,7 @@ export const StickyScroll = ({
             {/* Animated Tech Stack with Curved Layout */}
             <AnimatedTechStack
               techStack={item.techStack}
-              className="flex relative top-12 xl:gap-8"
+              className="flex relative top-8 xl:gap-8"
               iconSize="md"
             />
           </motion.div>

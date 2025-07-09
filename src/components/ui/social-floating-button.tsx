@@ -1,6 +1,6 @@
 "use client";
 import React, { JSX } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { AnimatedTooltip } from "./animated-tooltip";
 
@@ -16,9 +16,7 @@ export const SocialFloatingButton = ({
   className?: string;
 }) => {
   return (
-    <div 
-      className={`fixed bottom-4 left-4 z-[9999] w-auto ${className}`}
-    >
+    <div className={`fixed bottom-4 left-4 z-[9999] w-auto ${className}`}>
       {socialItems?.length ? (
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -29,10 +27,10 @@ export const SocialFloatingButton = ({
           shadow-lg"
         >
           {socialItems.map((item, idx) => (
-            <Link 
-              key={idx} 
-              href={item.link} 
-              target="_blank" 
+            <Link
+              key={idx}
+              href={item.link}
+              target="_blank"
               aria-label={item.name}
               className="text-neutral-600 dark:text-neutral-300 
               hover:text-blue-500 dark:hover:text-blue-400 
@@ -43,7 +41,15 @@ export const SocialFloatingButton = ({
                 whileTap={{ scale: 0.9 }}
                 className="text-xl"
               >
-                {item.icon}
+                <AnimatedTooltip
+                  items={[
+                    {
+                      id: idx,
+                      name: item.name || "",
+                      element: item.icon,
+                    },
+                  ]}
+                />
               </motion.div>
             </Link>
           ))}

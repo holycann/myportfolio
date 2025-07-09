@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ProjectItem } from "@/types/project";
 import { HiXCircle } from "react-icons/hi";
 import { ProjectStatus } from "./ProjectStatus";

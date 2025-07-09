@@ -108,8 +108,6 @@ export default function Contact() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
-      console.log(result);
-
       setIsSubmitted(true);
       toast.success("Message sent successfully!");
 

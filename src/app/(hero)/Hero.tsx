@@ -17,7 +17,7 @@ import Badge from "@/components/ui/badge";
 export default function Hero() {
   const handleResumeClick = () => {
     // Open resume in new tab
-    window.open("/resume.pdf", "_blank");
+    window.open("/MuhamadRamadhanResume.pdf", "_blank");
   };
 
   const handleConnectClick = () => {

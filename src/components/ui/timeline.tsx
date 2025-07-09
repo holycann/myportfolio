@@ -1,6 +1,6 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, motion } from "motion/react";
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";

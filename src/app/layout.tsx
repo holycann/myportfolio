@@ -6,22 +6,22 @@ import { Toaster } from "react-hot-toast";
 import { GlowingStarsBackground } from "../components/ui/glowing-stars";
 import Navbar from "./components/Nav";
 import { getSEO, generateJsonLd, defaultMeta } from "@/lib/seo";
-import { Providers, ThemeProvider } from "./providers";
+import { Providers, ThemeProvider } from "../providers/ThemeProvider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { LenisProvider } from "@/providers/LenisProvider";
 import { LoadingProvider } from "@/providers/LoadingProvider";
 
 const inter = Inter({
   subsets: ["latin"],
-  display: 'swap',
+  display: "swap",
   preload: true,
 });
 
 export const metadata: Metadata = getSEO({
-  title: "My Portfolio",
-  description: "My personal portfolio website",
-  keywords: ["portfolio", "developer", "web", "frontend", "backend"],
-  url: process.env.NEXT_PUBLIC_URL || "https://myportfolio.com",
+  title: defaultMeta.title,
+  description: defaultMeta.description,
+  keywords: defaultMeta.keywords,
+  url: defaultMeta.url,
   themeColor: "#000000",
 });
 
@@ -31,11 +31,8 @@ const structuredData = {
   name: "Muhamad Ramadhan",
   url: defaultMeta.url,
   image: defaultMeta.image,
-  sameAs: [
-    "https://twitter.com/ehhramaa_",
-    "https://instagram.com/ehhramaa_",
-  ],
-  jobTitle: "Fullstack Developer & Automation Engineer",
+  sameAs: ["https://twitter.com/ehhramaa_", "https://instagram.com/ehhramaa_"],
+  jobTitle: "Full Stack Developer & Automation Engineer",
   worksFor: {
     "@type": "Organization",
     name: "Freelance",
@@ -52,14 +49,30 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <Head>
         <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0A0A0A" />
-        <meta name="author" content="Muhamad Ramadhan" />
-        <meta
-          name="keywords"
-          content="Fullstack Developer, Portfolio, Golang, Node.js, Crypto, Indonesia, Web Developer, Next.js, React, Tailwind"
-        />
+        <meta name="author" content={defaultMeta.author} />
+        <meta name="keywords" content={defaultMeta.keywords.join(", ")} />
+        <meta name="description" content={defaultMeta.description} />
+
         {/* Canonical link */}
         <link rel="canonical" href={defaultMeta.url} />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={defaultMeta.title} />
+        <meta property="og:description" content={defaultMeta.description} />
+        <meta property="og:image" content={defaultMeta.image} />
+        <meta property="og:url" content={defaultMeta.url} />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content={defaultMeta.twitterHandle} />
+        <meta name="twitter:title" content={defaultMeta.title} />
+        <meta name="twitter:description" content={defaultMeta.description} />
+        <meta name="twitter:image" content={defaultMeta.image} />
+
+        {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={generateJsonLd(structuredData)}
@@ -84,8 +97,8 @@ export default function RootLayout({
                   toastOptions={{
                     duration: 3000,
                     style: {
-                      background: '#333',
-                      color: '#fff',
+                      background: "#333",
+                      color: "#fff",
                     },
                   }}
                 />
