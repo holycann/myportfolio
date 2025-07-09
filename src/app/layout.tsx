@@ -16,6 +16,7 @@ const inter = Inter({
   preload: true,
 });
 
+
 export const metadata: Metadata = getSEO({
   title: defaultMeta.title,
   description: defaultMeta.description,

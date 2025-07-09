@@ -11,7 +11,6 @@ import {
   FaLinkedin,
   FaMapMarkerAlt,
   FaPaperPlane,
-  FaTwitter
 } from "react-icons/fa";
 
 interface FormData {
@@ -129,20 +128,20 @@ export default function Contact() {
   };
 
   const socialLinks = [
-    { 
-      icon: FaLinkedin, 
-      href: 'https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/', 
-      label: 'LinkedIn' 
+    {
+      icon: FaLinkedin,
+      href: "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/",
+      label: "LinkedIn",
     },
-    { 
-      icon: FaGithub, 
-      href: 'https://github.com/holycann', 
-      label: 'GitHub' 
+    {
+      icon: FaGithub,
+      href: "https://github.com/holycann",
+      label: "GitHub",
     },
-    { 
-      icon: FaInstagram, 
-      href: 'https://instagram.com/ehhramaa_', 
-      label: 'Instagram' 
+    {
+      icon: FaInstagram,
+      href: "https://instagram.com/ehhramaa_",
+      label: "Instagram",
     },
   ];
 
@@ -177,11 +176,15 @@ export default function Contact() {
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <FaEnvelope className="text-2xl text-cyan-500" />
-                <span className="text-sm md:text-base">muhamad.ramadhan.dev@gmail.com</span>
+                <span className="text-sm md:text-base">
+                  muhamad.ramadhan.dev@gmail.com
+                </span>
               </div>
               <div className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-2xl text-cyan-500" />
-                <span className="text-sm md:text-base">Indonesia, West Java</span>
+                <span className="text-sm md:text-base">
+                  Indonesia, West Java
+                </span>
               </div>
             </div>
 
@@ -213,11 +216,13 @@ export default function Contact() {
                     value={formData.firstName}
                     onChange={handleChange}
                     className={`w-full p-3 bg-[#2A2A2A] rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
-                      errors.firstName ? 'border-2 border-red-500' : ''
+                      errors.firstName ? "border-2 border-red-500" : ""
                     }`}
                   />
                   {errors.firstName && (
-                    <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.firstName}
+                    </p>
                   )}
                 </div>
                 <div>
@@ -239,7 +244,7 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 className={`w-full p-3 bg-[#2A2A2A] rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
-                  errors.email ? 'border-2 border-red-500' : ''
+                  errors.email ? "border-2 border-red-500" : ""
                 }`}
               />
               {errors.email && (
@@ -262,7 +267,7 @@ export default function Contact() {
                 onChange={handleChange}
                 rows={4}
                 className={`w-full p-3 bg-[#2A2A2A] rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
-                  errors.message ? 'border-2 border-red-500' : ''
+                  errors.message ? "border-2 border-red-500" : ""
                 }`}
               />
               {errors.message && (

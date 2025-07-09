@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from "react";
 import { motion } from "motion/react";
-import { TechStackIcon, TechStackIconProps } from "./TechStackIcon";
+import { TechStackIcon } from "./tech-stack-icon";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 export type AnimatedTechStackProps = {
@@ -25,7 +25,7 @@ export const AnimatedTechStack = ({
   const tooltipItems = techStack.map((tech, index) => ({
     id: index,
     name: tech.name,
-    designation: '', // Optional additional text
+    designation: "", // Optional additional text
     element: (
       <TechStackIcon
         name={tech.name}
@@ -34,7 +34,7 @@ export const AnimatedTechStack = ({
         className={tech.className}
         size={iconSize}
       />
-    )
+    ),
   }));
 
   return (
@@ -58,10 +58,10 @@ export const AnimatedTechStack = ({
           type: "spring",
           stiffness: 400,
           damping: 10,
-        }
+        },
       }}
       whileTap={{
-        scale: 0.95
+        scale: 0.95,
       }}
     >
       <AnimatedTooltip items={tooltipItems} />

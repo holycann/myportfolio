@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { useAnimationWorker } from "@/lib/use-animation-worker";
+import { useAnimationWorker } from "@/context/use-animation-worker";
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   // Reduced from 150x100 to 50x30 (85% reduction in DOM elements)

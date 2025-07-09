@@ -1,11 +1,11 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FaGithub, FaLink } from 'react-icons/fa';
 import { ProjectItem } from '@/types/project';
-import { ProjectBadge } from './ProjectBadge';
-import { ProjectStatus } from './ProjectStatus';
+import { ProjectBadge } from './project-badge';
+import { ProjectStatus } from './project-status';
 
 export const ProjectCard: React.FC<{ project: ProjectItem }> = ({ project }) => {
   return (

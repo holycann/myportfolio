@@ -1,6 +1,22 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { motion, MotionValue, useMotionValue, useSpring } from "motion/react";
+
+// ✅ Custom hook untuk deteksi mobile secara clean
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update(); // initial check
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return isMobile;
+};
 
 export const ContainerHoverAnimation = ({
   titleComponent,
@@ -9,39 +25,28 @@ export const ContainerHoverAnimation = ({
   titleComponent: string | React.ReactNode;
   children: React.ReactNode;
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
-  }, []);
+  const isMobile = useIsMobile();
 
   const rotate = useSpring(useMotionValue(20), { stiffness: 200, damping: 20 });
   const scale = useSpring(useMotionValue(1), { stiffness: 200, damping: 20 });
 
   const handleHoverStart = () => {
-    rotate.set(0); // rotasi saat hover
-    scale.set(isMobile ? 0.9 : 1.05);
+    requestAnimationFrame(() => {
+      rotate.set(0);
+      scale.set(isMobile ? 0.9 : 1.05);
+    });
   };
 
   const handleHoverEnd = () => {
-    rotate.set(20); // rotasi kebalik ketika hover hilang
+    requestAnimationFrame(() => {
+      rotate.set(20);
+      scale.set(1); // reset ke normal
+    });
   };
 
   return (
     <div className="flex lg:items-start lg:justify-start sm:items-center sm:justify-center relative p-2 md:px-20 lg:pb-20">
-      <div
-        className="w-full relative"
-        style={{
-          perspective: "1000px",
-        }}
-      >
+      <div className="w-full relative" style={{ perspective: "1000px" }}>
         <Header titleComponent={titleComponent} />
         <Card
           rotate={rotate}
@@ -56,13 +61,11 @@ export const ContainerHoverAnimation = ({
   );
 };
 
-export const Header = ({ titleComponent }: { titleComponent: React.ReactNode }) => {
-  return (
-    <motion.div className="max-w-5xl mx-auto text-center mb-4">
-      {titleComponent}
-    </motion.div>
-  );
-};
+export const Header = ({ titleComponent }: { titleComponent: React.ReactNode }) => (
+  <motion.div className="max-w-5xl mx-auto text-center mb-4">
+    {titleComponent}
+  </motion.div>
+);
 
 export const Card = ({
   rotate,
@@ -84,6 +87,7 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
+        willChange: "transform, box-shadow", // ✅ GPU-accelerated
         boxShadow:
           "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 12px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
       }}

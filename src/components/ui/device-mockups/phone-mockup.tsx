@@ -55,8 +55,12 @@ export const PhoneMockup = ({
   };
 
   return (
-    <div className={`flex justify-center items-center relative mockup-phone border-5 p-2 border-cyan-600 outline-cyan-600 mx-auto ${orientation === 'horizontal' ? 'xl:w-full h-72' : 'xl:w-1/2 2xl:w-110'}`}>
-      <div className={`absolute mockup-phone-camera z-10 flex items-center justify-evenly p-2 ${orientation === 'horizontal' ? 'top-30 -left-8 rotate-90' : 'top-2'}`}>
+    <div
+      className={`flex justify-center items-center relative mockup-phone border-5 p-2 border-cyan-600 outline-cyan-600 mx-auto ${orientation === "horizontal" ? "xl:w-full h-72" : "xl:w-1/2 2xl:w-110"}`}
+    >
+      <div
+        className={`absolute mockup-phone-camera z-10 flex items-center justify-evenly p-2 ${orientation === "horizontal" ? "top-30 -left-8 rotate-90" : "top-2"}`}
+      >
         <div className="w-2 h-2 bg-gray-300 rounded-full flex items-center justify-center">
           <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
         </div>
@@ -69,7 +73,8 @@ export const PhoneMockup = ({
       </div>
       <div
         ref={imageContainerRef}
-        className={`relative mockup-phone-display overflow-hidden ${orientation === 'horizontal' ? 'h-full w-full' : 'h-full'}`}
+        // className={`relative mockup-phone-display overflow-hidden ${orientation === 'horizontal' ? 'h-full w-full' : 'h-full'}`}
+        className={`relative mockup-phone-display overflow-hidden h-full w-full`}
       >
         <AnimatePresence mode="wait">
           <motion.div

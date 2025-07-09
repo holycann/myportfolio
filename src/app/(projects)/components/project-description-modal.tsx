@@ -4,14 +4,14 @@ import React from "react";
 import { motion } from "motion/react";
 import { ProjectItem } from "@/types/project";
 import { HiXCircle } from "react-icons/hi";
-import { ProjectStatus } from "./ProjectStatus";
+import { ProjectStatus } from "./project-status";
 
 export interface FullDescriptionModalProps {
   project: ProjectItem;
   onClose: () => void;
 }
 
-export const FullDescriptionModal: React.FC<FullDescriptionModalProps> = ({
+export const ProjectDescriptionModal: React.FC<FullDescriptionModalProps> = ({
   project,
   onClose,
 }) => (
