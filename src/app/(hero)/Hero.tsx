@@ -5,7 +5,6 @@ import Image from "next/image";
 import { MyButton } from "@/components/ui/mybutton";
 import { HiOutlineEye } from "react-icons/hi";
 import { FavTechStack } from "@/components/ui/animated-card";
-import Lenis from "lenis";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import {

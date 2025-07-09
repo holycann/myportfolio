@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
-import { GlowingStarsBackground } from "../components/ui/glowing-stars";
 import Navbar from "./components/Nav";
 import { getSEO, generateJsonLd, defaultMeta } from "@/lib/seo";
 import { Providers, ThemeProvider } from "../providers/ThemeProvider";
@@ -89,7 +88,6 @@ export default function RootLayout({
             <LenisProvider>
               <LoadingProvider>
                 <Navbar />
-                <GlowingStarsBackground />
                 {children}
                 <ScrollToTop />
                 <Toaster

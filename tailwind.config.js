@@ -1,8 +1,4 @@
 // tailwind.config.js
-import colors from 'tailwindcss/colors'
-import fontFamily from 'tailwindcss/defaultTheme'
-import plugin from 'tailwindcss/plugin'
-
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
