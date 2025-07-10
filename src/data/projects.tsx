@@ -64,7 +64,12 @@ import {
   HiShoppingCart,
   HiViewGrid,
 } from "react-icons/hi";
-import { HiCursorArrowRays, HiEnvelope, HiMapPin, HiPhoto } from "react-icons/hi2";
+import {
+  HiCursorArrowRays,
+  HiEnvelope,
+  HiMapPin,
+  HiPhoto,
+} from "react-icons/hi2";
 
 // Utility function for placeholder images
 const createPlaceholder = (text: string) =>
@@ -123,10 +128,26 @@ export const projects = [
     webUrl: "https://wag.holyycan.com",
     githubIcon: ProjectIcons.default.github,
     webIcon: ProjectIcons.default.web,
+    thumbnails: [
+      {
+        alt: "GoWAG App",
+        src: "/images/projects/gowag/thumbnails/wag-phone-homepage.png",
+        device: "phone",
+        deviceColor: "border-blue-500",
+      },
+      {
+        alt: "GoWAG Login Page",
+        src: "/images/projects/gowag/thumbnails/wag-phone-login.png",
+      },
+      {
+        alt: "GoWAG Register Page",
+        src: "/images/projects/gowag/thumbnails/wag-phone-register.png",
+      },
+    ],
     images: [
       {
         alt: "GoWAG App",
-        src: "/images/projects/gowag/thumbnail.png",
+        src: "/images/projects/gowag/wag-homepage.png",
         device: "phone",
         deviceColor: "border-blue-500",
       },
@@ -137,20 +158,128 @@ export const projects = [
         deviceColor: "border-green-500",
       },
       {
-        alt: "GoWAG Analytics",
-        src: "/images/projects/gowag/wag-analytics.png",
+        alt: "GoWAG Contacts Page",
+        src: "/images/projects/gowag/wag-contacts.png",
         device: "phone",
         deviceColor: "border-purple-500",
       },
       {
-        alt: "GoWAG Messages",
-        src: "/images/projects/gowag/wag-messages.png",
+        alt: "GoWAG Groups Page",
+        src: "/images/projects/gowag/wag-groups.png",
         device: "window",
         deviceColor: "border-blue-500",
       },
       {
-        alt: "GoWAG API Keys",
+        alt: "GoWAG Messages Page",
+        src: "/images/projects/gowag/wag-messages.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Schedule Messages Page",
+        src: "/images/projects/gowag/wag-schedule-messages.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Campaigns Page",
+        src: "/images/projects/gowag/wag-campaigns.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Media Page",
+        src: "/images/projects/gowag/wag-media.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Auto Reply Page",
+        src: "/images/projects/gowag/wag-auto-reply.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Sessions Page",
+        src: "/images/projects/gowag/wag-sessions.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Analytics Page",
+        src: "/images/projects/gowag/wag-analytics.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG System Health Page",
+        src: "/images/projects/gowag/wag-system-health.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Network Status Page",
+        src: "/images/projects/gowag/wag-network-status.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Message Logs Page",
+        src: "/images/projects/gowag/wag-message-logs.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Webhook Management Page",
+        src: "/images/projects/gowag/wag-webhook-management.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Webhook Logs Page",
+        src: "/images/projects/gowag/wag-webhook-logs.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Integrations Page",
+        src: "/images/projects/gowag/wag-integrations.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Api Keys Page",
         src: "/images/projects/gowag/wag-api-keys.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Rate Limiting Page",
+        src: "/images/projects/gowag/wag-rate-limiting.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Access Management Page",
+        src: "/images/projects/gowag/wag-access-management.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Billing Page",
+        src: "/images/projects/gowag/wag-billing.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Feedback Page",
+        src: "/images/projects/gowag/wag-feedback.png",
+        device: "phone",
+        deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "GoWAG Settings Page",
+        src: "/images/projects/gowag/wag-settings.png",
         device: "phone",
         deviceColor: "border-yellow-500",
       },
@@ -213,14 +342,14 @@ export const projects = [
         deviceColor: "border-blue-500",
       },
       {
-        alt: "BubblePi Homepage",
-        src: "/images/projects/bubblepi/bs-homepage.png",
-        device: "window",
-        deviceColor: "border-green-500",
-      },
-      {
         alt: "BubblePi Products",
         src: "/images/projects/bubblepi/bs-products.png",
+        device: "phone",
+        deviceColor: "border-purple-500",
+      },
+      {
+        alt: "BubblePi Detail Product",
+        src: "/images/projects/bubblepi/bs-detail-product.png",
         device: "phone",
         deviceColor: "border-purple-500",
       },
@@ -229,6 +358,24 @@ export const projects = [
         src: "/images/projects/bubblepi/bs-cart.png",
         device: "window",
         deviceColor: "border-yellow-500",
+      },
+      {
+        alt: "BubblePi Shipping Method",
+        src: "/images/projects/bubblepi/bs-shipping-method.png",
+        device: "phone",
+        deviceColor: "border-green-500",
+      },
+      {
+        alt: "BubblePi Payment Method",
+        src: "/images/projects/bubblepi/bs-payment-method.png",
+        device: "phone",
+        deviceColor: "border-green-500",
+      },
+      {
+        alt: "BubblePi Make Payment",
+        src: "/images/projects/bubblepi/bs-make-payment.png",
+        device: "phone",
+        deviceColor: "border-green-500",
       },
       {
         alt: "BubblePi Checkout",
@@ -285,14 +432,14 @@ export const projects = [
         deviceColor: "border-blue-500",
       },
       {
-        alt: "ASA Media Homepage",
-        src: "/images/projects/asamedia/asamedia-homepage.png",
-        device: "window",
-        deviceColor: "border-purple-500",
-      },
-      {
         alt: "ASA Media Portfolio",
         src: "/images/projects/asamedia/asamedia-porto.png",
+        device: "phone",
+        deviceColor: "border-green-500",
+      },
+      {
+        alt: "ASA Media Detail Portfolio",
+        src: "/images/projects/asamedia/asamedia-detail-porto.png",
         device: "phone",
         deviceColor: "border-green-500",
       },
@@ -343,14 +490,26 @@ export const projects = [
         deviceColor: "border-red-500",
       },
       {
-        alt: "Kawasan Digital Homepage",
-        src: "/images/projects/kawasan-digital/kd-home.png",
-        device: "phone",
-        deviceColor: "border-blue-500",
+        alt: "Kawasan Digital About Page",
+        src: "/images/projects/kawasan-digital/kd-about.png",
+        device: "window",
+        deviceColor: "border-green-500",
       },
       {
-        alt: "Kawasan Digital Services",
+        alt: "Kawasan Digital Services Page",
         src: "/images/projects/kawasan-digital/kd-services.png",
+        device: "window",
+        deviceColor: "border-green-500",
+      },
+      {
+        alt: "Kawasan Digital Portfolio Page",
+        src: "/images/projects/kawasan-digital/kd-portfolio.png",
+        device: "window",
+        deviceColor: "border-green-500",
+      },
+      {
+        alt: "Kawasan Digital Contact Page",
+        src: "/images/projects/kawasan-digital/kd-contact.png",
         device: "window",
         deviceColor: "border-green-500",
       },
@@ -395,19 +554,7 @@ export const projects = [
         src: "/images/projects/smart-parking/thumbnail.png",
         device: "window",
         deviceColor: "border-red-500",
-      },
-      {
-        alt: "Smart Parking Dashboard",
-        src: "/images/projects/smart-parking/dashboard.png",
-        device: "phone",
-        deviceColor: "border-yellow-500",
-      },
-      {
-        alt: "Smart Parking Registration",
-        src: "/images/projects/smart-parking/registration.png",
-        device: "window",
-        deviceColor: "border-green-500",
-      },
+      }
     ],
     techStack: [
       { name: "React", icon: ProjectIcons.tech.React },

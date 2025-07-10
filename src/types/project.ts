@@ -40,6 +40,7 @@ export interface ProjectItem {
   webUrl?: string;
   githubIcon?: ReactNode;
   webIcon?: ReactNode;
+  thumbnails: ProjectImage[];
   images: ProjectImage[];
   techStack: ProjectTechStack[];
   features: ProjectFeature[];

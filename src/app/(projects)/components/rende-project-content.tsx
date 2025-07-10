@@ -200,16 +200,27 @@ const renderProjectMockup = (
   orientation: "vertical" | "horizontal" = "vertical"
 ) => {
   if (item.images && item.images.length > 0) {
+    let thumbnails;
     const images = item.images.map((img) => ({
       src: img.src,
       alt: img.alt,
     }));
 
+    if (item.thumbnails && item.thumbnails.length > 0) {
+      thumbnails = item.thumbnails.map((img) => ({
+        src: img.src,
+        alt: img.alt,
+      }));
+    } else {
+      thumbnails = images;
+    }
+
     switch (mockupType) {
       case "phone":
         return (
           <PhoneMockup
-            images={images}
+            thumbnails={thumbnails}
+            imageCarousel={images}
             title={item.title}
             onImageClick={() => handleImageClick(item)}
             orientation={orientation}

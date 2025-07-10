@@ -5,12 +5,17 @@ import { FaArrowLeft, FaArrowRight, FaEye } from "react-icons/fa6";
 import { createPlaceHolder } from "@/lib/utils";
 
 export const PhoneMockup = ({
-  images,
+  thumbnails,
+  imageCarousel,
   title,
   orientation = "vertical",
   onImageClick,
 }: {
-  images: {
+  thumbnails: {
+    src: string;
+    alt: string;
+  }[];
+  imageCarousel: {
     src: string;
     alt: string;
   }[];
@@ -39,19 +44,19 @@ export const PhoneMockup = ({
   const handleNextImage = () => {
     setDirection("next");
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === thumbnails.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const handlePreviousImage = () => {
     setDirection("prev");
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? thumbnails.length - 1 : prevIndex - 1
     );
   };
 
   const handleImageClick = () => {
-    onImageClick(images);
+    onImageClick(imageCarousel);
   };
 
   return (
@@ -100,14 +105,14 @@ export const PhoneMockup = ({
           >
             <motion.img
               src={
-                images[currentImageIndex]?.src === "" ||
-                images[currentImageIndex]?.src === undefined
+                thumbnails[currentImageIndex]?.src === "" ||
+                thumbnails[currentImageIndex]?.src === undefined
                   ? createPlaceHolder(
-                      images[currentImageIndex]?.alt || "Default Image"
+                    thumbnails[currentImageIndex]?.alt || "Default Image"
                     )
-                  : images[currentImageIndex]?.src
+                  : thumbnails[currentImageIndex]?.src
               }
-              alt={images[currentImageIndex]?.alt || "Default Image"}
+              alt={thumbnails[currentImageIndex]?.alt || "Default Image"}
               className="w-full h-full object-cover object-top"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
