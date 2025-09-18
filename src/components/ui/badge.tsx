@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { Slot } from '@radix-ui/react-slot';
 import React from 'react';
 
 // Definisi tipe props untuk Badge
@@ -7,8 +6,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'outline-default' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-warning' | 'outline-danger' | 'outline-info';
   size?: 'sm' | 'md' | 'lg';
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
-  asChild?: boolean;
   className?: string;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
+  blur?: boolean;
 }
 
 // Komponen Badge
@@ -18,41 +19,97 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
       variant = 'default',
       size = 'md',
       rounded = 'md',
-      asChild = false,
       className,
+      icon,
+      iconPosition = 'left',
+      blur = false,
       children,
       ...props
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : 'div';
-
-    // Variasi warna untuk badge
+    // Variasi warna untuk badge dengan background dan text yang berbeda
     const variantStyles = {
-      // Solid variants
-      default: 'bg-gray-100 text-gray-800',
-      primary: 'bg-blue-500 text-white',
-      secondary: 'bg-gray-500 text-white',
-      success: 'bg-green-500 text-white',
-      warning: 'bg-yellow-500 text-black',
-      danger: 'bg-red-500 text-white',
-      info: 'bg-cyan-500 text-white',
+      // Solid variants dengan background dan text yang berbeda
+      default: { 
+        bg: 'bg-gray-100/60', 
+        text: 'text-gray-800',
+        border: 'border-gray-200/50'
+      },
+      primary: { 
+        bg: 'bg-blue-500/60', 
+        text: 'text-white',
+        border: 'border-blue-600/50'
+      },
+      secondary: { 
+        bg: 'bg-gray-500/60', 
+        text: 'text-white',
+        border: 'border-gray-600/50'
+      },
+      success: { 
+        bg: 'bg-green-500/60', 
+        text: 'text-white',
+        border: 'border-green-600/50'
+      },
+      warning: { 
+        bg: 'bg-yellow-500/60', 
+        text: 'text-black',
+        border: 'border-yellow-600/50'
+      },
+      danger: { 
+        bg: 'bg-red-500/60', 
+        text: 'text-white',
+        border: 'border-red-600/50'
+      },
+      info: { 
+        bg: 'bg-cyan-500/60', 
+        text: 'text-white',
+        border: 'border-cyan-600/50'
+      },
       
       // Outline variants
-      'outline-default': 'border border-gray-300 text-gray-800 bg-transparent',
-      'outline-primary': 'border border-blue-500 text-blue-500 bg-transparent',
-      'outline-secondary': 'border border-gray-500 text-gray-500 bg-transparent',
-      'outline-success': 'border border-green-500 text-green-500 bg-transparent',
-      'outline-warning': 'border border-yellow-500 text-yellow-500 bg-transparent',
-      'outline-danger': 'border border-red-500 text-red-500 bg-transparent',
-      'outline-info': 'border border-cyan-500 text-cyan-500 bg-transparent',
+      'outline-default': { 
+        bg: 'bg-transparent', 
+        text: 'text-gray-800',
+        border: 'border border-gray-300'
+      },
+      'outline-primary': { 
+        bg: 'bg-transparent', 
+        text: 'text-blue-500',
+        border: 'border border-blue-500'
+      },
+      'outline-secondary': { 
+        bg: 'bg-transparent', 
+        text: 'text-gray-500',
+        border: 'border border-gray-500'
+      },
+      'outline-success': { 
+        bg: 'bg-transparent', 
+        text: 'text-green-500',
+        border: 'border border-green-500'
+      },
+      'outline-warning': { 
+        bg: 'bg-transparent', 
+        text: 'text-yellow-500',
+        border: 'border border-yellow-500'
+      },
+      'outline-danger': { 
+        bg: 'bg-transparent', 
+        text: 'text-red-500',
+        border: 'border border-red-500'
+      },
+      'outline-info': { 
+        bg: 'bg-transparent', 
+        text: 'text-cyan-500',
+        border: 'border border-cyan-500'
+      },
     };
 
     // Ukuran badge
     const sizeStyles = {
-      sm: 'px-2 py-0.5 text-xs',
-      md: 'px-3 py-1 text-sm',
-      lg: 'px-4 py-2 text-base',
+      sm: 'px-2 py-0.5 text-xs gap-1',
+      md: 'px-3 py-1 text-sm gap-2',
+      lg: 'px-4 py-2 text-base gap-2',
     };
 
     // Rounded badge
@@ -64,20 +121,32 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
       full: 'rounded-full',
     };
 
+    // Dapatkan gaya untuk variant yang dipilih
+    const selectedVariant = variantStyles[variant];
+
     return (
-      <Comp
+      <div
         ref={ref}
         className={cn(
           'inline-flex items-center justify-center font-medium',
-          variantStyles[variant],
+          selectedVariant.bg,
+          selectedVariant.text,
+          selectedVariant.border,
           sizeStyles[size],
           roundedStyles[rounded],
+          blur && 'backdrop-blur-md',
           className
         )}
         {...props}
       >
+        {icon && iconPosition === 'left' && (
+          <span className="mr-1">{icon}</span>
+        )}
         {children}
-      </Comp>
+        {icon && iconPosition === 'right' && (
+          <span className="ml-1">{icon}</span>
+        )}
+      </div>
     );
   }
 );

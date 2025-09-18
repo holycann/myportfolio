@@ -33,30 +33,35 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     (window as any).lenisInstance = lenisInstance;
 
     // Enhanced global scroll method with more robust handling
-    (window as any).smoothScrollTo = (target: string | number, options?: { 
-      offset?: number, 
-      duration?: number,
-      easing?: (t: number) => number 
-    }) => {
+    (window as any).smoothScrollTo = (
+      target: string | number,
+      options?: {
+        offset?: number;
+        duration?: number;
+        easing?: (t: number) => number;
+      }
+    ) => {
       const offset = options?.offset || 80; // Default navbar offset
       const duration = options?.duration ?? 1.2; // Default duration
-      const easing = options?.easing || ((t) => Math.min(1, 1 - Math.pow(2, -10 * t)));
+      const easing =
+        options?.easing || ((t) => Math.min(1, 1 - Math.pow(2, -10 * t)));
 
-      if (typeof target === 'string') {
+      if (typeof target === "string") {
         const element = document.getElementById(target);
         if (element) {
-          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const elementPosition =
+            element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - offset;
 
-          lenisInstance.scrollTo(offsetPosition, { 
+          lenisInstance.scrollTo(offsetPosition, {
             duration,
-            easing
+            easing,
           });
         }
       } else {
-        lenisInstance.scrollTo(target, { 
+        lenisInstance.scrollTo(target, {
           duration,
-          easing
+          easing,
         });
       }
     };
@@ -69,4 +74,4 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return <>{children}</>;
-} 
+}

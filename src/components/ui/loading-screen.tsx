@@ -53,10 +53,11 @@ export const LoadingScreen = () => {
           <Image
             src="/images/logo.png"
             alt="Logo"
-            width={128}
-            height={128}
+            width={256}
+            height={256}
             priority
-            className="object-contain"
+            quality={100}
+            className="object-contain w-full h-full"
           />
         </motion.div>
       </div>

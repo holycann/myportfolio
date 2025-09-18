@@ -62,7 +62,7 @@ export default function FeaturedSection({
       >
         <div
           className={cn(
-            "absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-blue-500 transition-all duration-200 origin-center",
+            "absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-amber-100 transition-all duration-200 origin-center",
             props.indicatorClassName
           )}
         />

@@ -30,12 +30,12 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       {(label || showPercentage) && (
         <div className="flex items-center justify-between text-sm">
           {label && (
-            <span className={cn("text-neutral-600 dark:text-neutral-300", labelClassName)}>
+            <span className={cn("text-neutral-600 dark:text-white", labelClassName)}>
               {label}
             </span>
           )}
           {showPercentage && (
-            <span className="text-purple-400 font-semibold">
+            <span className="text-white font-semibold">
               {clampedProgress}%
             </span>
           )}
@@ -44,13 +44,13 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       
       <motion.div
         className={cn(
-          "w-full bg-gray-700 rounded-full h-1.5 overflow-hidden",
+          "w-full bg-[var(--color-bg-secondary)] rounded-full h-1.5 overflow-hidden",
           barClassName
         )}
         {...motionProps}
       >
         <motion.div
-          className="bg-purple-500 h-1.5 rounded-full"
+          className="bg-[var(--color-primary-light)] dark:bg-[var(--color-primary)] h-1.5 rounded-full"
           initial={{ width: 0 }}
           animate={{
             width: `${clampedProgress}%`,

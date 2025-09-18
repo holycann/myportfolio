@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 
 // Default metadata for the site
 export const defaultMeta = {
-  title: "Muhamad Ramadhan — Full Stack Developer & Automation Engineer",
+  title: "Itsrama — Backend & Automation Engineer",
   description:
-    "Explore the personal portfolio of Muhamad Ramadhan, a Full Stack Developer and Automation Engineer specializing in scalable web applications, backend systems, and automation tools.",
+    "Explore the personal portfolio of Itsrama, a Backend & Automation Engineer specializing in backend systems, and automation tools.",
   keywords: [
-    "Muhamad Ramadhan",
-    "full stack developer portfolio",
+    "Itsrama",
+    "backend developer portfolio",
     "backend developer",
     "web developer",
     "automation engineer",
@@ -16,10 +16,10 @@ export const defaultMeta = {
     "React developer",
     "Next.js portfolio",
   ],
-  url: "https://holyycan.com",
-  image: "https://holyycan.com/images/hero.png",
+  url: "https://itsrama.kawasan.digital",
+  image: "https://itsrama.kawasan.digital/images/hero.png",
   twitterHandle: "@ehhramaa_",
-  author: "Muhamad Ramadhan",
+  author: "Itsrama",
 };
 
 // Define OpenGraph type locally

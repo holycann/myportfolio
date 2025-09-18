@@ -8,11 +8,15 @@ export const TextGenerateEffect = ({
   className,
   filter = true,
   duration = 1,
+  delay = 0.5,
+  textSize = "text-lg", // Add a default text size prop
 }: {
   words: string;
   className?: string;
   filter?: boolean;
+  delay?: number;
   duration?: number;
+  textSize?: string; // Add type for text size
 }) => {
   const [scope, animate] = useAnimate();
   const wordsArray = words.split(" ");
@@ -25,7 +29,7 @@ export const TextGenerateEffect = ({
       },
       {
         duration: duration ? duration : 1,
-        delay: stagger(0.2),
+        delay: stagger(delay),
       }
     );
   }, [scope.current]);
@@ -51,9 +55,14 @@ export const TextGenerateEffect = ({
   };
 
   return (
-    <div className={cn("font-bold", className)}>
+    <div className={className}>
       <div className="mt-4">
-        <div className="dark:text-white text-black text-lg sm:text-2xl md:text-3xl lg:text-5xl text-center leading-snug tracking-wide">
+        <div
+          className={cn(
+            "dark:text-white text-black text-center leading-snug tracking-wide",
+            textSize
+          )}
+        >
           {renderWords()}
         </div>
       </div>

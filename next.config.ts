@@ -27,11 +27,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "assets.aceternity.com",
-      },
-      {
-        protocol: "https",
-        hostname: "placehold.co",
+        hostname: "*",
       },
     ],
     formats: ["image/avif", "image/webp"],
@@ -56,22 +52,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb",
     },
   },
-  // Support Web Workers
-  webpack: (config) => {
-    // Support Web Workers
-    config.module.rules.push({
-      test: /\.worker\.ts$/,
-      use: { loader: "worker-loader" },
-    });
-
-    // Fix for "Can't resolve 'fs'" error
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-    };
-
-    return config;
-  },
+  allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
   // Add content security policy
   headers: async () => {
     return [
@@ -91,18 +72,13 @@ const nextConfig: NextConfig = {
             value: "1; mode=block",
           },
           // Allow web workers
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self';",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
-              "connect-src 'self' https://api.emailjs.com ws://localhost:* ws://127.0.0.1:* http://localhost:*;",
-              "worker-src 'self' blob:;",
-              "style-src 'self' 'unsafe-inline';",
-              "img-src 'self' data: blob:;",
-              "font-src 'self' data:;",
-            ].join(" "),
-          },
+          // {
+          //   key: "Content-Security-Policy",
+          //   value: [
+          //     "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
+          //     "connect-src 'self' https://api.emailjs.com ws://localhost:* ws://127.0.0.1:* http://localhost:*;",
+          //   ].join(" "),
+          // },
         ],
       },
     ];

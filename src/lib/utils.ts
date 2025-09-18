@@ -8,3 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 export function createPlaceHolder(text: string) {
   return `https://placehold.co/800x600/333/FFF?text=${encodeURIComponent(text)}`;
 }
+
+export function deslugify(slug: string | undefined): string {
+  if (!slug) return '';
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}

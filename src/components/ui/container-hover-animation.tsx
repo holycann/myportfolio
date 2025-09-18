@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, MotionValue, useMotionValue, useSpring } from "motion/react";
 
-// ✅ Custom hook untuk deteksi mobile secara clean
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -61,7 +60,11 @@ export const ContainerHoverAnimation = ({
   );
 };
 
-export const Header = ({ titleComponent }: { titleComponent: React.ReactNode }) => (
+export const Header = ({
+  titleComponent,
+}: {
+  titleComponent: React.ReactNode;
+}) => (
   <motion.div className="max-w-5xl mx-auto text-center mb-4">
     {titleComponent}
   </motion.div>
@@ -99,3 +102,5 @@ export const Card = ({
     </motion.div>
   );
 };
+
+export default ContainerHoverAnimation;

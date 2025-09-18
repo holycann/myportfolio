@@ -6,7 +6,7 @@ import { FaDocker, FaGolang, FaPython } from "react-icons/fa6";
 import { BiLogoPostgresql } from "react-icons/bi";
 import { SiFirebase, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
 
-export function FavTechStack() {
+export default function FavTechStack() {
   return <Skeleton />;
 }
 

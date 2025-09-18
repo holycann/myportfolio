@@ -1,9 +1,40 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #100700;
+  --foreground: #2c2c2c;
+  --color-primary: #4a3f3a;
+  --color-secondary: #8b6f47;
+  --color-accent: #f4e4c1;
+  --color-bg-primary: #100700;
+  --color-bg-secondary: #f4e4c1;
+  --color-text-primary: #2c2c2c;
+  --color-text-secondary: #4a3f3a;
+  --color-text-muted: #808080;
+  --color-border: #e0e0e0;
+  --color-shadow: rgba(44, 44, 44, 0.1);
+
+  /* Expanded color palette */
+  --color-primary-light: #6d5f57;
+  --color-primary-dark: #2c2321;
+  --color-secondary-light: #b39464;
+  --color-secondary-dark: #5c4b3a;
+  --color-accent-light: #f7ecd8;
+  --color-accent-dark: #d1b98f;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+  --color-warning: #ff9800;
+  --color-info: #2196f3;
+  --color-deep-purple: #060010;
+
+  /* New gradient definitions */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary-light), var(--color-secondary-dark));
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-light), var(--color-accent-dark));
+  --gradient-success: linear-gradient(135deg, #4caf50, #2e7d32);
+  --gradient-error: linear-gradient(135deg, #f44336, #d32f2f);
+  --gradient-warning: linear-gradient(135deg, #ff9800, #f57c00);
+  --gradient-info: linear-gradient(135deg, #2196f3, #1976d2);
 }
 
 @theme inline {
@@ -11,8 +42,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-poppins: 'Poppins', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
   --animate-move: move 5s linear infinite;
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 
   @keyframes move {
     0% {
@@ -23,19 +55,71 @@
       transform: translateX(200px);
     }
   }
+
+  @keyframes shine {
+    0% {
+      background-position: 100%;
+    }
+
+    100% {
+      background-position: -100%;
+    }
+  }
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
+}
+
+.animate-shine {
+  animation: shine 5s linear infinite;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #100700;
+    --foreground: #ffffff;
+    --color-primary: #8b6f47;
+    --color-secondary: #f4e4c1;
+    --color-accent: #4a3f3a;
+    --color-bg-primary: #100700;
+    --color-bg-secondary: #2c2c2c;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #f4e4c1;
+    --color-text-muted: #b0b0b0;
+    --color-border: #404040;
+    --color-shadow: rgba(0, 0, 0, 0.3);
+
+    /* Expanded dark mode color palette */
+    --color-primary-light: #a68c5e;
+    --color-primary-dark: #5c4b3a;
+    --color-secondary-light: #f7ecd8;
+    --color-secondary-dark: #8b6f47;
+    --color-accent-light: #6d5f57;
+    --color-accent-dark: #2c2321;
+    --color-success: #81c784;
+    --color-error: #e57373;
+    --color-warning: #ffb74d;
+    --color-info: #64b5f6;
+    --color-deep-purple: #060010;
+
+    /* Dark mode gradient definitions */
+    --gradient-primary: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+    --gradient-secondary: linear-gradient(135deg, var(--color-secondary-light), var(--color-secondary-dark));
+    --gradient-accent: linear-gradient(135deg, var(--color-accent-light), var(--color-accent-dark));
+    --gradient-success: linear-gradient(135deg, #81c784, #2e7d32);
+    --gradient-error: linear-gradient(135deg, #e57373, #d32f2f);
+    --gradient-warning: linear-gradient(135deg, #ffb74d, #f57c00);
+    --gradient-info: linear-gradient(135deg, #64b5f6, #1976d2);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins);
+  font-family: var(--font-montserrat);
   height: 100%;
   margin: 0;
   padding: 0;
@@ -50,14 +134,28 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--color-secondary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--color-primary);
+}
+
+.no-visible-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-visible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+canvas {
+  background: transparent;
 }
