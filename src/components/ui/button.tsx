@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, ReactNode, MouseEvent } from "react";
 import { cn } from "@/lib/utils";
 import { HoverBorderGradient } from "./hover-border-gradient";
-import { motion, TargetAndTransition } from 'framer-motion';
+import { motion, TargetAndTransition } from 'motion/react';
 
 // Adjust sound feedback type
 type SoundFeedbackConfig = {

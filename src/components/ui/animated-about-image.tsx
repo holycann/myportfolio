@@ -7,7 +7,7 @@ import React, {
   useMemo, 
   useCallback 
 } from "react";
-import { motion, AnimatePresence, Transition, Easing } from "framer-motion";
+import { motion, AnimatePresence, Transition, Easing } from "motion/react";
 import Image from "next/image";
 import { createPlaceHolder } from "@/lib/utils";
 import { useInView } from "react-intersection-observer";

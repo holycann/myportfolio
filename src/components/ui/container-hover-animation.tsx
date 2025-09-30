@@ -7,7 +7,7 @@ import {
   MotionValue, 
   useMotionValue, 
   useSpring,
-} from "framer-motion";
+} from "motion/react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { AnimationPresets } from "@/lib/animations";
 

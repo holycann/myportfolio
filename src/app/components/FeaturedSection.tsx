@@ -1,14 +1,9 @@
 "use client";
 
-import React, { 
-  useEffect, 
-  useState, 
-  useMemo, 
-  useCallback 
-} from "react";
+import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { HiSparkles } from "react-icons/hi";
 
 // Centralized configuration and utility imports
@@ -17,6 +12,7 @@ import { Experience } from "@/types/Experience";
 import { TechStack } from "@/types/TechStack";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Step } from "@/components/ui/stepper";
+import { useFetchData } from "@/hooks/useFetchData";
 
 // Dynamic imports with loading states
 const MagicBento = dynamic(() => import("@/components/ui/magic-bento"), {
@@ -111,31 +107,10 @@ SkeletonOne.displayName = 'SkeletonOne';
  * @param {TechStack[]} props.techStack - Array of tech stack items
  */
 export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
-  // State management with error handling
-  const [featuredExperiences, setFeaturedExperiences] = useState<Experience[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  // Memoized data fetching with error handling
-  const fetchExperiences = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await experienceService.getExperiences();
-      if (response.data) {
-        setFeaturedExperiences(response.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch experiences:", error);
-      setError(error instanceof Error ? error : new Error('Unknown error'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  // Fetch experiences on component mount
-  useEffect(() => {
-    fetchExperiences();
-  }, [fetchExperiences]);
+  // Use useFetchData hook to fetch experiences
+  const { data: featuredExperiences, isLoading, error } = useFetchData(
+    () => experienceService.getExperiences(),
+  );
 
   // Memoized infinite menu items
   const infiniteMenuItems = useMemo(() => 

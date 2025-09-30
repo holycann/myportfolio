@@ -1,17 +1,14 @@
 "use client";
 
 import React, { 
-  useState, 
-  useEffect, 
-  useCallback, 
   useMemo 
 } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Project } from "@/types/Project";
 import { projectService } from "@/services/projectService";
 import { Loading } from "@/components/ui/loading";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useFetchData } from "@/hooks/useFetchData";
 
 // Dynamically import heavy components
 const LightRays = dynamic(() => import("@/components/ui/light-rays").then(mod => mod.default), {
@@ -44,7 +41,7 @@ const FocusCards = dynamic(() => import("@/components/ui/focus-card").then(mod =
   ssr: false,
 });
 
-const AnimatedTechStack = dynamic(() => import("../components").then(mod => mod.AnimatedTechStack), {
+const AnimatedTechStack = dynamic(() => import("@/components/ui/animated-tech-stack").then(mod => mod.AnimatedTechStack), {
   loading: () => <Skeleton variant="rounded" />,
   ssr: false,
 });
@@ -79,64 +76,31 @@ const PROJECT_DETAIL_CONFIG = {
  * Handles client-side data fetching and rendering
  */
 export default function ProjectDetail({ slug }: { slug: string }) {
-  const [project, setProject] = useState<Project | null>(null);
-  const [relatedProjects, setRelatedProjects] = useState<Project[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Fetch project details
+  const { 
+    data: projects, 
+    isLoading, 
+    error 
+  } = useFetchData(
+    () => projectService.getProjects(undefined, undefined, { slug }),
+  );
 
-  // Memoized fetch project function
-  const fetchProject = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await projectService.getProjectBySlug(slug);
-      
-      if (response.data) {
-        setProject(response.data);
-        setError(null);
-      } else {
-        setError("Project not found.");
-      }
-    } catch (error) {
-      console.error("Failed to fetch project:", error);
-      setError("Unable to load project details. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [slug]);
+  // Fetch related projects
+  const { 
+    data: relatedProjects 
+  } = useFetchData(
+    () => projectService.getProjects(
+      { per_page: PROJECT_DETAIL_CONFIG.dataFetching.relatedProjectsPageSize },
+      {
+        sort_by: PROJECT_DETAIL_CONFIG.dataFetching.sortBy,
+        sort_order: PROJECT_DETAIL_CONFIG.dataFetching.sortOrder
+      },
+      { category: projects?.[0]?.category }
+    ),
+  );
 
-  // Memoized fetch related projects function
-  const fetchRelatedProjects = useCallback(async (projectCategory?: string) => {
-    if (!projectCategory) return;
-
-    try {
-      const response = await projectService.getProjects(
-        { per_page: PROJECT_DETAIL_CONFIG.dataFetching.relatedProjectsPageSize },
-        {
-          sort_by: PROJECT_DETAIL_CONFIG.dataFetching.sortBy,
-          sort_order: PROJECT_DETAIL_CONFIG.dataFetching.sortOrder
-        },
-        { category: projectCategory }
-      );
-
-      if (response.data) {
-        setRelatedProjects(response.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch related projects:", error);
-    }
-  }, []);
-
-  // Fetch project on component mount
-  useEffect(() => {
-    fetchProject();
-  }, [fetchProject]);
-
-  // Fetch related projects when project is loaded
-  useEffect(() => {
-    if (project) {
-      fetchRelatedProjects(project.category);
-    }
-  }, [project, fetchRelatedProjects]);
+  // Memoized project
+  const project = useMemo(() => projects?.[0] || null, [projects]);
 
   // Memoized project thumbnail
   const projectThumbnail = useMemo(() => 
@@ -147,7 +111,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
   if (isLoading) return <Loading variant="solid" size="lg" label="Loading project details..." />;
   
   // Render error state
-  if (error) return <div className="text-red-500 text-center">{error}</div>;
+  if (error) return <div className="text-red-500 text-center">{error.message}</div>;
 
   // Render project details
   return (

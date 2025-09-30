@@ -1,4 +1,4 @@
-import { Variants, TargetAndTransition, Transition } from "framer-motion";
+import { Variants, TargetAndTransition, Transition } from "motion/react";
 
 /**
  * Animation configurations for consistent and reusable animations

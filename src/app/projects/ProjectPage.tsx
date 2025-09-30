@@ -1,16 +1,12 @@
 "use client";
 
-import React, { 
-  useState, 
-  useEffect, 
-  useCallback 
-} from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import { GoProjectTemplate } from "react-icons/go";
 import { projectService } from "@/services/projectService";
 import { Project } from "@/types/Project";
 import { Loading } from "@/components/ui/loading";
-import LoadingScreen from "@/components/ui/loading-screen";
+import { useFetchData } from "@/hooks/useFetchData";
 
 // Dynamically import heavy components
 const DarkVeil = dynamic(() => import("@/components/ui/dark-veil-background"), {
@@ -58,45 +54,19 @@ const PROJECTS_CONFIG = {
  * Handles client-side data fetching and rendering
  */
 export default function ProjectPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Memoized fetch projects function
-  const fetchProjects = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await projectService.getProjects({
-        per_page: PROJECTS_CONFIG.dataFetching.initialPageSize
-      }, {
+  const { data: projects, isLoading, error } = useFetchData(
+    () => projectService.getProjects(
+      { per_page: PROJECTS_CONFIG.dataFetching.initialPageSize },
+      {
         sort_by: PROJECTS_CONFIG.dataFetching.sortBy,
         sort_order: PROJECTS_CONFIG.dataFetching.sortOrder
-      });
-
-      const projectData = response?.data ?? [];
-      
-      if (Array.isArray(projectData) && projectData.length > 0) {
-        setProjects(projectData);
-        setError(null);
-      } else {
-        setError("No projects found.");
       }
-    } catch (error) {
-      console.error("Failed to fetch projects:", error);
-      setError("Unable to load projects. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  // Fetch projects on component mount
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+    ),
+  );
 
   // Render loading or error states
-  if (isLoading) return <LoadingScreen />;
-  if (error) return <div className="text-red-500 text-center">{error}</div>;
+  if (isLoading) return <Loading variant="solid" size="lg" label="Loading projects..." />;
+  if (error) return <div className="text-red-500 text-center">{error.message}</div>;
 
   return (
     <>

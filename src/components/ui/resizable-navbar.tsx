@@ -14,7 +14,7 @@ import {
   useMotionValueEvent, 
   useScroll,
   Transition 
-} from "framer-motion";
+} from "motion/react";
 import { 
   FaBars, 
   FaTimes 
@@ -96,7 +96,7 @@ export const Navbar = React.memo(({
       transition={NAVBAR_CONFIG.animation.resizeTransition}
       className={cn(
         NAVBAR_CONFIG.styling.desktopNavbar, 
-        "sticky top-0", // Ensure sticky positioning
+        "fixed top-0", // Ensure fixed positioning
         className
       )}
     >
@@ -162,15 +162,12 @@ NavBody.displayName = 'NavBody';
 export const NavItems = React.memo(({
   items, 
   className, 
-  onItemClick 
 }: { 
   items: { 
     name: string; 
     link: string; 
-    onClick?: (event?: React.MouseEvent<HTMLAnchorElement>) => void 
   }[], 
   className?: string, 
-  onItemClick?: () => void 
 }) => {
   const [hovered, setHovered] = useState<number | null>(null);
   const pathname = usePathname();
@@ -186,10 +183,6 @@ export const NavItems = React.memo(({
       {items.map((item, idx) => (
         <Link
           onMouseEnter={() => setHovered(idx)}
-          onClick={(event) => {
-            item.onClick?.(event);
-            onItemClick?.();
-          }}
           className={cn(
             "relative px-4 py-2 text-[var(--color-text-secondary)] dark:text-[var(--color-text-primary)]",
             isLinkActive(pathname, item.link) &&
@@ -407,7 +400,6 @@ export const NavbarButton = React.memo(({
   variant = "primary",
   ...props
 }: {
-  href?: string;
   children: React.ReactNode;
   className?: string;
   variant?: "primary" | "secondary" | "dark" | "gradient";
@@ -427,7 +419,7 @@ export const NavbarButton = React.memo(({
 
   return (
     <Link
-      href={href || ''}
+      href={href || "/contact"}
       className={cn(baseStyles, variantStyles[variant], className)}
       {...props}
     >

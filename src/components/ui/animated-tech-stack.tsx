@@ -1,8 +1,8 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React from "react";
 import { motion } from "motion/react";
-import { TechStackIcon } from "./tech-stack-icon";
+import { TechStackIcon } from "./tech-stack";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import {
   SiNextdotjs,

@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import ShinyText from "@/components/ui/shiny-text";
-import { AboutImages } from "./animated-about-image";
+import { AboutImages } from "@/components/ui/animated-about-image";
 import { cn } from "@/lib/utils";
 import { LoadingInline } from "@/components/ui/loading";
 
@@ -130,7 +130,7 @@ const HERO_ABOUT_CONFIG = {
 };
 
 const AnimatedImageAbout = dynamic(
-  () => import("./animated-about-image").then((mod) => mod.AnimatedImageAbout),
+  () => import("../../../components/ui/animated-about-image").then((mod) => mod.AnimatedImageAbout),
   { ...HERO_ABOUT_CONFIG.dynamicImports }
 );
 

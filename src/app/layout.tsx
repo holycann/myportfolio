@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import { Toaster } from "sonner";
+import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
 
 // Centralized Configurations
@@ -104,11 +104,14 @@ export default function RootLayout({
           {children}
           <Footer />
           <ScrollToTop />
-          <Toaster
+          <Toaster 
             position="top-right"
-            richColors
-            expand={false}
-            closeButton
+            toastOptions={{
+              style: {
+                background: '#333',
+                color: '#fff',
+              },
+            }}
           />
         </Providers>
       </body>

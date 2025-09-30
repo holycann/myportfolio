@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import {
   FaFirefoxBrowser,
   FaServer,
@@ -17,6 +17,7 @@ import { TechStack } from "@/types/TechStack";
 import { FeaturedSectionProps } from "@/components/ui/featured-section";
 import FeaturedSection from "@/components/ui/featured-section";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { useFetchData } from "@/hooks/useFetchData";
 
 /**
  * Configuration for TechStack section
@@ -65,93 +66,69 @@ const getIconForCategory = (category?: string) => {
  * TechStack section displaying categorized technology stacks
  * Supports lazy loading and performance optimization
  */
-export default function TechStack() {
-  const [techStacks, setTechStacks] = useState<FeaturedSectionProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Memoized fetch tech stacks function
-  const fetchTechStacks = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await techStackService.getTechStacks(
-        { per_page: TECH_STACK_CONFIG.pagination.perPage },
-        {
-          sort_by: TECH_STACK_CONFIG.sorting.sortBy,
-          sort_order: TECH_STACK_CONFIG.sorting.sortOrder,
-        }
-      );
-
-      const techStackData = response?.data ?? [];
-      if (Array.isArray(techStackData) && techStackData.length > 0) {
-        // Memoized data transformation
-        const categorizedTechStacks = (() => {
-          const grouped = techStackData.reduce(
-            (acc, tech) => {
-              const category = tech.category || "Unknown Category";
-              acc[category] = [...(acc[category] || []), tech];
-              return acc;
-            },
-            {} as Record<string, TechStack[]>
-          );
-
-          return Object.entries(grouped).map(([category, techs]) => ({
-            title: category,
-            icon: getIconForCategory(category),
-            children: (
-              <div
-                className={`grid gap-4 p-8 ${TECH_STACK_CONFIG.grid.base} ${TECH_STACK_CONFIG.grid.md} ${TECH_STACK_CONFIG.grid.lg}`}
-              >
-                {techs.map((tech, index) => (
-                  <HoverBorderGradient
-                    key={tech.id}
-                    containerClassName="w-full"
-                    className={`
-                      w-full py-2 
-                      text-[var(--color-text-primary)] 
-                      dark:text-[var(--color-text-secondary)] 
-                      ${
-                        index % 2 === 0
-                          ? "bg-gradient-to-br from-[var(--color-primary-light)] to-[var(--color-primary-dark)]"
-                          : "bg-gradient-to-br from-[var(--color-secondary-light)] to-[var(--color-secondary-dark)]"
-                      }
-                      text-xs rounded-full
-                      transition duration-300 
-                      hover:scale-105
-                    `}
-                    duration={1.5}
-                    clockwise={index % 2 === 0}
-                  >
-                    {tech.name}
-                  </HoverBorderGradient>
-                ))}
-              </div>
-            ),
-          }));
-        })();
-
-        setTechStacks(categorizedTechStacks);
-        setError(null);
-      } else {
-        setError("No tech stacks found.");
+export default function TechStackSection() {
+  const { data: techStackData, isLoading, error } = useFetchData(
+    () => techStackService.getTechStacks(
+      { per_page: TECH_STACK_CONFIG.pagination.perPage },
+      {
+        sort_by: TECH_STACK_CONFIG.sorting.sortBy,
+        sort_order: TECH_STACK_CONFIG.sorting.sortOrder,
       }
-    } catch (error) {
-      console.error("Failed to fetch tech stacks", error);
-      setError("Unable to load tech stacks. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    )
+  );
 
-  // Fetch tech stacks on component mount
-  useEffect(() => {
-    fetchTechStacks();
-  }, [fetchTechStacks]);
+  // Memoized data transformation
+  const techStacks: FeaturedSectionProps[] = (() => {
+    if (!techStackData || techStackData.length === 0) return [];
+
+    const grouped = techStackData.reduce(
+      (acc, tech) => {
+        const category = tech.category || "Unknown Category";
+        acc[category] = [...(acc[category] || []), tech];
+        return acc;
+      },
+      {} as Record<string, TechStack[]>
+    );
+
+    return Object.entries(grouped).map(([category, techs]) => ({
+      title: category,
+      icon: getIconForCategory(category),
+      children: (
+        <div
+          className={`grid gap-4 p-8 ${TECH_STACK_CONFIG.grid.base} ${TECH_STACK_CONFIG.grid.md} ${TECH_STACK_CONFIG.grid.lg}`}
+        >
+          {techs.map((tech, index) => (
+            <HoverBorderGradient
+              key={tech.id}
+              containerClassName="w-full"
+              className={`
+                w-full py-2 
+                text-[var(--color-text-primary)] 
+                dark:text-[var(--color-text-secondary)] 
+                ${
+                  index % 2 === 0
+                    ? "bg-gradient-to-br from-[var(--color-primary-light)] to-[var(--color-primary-dark)]"
+                    : "bg-gradient-to-br from-[var(--color-secondary-light)] to-[var(--color-secondary-dark)]"
+                }
+                text-xs rounded-full
+                transition duration-300 
+                hover:scale-105
+              `}
+              duration={1.5}
+              clockwise={index % 2 === 0}
+            >
+              {tech.name}
+            </HoverBorderGradient>
+          ))}
+        </div>
+      ),
+    }));
+  })();
 
   // Render loading or error states
   if (isLoading)
     return <Loading variant="solid" size="lg" label="Loading..." />;
-  if (error) return <div className="text-red-500 text-center">{error}</div>;
+  if (error) return <div className="text-red-500 text-center">{error.message}</div>;
 
   return (
     <section

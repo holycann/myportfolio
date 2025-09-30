@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ErrorInfo, ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
 interface ErrorBoundaryProps {

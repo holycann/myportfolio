@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import { Loading } from "@/components/ui/loading";
 import { Timeline } from "@/components/ui/timeline";
 import ShinyText from "@/components/ui/shiny-text";
 import { experienceService } from "@/services/experienceService";
 import type { Experience } from "@/types/Experience";
+import { useFetchData } from "@/hooks/useFetchData";
 
 /**
  * Configuration for Experience section
@@ -29,57 +30,20 @@ const EXPERIENCE_CONFIG = {
  * Supports lazy loading and performance optimization
  */
 export default function Experience() {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Memoized fetch experiences function
-  const fetchExperiences = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await experienceService.getExperiences(
-        {
-          per_page: EXPERIENCE_CONFIG.dataFetching.initialPageSize,
-        },
-        {
-          sort_by: EXPERIENCE_CONFIG.dataFetching.sortBy,
-          sort_order: EXPERIENCE_CONFIG.dataFetching.sortOrder,
-        }
-      );
-
-      const experienceData = response?.data ?? [];
-
-      if (Array.isArray(experienceData) && experienceData.length > 0) {
-        // Memoized data sorting and transformation
-        const sortedExperiences = (() =>
-          experienceData.sort(
-            (a, b) =>
-              new Date(b.start_date).getTime() -
-              new Date(a.start_date).getTime()
-          ))();
-
-        setExperiences(sortedExperiences);
-        setError(null);
-      } else {
-        setError("No experiences found.");
+  const { data: experiences, isLoading, error } = useFetchData(
+    () => experienceService.getExperiences(
+      { per_page: EXPERIENCE_CONFIG.dataFetching.initialPageSize },
+      {
+        sort_by: EXPERIENCE_CONFIG.dataFetching.sortBy,
+        sort_order: EXPERIENCE_CONFIG.dataFetching.sortOrder,
       }
-    } catch (error) {
-      console.error("Failed to fetch experiences:", error);
-      setError("Unable to load experiences. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  // Fetch experiences on component mount
-  useEffect(() => {
-    fetchExperiences();
-  }, [fetchExperiences]);
+    ),
+  );
 
   // Render loading or error states
   if (isLoading)
     return <Loading variant="solid" size="lg" label="Loading experiences..." />;
-  if (error) return <div className="text-red-500 text-center">{error}</div>;
+  if (error) return <div className="text-red-500 text-center">{error.message}</div>;
 
   return (
     <section

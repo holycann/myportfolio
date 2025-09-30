@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { MyButton } from "@/components/ui/mybutton";
+import { Button } from "@/components/ui/button";
 
 export const ProjectBadge = ({ 
   title, 
@@ -33,10 +33,12 @@ export const ProjectBadge = ({
         },
       }}
     >
-      <MyButton 
-        text={title} 
-        buttonClassName={`${variantStyles[variant]} transition-all duration-300`}
-      />
+      <Button 
+        variant={variant === "default" ? "primary" : variant === "outlined" ? "outline" : "ghost"}
+        className={`${variantStyles[variant]} transition-all duration-300`}
+      >
+        {title}
+      </Button>
     </motion.div>
   );
 }; 

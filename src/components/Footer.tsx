@@ -1,10 +1,98 @@
-import { TextHoverEffect } from "@/components/ui/text-hover-effect";
-import Image from "next/image";
 import React from "react";
-import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter, FaX } from "react-icons/fa6";
+import Image from "next/image";
 import Link from "next/link";
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from "react-icons/fa6";
 
-const Footer: React.FC = () => {
+// Configuration for social links
+const SOCIAL_LINKS = [
+  {
+    href: "https://github.com/holyycan",
+    icon: FaGithub,
+    label: "GitHub"
+  },
+  {
+    href: "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/",
+    icon: FaLinkedin,
+    label: "LinkedIn"
+  },
+  {
+    href: "https://x.com/ehhramaa_",
+    icon: FaTwitter,
+    label: "Twitter"
+  },
+  {
+    href: "mailto:muhamad.ramadhan.dev@gmail.com",
+    icon: FaEnvelope,
+    label: "Email"
+  }
+];
+
+const NAVIGATION_LINKS = {
+  General: [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/project", label: "Project" },
+    { href: "/contact", label: "Contact" }
+  ],
+  Extras: [
+    { href: "/about#tech-stack", label: "Tech Stack" },
+    { href: "/about#experience", label: "Experience" }
+  ]
+};
+
+/**
+ * Social Links Rendering Component
+ */
+const SocialLinks = React.memo(() => (
+  <div className="flex items-center justify-center space-x-6 text-3xl">
+    {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
+      <a
+        key={label}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        className="hover:text-[var(--color-accent)] hover:scale-110 transition-all duration-300 transform"
+      >
+        <Icon />
+      </a>
+    ))}
+  </div>
+));
+
+/**
+ * Navigation Links Rendering Component
+ */
+const NavigationLinks = React.memo(() => (
+  <div className="grid grid-cols-2 gap-6 text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)]">
+    {Object.entries(NAVIGATION_LINKS).map(([section, links]) => (
+      <div key={section} className="space-y-4 flex flex-col justify-start items-center text-center">
+        <h4 className="font-semibold text-lg border-b border-[var(--color-accent)] pb-2">
+          {section}
+        </h4>
+        <ul className="space-y-2">
+          {links.map(({ href, label }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+));
+
+/**
+ * Footer Component
+ * Renders site footer with social links, navigation, and copyright
+ */
+const Footer: React.FC = React.memo(() => {
   return (
     <footer className="pt-20">
       <div className="w-full max-w-7xl mx-auto">
@@ -12,16 +100,13 @@ const Footer: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-light)]/30 to-[var(--color-secondary-light)]/30 blur-2xl rounded-3xl -z-10"></div>
           <div className="relative bg-[var(--color-bg-primary)]/40 backdrop-blur-xl rounded-3xl border border-[var(--color-border)]/20 p-8 shadow-2xl">
             <div className="space-y-4">
-              <div className="h-4 bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-secondary-light)] rounded-full w-3/4"></div>
-              <div className="h-4 bg-[var(--color-text-secondary)]/20 rounded-full w-1/2"></div>
-              <div className="h-4 bg-[var(--color-text-secondary)]/20 rounded-full w-2/3"></div>
               <div className="flex justify-center items-center gap-4 w-1/2">
                 <Image
                   src="/images/logo.png"
                   alt="Muhamad Ramadhan Profile"
                   width={84}
                   height={84}
-                  priority
+                  priority={false}
                 />
                 <p className="text-lg font-medium opacity-90">
                   I'm Muhamad Ramadhan - a backend and automation engineer
@@ -34,111 +119,14 @@ const Footer: React.FC = () => {
                     <h3 className="text-xl font-semibold mb-4">
                       Connect With Me
                     </h3>
-                    <div className="flex items-center justify-center space-x-6 text-3xl">
-                      <a
-                        href="https://github.com/holyycan"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-[var(--color-accent)] hover:scale-110 transition-all duration-300 transform"
-                      >
-                        <FaGithub />
-                      </a>
-                      <a
-                        href="https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-[var(--color-accent)] hover:scale-110 transition-all duration-300 transform"
-                      >
-                        <FaLinkedin />
-                      </a>
-                      <a
-                        href="https://x.com/ehhramaa_"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-[var(--color-accent)] hover:scale-110 transition-all duration-300 transform"
-                      >
-                        <FaTwitter />
-                      </a>
-                      <a
-                        href="mailto:muhamad.ramadhan.dev@gmail.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-[var(--color-accent)] hover:scale-110 transition-all duration-300 transform"
-                      >
-                        <FaEnvelope />
-                      </a>
-                    </div>
+                    <SocialLinks />
                   </div>
-
                   <p className="text-sm opacity-70">
                     Let's collaborate and build something amazing together!
                   </p>
                 </div>
                 <div className="h-full bg-[var(--color-text-secondary)]/10 rounded-xl p-6">
-                  <div className="grid grid-cols-2 gap-6 text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)]">
-                    <div className="space-y-4 flex flex-col justify-start items-center text-center">
-                      <h4 className="font-semibold text-lg border-b border-[var(--color-accent)] pb-2">
-                        General
-                      </h4>
-                      <ul className="space-y-2">
-                        <li>
-                          <Link
-                            href="/"
-                            className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-                          >
-                            Home
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/about"
-                            className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-                          >
-                            About
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/project"
-                            className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-                          >
-                            Project
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/contact"
-                            className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-                          >
-                            Contact
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="space-y-4 flex flex-col justify-start items-center text-center">
-                      <h4 className="font-semibold text-lg border-b border-[var(--color-accent)] pb-2">
-                        Extras
-                      </h4>
-                      <ul className="space-y-2">
-                        <li>
-                          <Link
-                            href="/about#tech-stack"
-                            className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-                          >
-                            Tech Stack
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="/about#experience"
-                            className="opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all"
-                          >
-                            Experience
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  <NavigationLinks />
                 </div>
               </div>
             </div>
@@ -163,6 +151,8 @@ const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

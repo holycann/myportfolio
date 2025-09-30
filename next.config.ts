@@ -1,12 +1,22 @@
 import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
+// Configurable constants for better maintainability
+const BUNDLE_ANALYZE = process.env.ANALYZE === "true";
+const IMAGE_CACHE_TTL = 60 * 60 * 24; // 24 hours cache
+const SERVER_BODY_SIZE_LIMIT = "2mb";
+
+// Recommended device sizes for responsive images
+const RECOMMENDED_DEVICE_SIZES = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+const RECOMMENDED_IMAGE_SIZES = [16, 32, 48, 64, 96, 128, 256, 384];
+
 // Enable bundle analyzer when ANALYZE is true
 const withAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
+  enabled: BUNDLE_ANALYZE,
 });
 
 const nextConfig: NextConfig = {
+  // SVG handling configuration
   turbopack: {
     rules: {
       "*.svg": {
@@ -14,7 +24,7 @@ const nextConfig: NextConfig = {
           {
             loader: "@svgr/webpack",
             options: {
-              icon: true,
+              icon: true, // Optimize SVGs as icons
             },
           },
         ],
@@ -22,24 +32,34 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
+  // Comprehensive image optimization
   images: {
+    // Security: Allow SVG with caution
     dangerouslyAllowSVG: true,
+    // Restrict remote image patterns more specifically if possible
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*",
+        hostname: "*", // TODO: Replace with specific hostnames
       },
     ],
+    // Modern image formats for better compression
     formats: ["image/avif", "image/webp"],
-    minimumCacheTTL: 60 * 60 * 24, // Cache images for 24 hours
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: IMAGE_CACHE_TTL,
+    deviceSizes: RECOMMENDED_DEVICE_SIZES,
+    imageSizes: RECOMMENDED_IMAGE_SIZES,
   },
+
+  // Performance and build optimizations
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
+
+  // Experimental performance features
   experimental: {
+    // Optimize common package imports
     optimizePackageImports: [
       "@/components",
       "@/data",
@@ -48,12 +68,16 @@ const nextConfig: NextConfig = {
       "@svgr/webpack",
     ],
     optimisticClientCache: true,
+    // Limit server action body size for security
     serverActions: {
-      bodySizeLimit: "2mb",
+      bodySizeLimit: SERVER_BODY_SIZE_LIMIT,
     },
   },
+
+  // Development origin allowlist
   allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
-  // Add content security policy
+
+  // Enhanced security headers
   headers: async () => {
     return [
       {
@@ -61,29 +85,21 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "X-Content-Type-Options",
-            value: "nosniff",
+            value: "nosniff", // Prevent MIME type sniffing
           },
           {
             key: "X-Frame-Options",
-            value: "DENY",
+            value: "DENY", // Prevent clickjacking
           },
           {
             key: "X-XSS-Protection",
-            value: "1; mode=block",
+            value: "1; mode=block", // Enable XSS protection
           },
-          // Allow web workers
-          // {
-          //   key: "Content-Security-Policy",
-          //   value: [
-          //     "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
-          //     "connect-src 'self' https://api.emailjs.com ws://localhost:* ws://127.0.0.1:* http://localhost:*;",
-          //   ].join(" "),
-          // },
         ],
       },
     ];
   },
 };
 
-// Export with analyzer wrapper
+// Export configuration with bundle analyzer wrapper
 export default withAnalyzer(nextConfig);

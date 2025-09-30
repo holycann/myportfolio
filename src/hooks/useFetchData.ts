@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 // Custom hook for data fetching
 export function useFetchData<T>(
   fetchFn: () => Promise<ApiResponse<T[]>>,
-  filterFn: (item: T) => boolean = () => true,
-  limit = 5
+  filterFn: (item: T) => boolean = () => true
 ) {
   const [data, setData] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +16,7 @@ export function useFetchData<T>(
         setIsLoading(true);
         const response = await fetchFn();
         if (response.data) {
-          const filteredData = response.data.filter(filterFn).slice(0, limit);
+          const filteredData = response.data.filter(filterFn);
           setData(filteredData);
         }
       } catch (err) {

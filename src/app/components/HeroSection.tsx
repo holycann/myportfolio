@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { HiOutlineEye } from "react-icons/hi";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import React, { useCallback, useMemo } from "react";
 import { AnimatedButton } from "@/components/ui/button";
