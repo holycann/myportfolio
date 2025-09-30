@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
