@@ -11,6 +11,7 @@ import {
   PaginationNext,
 } from "./pagination";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Card = React.memo(
   ({
@@ -33,7 +34,7 @@ export const Card = React.memo(
       )}
     >
       <Image
-        src={card.src}
+        src={card.image || "/images/logo.png"}
         alt={card.title}
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -57,7 +58,8 @@ Card.displayName = "Card";
 
 export type FocusCardProps = {
   title: string;
-  src: string;
+  url: string;
+  image: string;
 };
 
 export function FocusCards({
@@ -89,13 +91,19 @@ export function FocusCards({
     <div className="flex flex-col items-center gap-10">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-7xl mx-auto w-full">
         {paginatedCards.map((card, index) => (
-          <Card
-            key={card.title}
-            card={card}
-            index={index}
-            hovered={hovered}
-            setHovered={setHovered}
-          />
+          <Link 
+            href={card.url} 
+            key={card.title} 
+            className="group relative block overflow-hidden rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            aria-label={`View project: ${card.title}`}
+          >
+            <Card
+              card={card}
+              index={index}
+              hovered={hovered}
+              setHovered={setHovered}
+            />
+          </Link>
         ))}
       </div>
 

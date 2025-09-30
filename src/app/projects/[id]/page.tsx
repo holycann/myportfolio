@@ -4,13 +4,9 @@ import ProjectDetail from "./ProjectDetailPage";
 import { deslugify } from "@/lib/utils";
 import { projectService } from "@/services/projectService";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }): Promise<Metadata> {
   try {
-    const slug = (await params).slug;
+    const { id:slug } = await params;
     const { data: project } = await projectService.getProjectBySlug(slug);
 
     if (!project) return { 
@@ -47,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page({ params }: Props) {
-  return <ProjectDetail slug={(await params).slug} />;
+export default async function Page({ params }) {
+  const { id:slug } = await params;
+  return <ProjectDetail slug={slug} />;
 }

@@ -30,10 +30,12 @@ import {
   SiChakraui,
   SiStrapi,
   SiSupabase,
+  SiGo
 } from "react-icons/si";
 
 // Mapping of tech names to their corresponding icons
 const techIconMap = {
+  Go: SiGo,
   "Next.js": SiNextdotjs,
   React: SiReact,
   "Tailwind CSS": SiTailwindcss,
