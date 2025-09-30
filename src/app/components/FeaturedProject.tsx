@@ -10,7 +10,7 @@ import { Project } from "@/types/Project";
 import CardSwap, { Card } from "../../components/ui/card-swap";
 import Link from "next/link";
 import Badge from "@/components/ui/badge";
-import { AnimatedButton, Button } from "@/components/ui/button";
+import { AnimatedButton } from "@/components/ui/button";
 
 const ShinyText = dynamic(() => import("@/components/ui/shiny-text"), {
   ssr: false,
