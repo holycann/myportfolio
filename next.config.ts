@@ -9,6 +9,7 @@ const SERVER_BODY_SIZE_LIMIT = "2mb";
 // Recommended device sizes for responsive images
 const RECOMMENDED_DEVICE_SIZES = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 const RECOMMENDED_IMAGE_SIZES = [16, 32, 48, 64, 96, 128, 256, 384];
+const RECOMMENDED_IMAGE_QUALITY = [25, 50, 75, 100];
 
 // Enable bundle analyzer when ANALYZE is true
 const withAnalyzer = withBundleAnalyzer({
@@ -35,6 +36,7 @@ const nextConfig: NextConfig = {
 
   // Comprehensive image optimization
   images: {
+    qualities: RECOMMENDED_IMAGE_QUALITY,
     // Security: Allow SVG with caution
     dangerouslyAllowSVG: true,
     // Restrict remote image patterns more specifically if possible

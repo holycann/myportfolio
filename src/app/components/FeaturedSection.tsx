@@ -199,7 +199,7 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
               endLat: -8.65, // Bali (Denpasar)
               endLng: 115.2167,
               arcAlt: 0.3,
-              color: "var(--color-secondary-light)",
+              color: "#B16CEA",
             },
             {
               order: 2,
@@ -208,7 +208,7 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
               endLat: 4.2105, // Penang, Malaysia
               endLng: 100.2048,
               arcAlt: 0.4,
-              color: "var(--color-accent-light)",
+              color: "#A855F7", // Equivalent to var(--color-accent-light)
             },
             {
               order: 3,
@@ -217,7 +217,7 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
               endLat: 1.4419, // Batam
               endLng: 104.2385,
               arcAlt: 0.5,
-              color: "var(--color-primary-light)",
+              color: "#8B5CF6", // Equivalent to var(--color-primary-light)
             },
             {
               order: 4,
@@ -226,7 +226,7 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
               endLat: 2.2899, // Singapore
               endLng: 103.8519,
               arcAlt: 0.6,
-              color: "var(--color-info)",
+              color: "#0EA5E9", // Equivalent to var(--color-info)
             },
             {
               order: 5,
@@ -235,7 +235,7 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
               endLat: 3.5952, // Medan, North Sumatra
               endLng: 98.6722,
               arcAlt: 0.4,
-              color: "var(--color-success)",
+              color: "#10B981", // Equivalent to var(--color-success)
             },
           ]}
         />

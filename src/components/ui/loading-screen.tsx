@@ -1,32 +1,63 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
+import { Transition, Easing } from 'motion/react';
 
-export const LoadingScreen = () => {
+export const LoadingScreen = React.memo(() => {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Memoize progress calculation to reduce unnecessary re-renders
+  const calculateProgress = useCallback((prev: number) => {
+    const newProgress = prev + Math.random() * 10;
+    return newProgress >= 100 ? 100 : newProgress;
+  }, []);
+
   useEffect(() => {
-    // Simulate loading progress
-    const timer = setInterval(() => {
+    // Use requestAnimationFrame for smoother progress updates
+    let animationFrameId: number;
+    let startTime: number | null = null;
+
+    const updateProgress = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      
       setProgress(prev => {
-        const newProgress = prev + Math.random() * 10;
+        const newProgress = calculateProgress(prev);
+        
         if (newProgress >= 100) {
-          clearInterval(timer);
-          // Add a small delay before hiding the loading screen
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 500);
+          // Add small delay before hiding loading screen
+          setTimeout(() => setIsLoading(false), 500);
           return 100;
         }
+        
+        // Continue animation if not complete
+        animationFrameId = requestAnimationFrame(updateProgress);
         return newProgress;
       });
-    }, 150);
+    };
 
-    return () => clearInterval(timer);
-  }, []);
+    // Start progress animation
+    animationFrameId = requestAnimationFrame(updateProgress);
+
+    // Cleanup function
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [calculateProgress]);
+
+  // Memoize logo animation properties
+  const logoAnimation = useMemo(() => ({
+    scale: [1, 1.2, 1],
+    rotate: [0, 10, -10, 0]
+  }), []);
+
+  const logoTransition: Transition = {
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut" as Easing
+  };
 
   if (!isLoading) return null;
 
@@ -36,19 +67,13 @@ export const LoadingScreen = () => {
       animate={{ opacity: isLoading ? 1 : 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
+      // Added fixed positioning with z-index for proper overlay
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-black"
     >
       <div className="relative w-32 h-32 mb-8">
         <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 10, -10, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
+          animate={logoAnimation}
+          transition={logoTransition}
         >
           <Image
             src="/images/logo.png"
@@ -80,6 +105,8 @@ export const LoadingScreen = () => {
       </motion.p>
     </motion.div>
   );
-};
+});
+
+LoadingScreen.displayName = 'LoadingScreen';
 
 export default LoadingScreen; 

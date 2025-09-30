@@ -105,7 +105,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
             loading="eager"
             decoding="sync"
             fill
-            quality={90}
+            quality={75}
             placeholder="blur"
             blurDataURL={createPlaceHolder(title || "Default Image")}
           />
