@@ -1,42 +1,68 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import MagicBento, { BentoCardProps } from "@/components/ui/magic-bento";
-import Stepper, { Step } from "@/components/ui/stepper";
-import ShinyText from "@/components/ui/shiny-text";
-import { World } from "@/components/ui/github-globe";
-import InfiniteMenu from "@/components/ui/infinite-menu";
+
+import React, { 
+  useEffect, 
+  useState, 
+  useMemo, 
+  useCallback 
+} from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import Badge from "@/components/ui/badge";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { HiSparkles } from "react-icons/hi";
+
+// Centralized configuration and utility imports
 import { experienceService } from "@/services/experienceService";
 import { Experience } from "@/types/Experience";
+import { TechStack } from "@/types/TechStack";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Step } from "@/components/ui/stepper";
 
-const SkeletonOne = () => {
-  const variants = {
-    initial: {
-      x: 0,
-    },
+// Dynamic imports with loading states
+const MagicBento = dynamic(() => import("@/components/ui/magic-bento"), {
+  loading: () => <Skeleton variant="default" height="500px" />,
+  ssr: false,
+});
+const Stepper = dynamic(() => import("@/components/ui/stepper"), {
+  loading: () => <Skeleton variant="default" height="300px" />,
+  ssr: false,
+});
+const InfiniteMenu = dynamic(() => import("@/components/ui/infinite-menu"), {
+  loading: () => <Skeleton variant="default" height="200px" />,
+  ssr: false,
+});
+const Badge = dynamic(() => import("@/components/ui/badge"), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+const ShinyText = dynamic(() => import("@/components/ui/shiny-text"), {
+  loading: () => <Skeleton variant="default" height="100px" />,
+  ssr: false,
+});
+const GitHubGlobe = dynamic(() => import("@/components/ui/github-globe").then((mod) => mod.World), {
+  loading: () => <Skeleton variant="default" height="400px" />,
+  ssr: false,
+});
+
+// Skeleton component with memoization
+const SkeletonOne = React.memo(() => {
+  const variants = useMemo(() => ({
+    initial: { x: 0 },
     animate: {
       x: 10,
       rotate: 5,
-      transition: {
-        duration: 0.2,
-      },
+      transition: { duration: 0.2 },
     },
-  };
-  const variantsSecond = {
-    initial: {
-      x: 0,
-    },
+  }), []);
+
+  const variantsSecond = useMemo(() => ({
+    initial: { x: 0 },
     animate: {
       x: -10,
       rotate: -5,
-      transition: {
-        duration: 0.2,
-      },
+      transition: { duration: 0.2 },
     },
-  };
+  }), []);
 
   return (
     <motion.div
@@ -73,56 +99,60 @@ const SkeletonOne = () => {
       </motion.div>
     </motion.div>
   );
-};
+});
+SkeletonOne.displayName = 'SkeletonOne';
 
-const items = [
-  {
-    image: "/images/tech-stack/golang.png",
-    title: "Go",
-  },
-  {
-    image: "/images/tech-stack/react.png",
-    title: "ReactJs",
-  },
-  {
-    image: "/images/tech-stack/nextjs.png",
-    title: "NextJs",
-  },
-  {
-    image: "/images/tech-stack/postgre.png",
-    title: "PostgreSQL",
-  },
-];
+/**
+ * Featured Section Component
+ * Displays a comprehensive overview of personal and professional highlights
+ * 
+ * @component
+ * @param {Object} props - Component properties
+ * @param {TechStack[]} props.techStack - Array of tech stack items
+ */
+export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
+  // State management with error handling
+  const [featuredExperiences, setFeaturedExperiences] = useState<Experience[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-export function FeaturedSection() {
-  const [featuredExperiences, setFeaturedExperiences] = useState<Experience[]>(
-    []
+  // Memoized data fetching with error handling
+  const fetchExperiences = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await experienceService.getExperiences();
+      if (response.data) {
+        setFeaturedExperiences(response.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch experiences:", error);
+      setError(error instanceof Error ? error : new Error('Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Fetch experiences on component mount
+  useEffect(() => {
+    fetchExperiences();
+  }, [fetchExperiences]);
+
+  // Memoized infinite menu items
+  const infiniteMenuItems = useMemo(() => 
+    techStack?.map((tech) => ({
+      image: tech.image_url || "https://picsum.photos/900/900?grayscale",
+      title: tech.name || "",
+    })) || [], 
+    [techStack]
   );
 
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await experienceService.getExperiences();
-        if (response.data) {
-          const featured = response.data;
-          setFeaturedExperiences(featured);
-        }
-      } catch (error) {
-        console.error("Failed to fetch experiences:", error);
-      }
-    };
-
-    fetchExperiences();
-  }, []);
-  const cardData: BentoCardProps[] = [
+  // Memoized card data with error handling
+  const cardData = useMemo(() => [
     {
       color: "var(--background)",
       title: "About",
       description: "A glimpse into my journey, passion, and vision in tech.",
-      link: {
-        href: "/about",
-        is_external: false,
-      },
+      link: { href: "/about", is_external: false },
       content: (
         <div className="flex justify-center items-center w-[80%] h-[80%]">
           <Badge
@@ -141,6 +171,7 @@ export function FeaturedSection() {
             alt="About Section Image"
             width={500}
             height={300}
+            sizes="(max-width: 768px) 100vw, 500px"
             className="w-full h-auto object-cover rounded-lg opacity-80"
           />
         </div>
@@ -149,24 +180,21 @@ export function FeaturedSection() {
     {
       color: "var(--background)",
       title: "Enthusiast",
-      description:
-        "Coding, crypto, and lifelong learning fuel my curiosity and drive.",
+      description: "Coding, crypto, and lifelong learning fuel my curiosity and drive.",
       content: <SkeletonOne />,
     },
     {
       color: "var(--background)",
       title: "Tech Stack",
-      description:
-        "The tools and technologies I use to build scalable, modern solutions.",
-      content: <InfiniteMenu items={items} />,
+      description: "The tools and technologies I use to build scalable, modern solutions.",
+      content: <InfiniteMenu items={infiniteMenuItems} />,
     },
     {
       color: "var(--background)",
       title: "Countries Explored",
-      description:
-        "Places I've visited that shaped my perspective and global mindset.",
+      description: "Places I've visited that shaped my perspective and global mindset.",
       content: (
-        <World
+        <GitHubGlobe
           globeConfig={{
             pointSize: 1,
             globeColor: "#1d072e",
@@ -241,12 +269,14 @@ export function FeaturedSection() {
     {
       color: "var(--background)",
       title: "Experience",
-      description:
-        "A timeline of growth: internships, projects, and continuous development.",
-      content: (
+      description: "A timeline of growth: internships, projects, and continuous development.",
+      content: isLoading ? (
+        <Skeleton variant="default" height="300px" />
+      ) : error ? (
+        <div className="text-red-500">Failed to load experiences</div>
+      ) : (
         <Stepper
           initialStep={0}
-          onStepChange={(step) => console.log(`Current step: ${step}`)}
           contentClassName="text-white"
           backButtonText=""
           nextButtonText=""
@@ -261,11 +291,10 @@ export function FeaturedSection() {
             className: "text-neutral-300 hover:text-white transition-colors",
           }}
           nextButtonProps={{
-            className:
-              "bg-purple-700 hover:bg-purple-600 text-white rounded-md",
+            className: "bg-purple-700 hover:bg-purple-600 text-white rounded-md",
           }}
         >
-          {featuredExperiences.map((experience, _) => (
+          {featuredExperiences.map((experience) => (
             <Step key={experience.id}>
               <p className="text-sm">{experience.company}</p>
               <h3 className="text-xl font-semibold">{experience.role}</h3>
@@ -278,7 +307,7 @@ export function FeaturedSection() {
         is_external: false,
       },
     },
-  ];
+  ], [infiniteMenuItems, featuredExperiences, isLoading, error]);
 
   return (
     <>

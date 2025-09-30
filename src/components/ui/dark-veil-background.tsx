@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect } from "react";
 import { Renderer, Program, Mesh, Triangle, Vec2 } from "ogl";
 
@@ -98,7 +100,7 @@ export default function DarkVeil({
     const parent = canvas.parentElement as HTMLElement;
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 2) : 2,
       canvas,
       alpha: true,
     });
@@ -130,7 +132,9 @@ export default function DarkVeil({
       program.uniforms.uResolution.value.set(w, h);
     };
 
-    window.addEventListener("resize", resize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", resize);
+    }
     resize();
 
     const start = performance.now();
@@ -152,7 +156,9 @@ export default function DarkVeil({
 
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("resize", resize);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener("resize", resize);
+      }
     };
   }, [
     hueShift,

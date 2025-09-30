@@ -1,7 +1,7 @@
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import Image from "next/image";
 import React from "react";
-import { FaGithub, FaLinkedin, FaMailchimp, FaTwitter, FaX } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter, FaX } from "react-icons/fa6";
 import Link from "next/link";
 
 const Footer: React.FC = () => {
@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
                         rel="noopener noreferrer"
                         className="hover:text-[var(--color-accent)] hover:scale-110 transition-all duration-300 transform"
                       >
-                        <FaMailchimp />
+                        <FaEnvelope />
                       </a>
                     </div>
                   </div>

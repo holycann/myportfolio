@@ -10,6 +10,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "./pagination";
+import Image from "next/image";
 
 export const Card = React.memo(
   ({
@@ -31,10 +32,12 @@ export const Card = React.memo(
         hovered !== null && hovered !== index && "blur-sm scale-[0.98]"
       )}
     >
-      <img
+      <Image
         src={card.src}
         alt={card.title}
-        className="object-cover absolute inset-0"
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        className="object-cover absolute inset-0 opacity-80"
       />
       <div
         className={cn(

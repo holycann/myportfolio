@@ -5,11 +5,14 @@ import Image from "next/image";
 import { HiOutlineEye } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { AnimatedButton } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
+import { withErrorBoundary } from "@/components/ui/error-boundary";
+import { AnimationPresets } from "@/lib/animations";
 
-// Dynamically import components to reduce initial bundle size
+// Dynamically import components with ssr: false and error boundary
 const ContainerHoverAnimation = dynamic(
   () => import("@/components/ui/container-hover-animation"),
   {
@@ -23,7 +26,7 @@ const FavTechStack = dynamic(() => import("@/components/ui/animated-card"), {
 });
 const Badge = dynamic(() => import("@/components/ui/badge"), {
   loading: () => <Skeleton variant="rounded" />,
-  ssr: true,
+  ssr: false,
 });
 const TextType = dynamic(() => import("@/components/ui/text-type"), {
   loading: () => <Skeleton variant="rounded" />,
@@ -38,99 +41,105 @@ const Threads = dynamic(() => import("@/components/ui/threads-background"), {
   ssr: false,
 });
 
-const handleResumeClick = () => {
-  window.open("/resume.pdf", "_blank");
-};
+/**
+ * Animated text component with character-level reveal animation
+ * Uses memoization to prevent unnecessary re-renders
+ * 
+ * @component
+ * @param {Object} props - Component properties
+ * @param {string} props.children - Text to animate
+ * @param {string} [props.className=''] - Additional CSS classes
+ * @param {number} [props.delay=0] - Base delay for animation
+ * @param {number} [props.staggerDelay=0.05] - Delay between character animations
+ * 
+ * @returns {React.ReactElement} Animated text component
+ */
+const AnimatedText = React.memo(
+  ({
+    children,
+    className = "",
+    delay = 0,
+    staggerDelay = 0.05,
+  }: {
+    children: string;
+    className?: string;
+    delay?: number;
+    staggerDelay?: number;
+  }) => {
+    // Use memoized animation to prevent unnecessary computations
+    const animatedCharacters = useMemo(
+      () =>
+        children.split("").map((char, index) => (
+          <motion.span
+            key={index}
+            variants={AnimationPresets.textReveal(delay, staggerDelay)}
+            initial="initial"
+            animate="animate"
+            custom={index}
+            className="inline-block origin-bottom"
+            style={{
+              display: "inline-block",
+              transformOrigin: "bottom center",
+            }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
+        )),
+      [children, delay, staggerDelay]
+    );
 
-const handleScrollToBottom = () => {
-  const featuredSection = document.getElementById("featured-section");
-  if (featuredSection) {
-    featuredSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    return <span className={className}>{animatedCharacters}</span>;
   }
-};
+);
+AnimatedText.displayName = "AnimatedText";
 
-export default function Hero() {
-  // Memoized AnimatedText component to reduce re-renders
-  const AnimatedText = React.memo(
-    ({
-      children,
-      className = "",
-      delay = 0,
-      staggerDelay = 0.05,
-    }: {
-      children: string;
-      className?: string;
-      delay?: number;
-      staggerDelay?: number;
-    }) => {
-      return (
-        <span className={className}>
-          {children.split("").map((char, index) => (
-            <motion.span
-              key={index}
-              initial={{
-                opacity: 0,
-                y: 20,
-                filter: "blur(10px)",
-                scale: 0.8,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-                scale: 1,
-                transition: {
-                  delay: delay + index * staggerDelay,
-                  duration: 0.6,
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 10,
-                },
-              }}
-              className="inline-block origin-bottom"
-              style={{
-                display: "inline-block",
-                transformOrigin: "bottom center",
-              }}
-            >
-              {char === " " ? "\u00A0" : char}
-            </motion.span>
-          ))}
-        </span>
-      );
+/**
+ * Hero section component with animated introduction and interactive elements
+ * Showcases personal branding, skills, and provides navigation options
+ * 
+ * @component
+ * @returns {React.ReactElement} Hero section with animations and interactions
+ */
+function Hero() {
+  const router = useRouter();
+
+  // Memoized event handlers to prevent unnecessary re-renders
+  const handleResumeClick = useCallback(() => {
+    router.push("/MuhamadRamadhanResume.pdf");
+  }, [router]);
+
+  const handleScrollToBottom = useCallback(() => {
+    const featuredSection = document.getElementById("featured-section");
+    if (featuredSection) {
+      featuredSection.scrollIntoView({ behavior: 'smooth' });
     }
+  }, []);
+
+  // Memoized background styles to prevent recomputation
+  const backgroundStyles = useMemo(
+    () => ({
+      gridBackground: cn(
+        "absolute inset-0",
+        "[background-size:40px_40px]",
+        "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+        "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
+      ),
+      radialGradient: "pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"
+    }),
+    []
   );
 
   return (
     <main
       role="main"
       aria-label="Hero Section"
-      style={{
-        width: "100%",
-        height: "100vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="w-full h-screen relative overflow-hidden"
     >
-      <section
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 1,
-        }}
-      >
+      <section className="absolute top-0 left-0 w-full h-full z-1">
         <Threads amplitude={2} distance={0.1} enableMouseInteraction={false} />
       </section>
-      <div
-        style={{ position: "relative", zIndex: 2 }}
-        className="container mx-auto relative flex flex-col justify-center items-center min-h-screen w-full overflow-hidden py-25 lg:py-0"
-      >
+
+      <div className="container mx-auto relative z-2 flex flex-col justify-center items-center min-h-screen w-full overflow-hidden py-25 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center">
           <article className="flex flex-col overflow-hidden">
             <ContainerHoverAnimation
@@ -157,16 +166,8 @@ export default function Hero() {
               }
             >
               <div className="relative flex w-full items-center justify-center bg-white dark:bg-black">
-                <div
-                  className={cn(
-                    "absolute inset-0",
-                    "[background-size:40px_40px]",
-                    "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-                    "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
-                  )}
-                />
-                {/* Radial gradient for the container to give a faded look */}
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
+                <div className={backgroundStyles.gridBackground} />
+                <div className={backgroundStyles.radialGradient} />
                 <div className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-500 bg-clip-text text-4xl font-bold text-transparent sm:text-7xl">
                   <div className="relative">
                     <motion.div
@@ -377,7 +378,7 @@ export default function Hero() {
                 </AnimatedButton>
                 <button
                   onClick={() => {
-                    window.open("/contact");
+                    router.push("/contact");
                   }}
                   className="px-4 text-xs sm:text-sm md:text-base lg:text-lg text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)] dark:hover:text-[var(--color-text-primary)] cursor-pointer transition duration-500"
                 >
@@ -474,3 +475,10 @@ export default function Hero() {
     </main>
   );
 }
+
+// Wrap Hero component with error boundary for enhanced error handling
+export default withErrorBoundary(Hero, (
+  <div className="flex items-center justify-center min-h-screen bg-red-50 dark:bg-red-900">
+    <p className="text-red-600 dark:text-red-300">Failed to load Hero section</p>
+  </div>
+));

@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect, useState } from 'react';
 import { Renderer, Program, Triangle, Mesh } from 'ogl';
 
@@ -87,7 +89,7 @@ const LightRays: React.FC<LightRaysProps> = ({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || typeof window === 'undefined') return;
 
     observerRef.current = new IntersectionObserver(
       entries => {
@@ -108,7 +110,7 @@ const LightRays: React.FC<LightRaysProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!isVisible || !containerRef.current) return;
+    if (!isVisible || !containerRef.current || typeof window === 'undefined') return;
 
     if (cleanupFunctionRef.current) {
       cleanupFunctionRef.current();
@@ -123,7 +125,7 @@ const LightRays: React.FC<LightRaysProps> = ({
       if (!containerRef.current) return;
 
       const renderer = new Renderer({
-        dpr: Math.min(window.devicePixelRatio, 2),
+        dpr: typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 2) : 2,
         alpha: true
       });
       rendererRef.current = renderer;
@@ -272,7 +274,7 @@ void main() {
       const updatePlacement = () => {
         if (!containerRef.current || !renderer) return;
 
-        renderer.dpr = Math.min(window.devicePixelRatio, 2);
+        renderer.dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 2, 2);
 
         const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
         renderer.setSize(wCSS, hCSS);
@@ -312,8 +314,9 @@ void main() {
           return;
         }
       };
-
-      window.addEventListener('resize', updatePlacement);
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', updatePlacement);
+      }
       updatePlacement();
       animationIdRef.current = requestAnimationFrame(loop);
 
@@ -323,7 +326,9 @@ void main() {
           animationIdRef.current = null;
         }
 
-        window.removeEventListener('resize', updatePlacement);
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', updatePlacement);
+        }
 
         if (renderer) {
           try {
@@ -372,7 +377,7 @@ void main() {
   ]);
 
   useEffect(() => {
-    if (!uniformsRef.current || !containerRef.current || !rendererRef.current) return;
+    if (!uniformsRef.current || !containerRef.current || !rendererRef.current || typeof window === 'undefined') return;
 
     const u = uniformsRef.current;
     const renderer = rendererRef.current;
@@ -409,14 +414,14 @@ void main() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current || !rendererRef.current) return;
+      if (!containerRef.current || !rendererRef.current || typeof window === 'undefined') return;
       const rect = containerRef.current.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
       mouseRef.current = { x, y };
     };
 
-    if (followMouse) {
+    if (followMouse && typeof window !== 'undefined') {
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
     }

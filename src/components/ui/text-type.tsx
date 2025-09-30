@@ -1,6 +1,6 @@
 "use client";
 
-import {
+import React, {
   ElementType,
   useEffect,
   useRef,
@@ -8,9 +8,31 @@ import {
   createElement,
   useMemo,
   useCallback,
+  memo
 } from "react";
 import { gsap } from "gsap";
 
+/**
+ * Configuration for text typing animation
+ * Provides default and customizable settings
+ */
+const TEXT_TYPE_CONFIG = {
+  defaults: {
+    typingSpeed: 50,
+    initialDelay: 0,
+    pauseDuration: 2000,
+    deletingSpeed: 30,
+    cursorBlinkDuration: 0.5,
+  },
+  observerOptions: {
+    threshold: 0.1
+  }
+};
+
+/**
+ * Text typing animation properties
+ * Defines comprehensive configuration for text animation
+ */
 interface TextTypeProps {
   className?: string;
   showCursor?: boolean;
@@ -32,20 +54,27 @@ interface TextTypeProps {
   reverseMode?: boolean;
 }
 
-const TextType = ({
+/**
+ * Advanced text typing animation component
+ * Supports multiple texts, cursor effects, and visibility triggers
+ * 
+ * @component
+ * @param {TextTypeProps} props - Text typing configuration
+ */
+const TextType = memo(({
   text,
   as: Component = "div",
-  typingSpeed = 50,
-  initialDelay = 0,
-  pauseDuration = 2000,
-  deletingSpeed = 30,
+  typingSpeed = TEXT_TYPE_CONFIG.defaults.typingSpeed,
+  initialDelay = TEXT_TYPE_CONFIG.defaults.initialDelay,
+  pauseDuration = TEXT_TYPE_CONFIG.defaults.pauseDuration,
+  deletingSpeed = TEXT_TYPE_CONFIG.defaults.deletingSpeed,
   loop = true,
   className = "",
   showCursor = true,
   hideCursorWhileTyping = false,
   cursorCharacter = "|",
   cursorClassName = "",
-  cursorBlinkDuration = 0.5,
+  cursorBlinkDuration = TEXT_TYPE_CONFIG.defaults.cursorBlinkDuration,
   textColor = "",
   variableSpeed,
   onSentenceComplete,
@@ -61,17 +90,20 @@ const TextType = ({
   const cursorRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
 
+  // Memoize text array to prevent unnecessary re-computations
   const textArray = useMemo(
     () => (Array.isArray(text) ? text : [text]),
     [text]
   );
 
+  // Generate random typing speed with memoization
   const getRandomSpeed = useCallback(() => {
     if (!variableSpeed) return typingSpeed;
     const { min, max } = variableSpeed;
     return Math.random() * (max - min) + min;
   }, [variableSpeed, typingSpeed]);
 
+  // Visibility observer for lazy loading
   useEffect(() => {
     if (!startOnVisible || !containerRef.current) return;
 
@@ -80,34 +112,39 @@ const TextType = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            observer.disconnect();
           }
         });
       },
-      { threshold: 0.1 }
+      TEXT_TYPE_CONFIG.observerOptions
     );
 
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [startOnVisible]);
 
+  // Cursor blinking animation
   useEffect(() => {
     if (showCursor && cursorRef.current) {
-      gsap.set(cursorRef.current, { opacity: 1 });
-      gsap.to(cursorRef.current, {
+      const cursorTimeline = gsap.timeline({ repeat: -1 });
+      cursorTimeline.to(cursorRef.current, {
         opacity: 0,
         duration: cursorBlinkDuration,
-        repeat: -1,
         yoyo: true,
-        ease: "power2.inOut",
+        ease: "power2.inOut"
       });
+
+      return () => {
+        cursorTimeline.kill();
+      };
     }
   }, [showCursor, cursorBlinkDuration]);
 
+  // Main typing animation logic
   useEffect(() => {
     if (!isVisible) return;
 
     let timeout: NodeJS.Timeout;
-
     const currentText = textArray[currentTextIndex];
     const processedText = reverseMode
       ? currentText.split("").reverse().join("")
@@ -121,9 +158,7 @@ const TextType = ({
             return;
           }
 
-          if (onSentenceComplete) {
-            onSentenceComplete(textArray[currentTextIndex], currentTextIndex);
-          }
+          onSentenceComplete?.(textArray[currentTextIndex], currentTextIndex);
 
           setCurrentTextIndex((prev) => (prev + 1) % textArray.length);
           setCurrentCharIndex(0);
@@ -176,6 +211,7 @@ const TextType = ({
     onSentenceComplete,
   ]);
 
+  // Determine cursor visibility
   const shouldHideCursor =
     hideCursorWhileTyping &&
     (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
@@ -187,18 +223,22 @@ const TextType = ({
       className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,
       ...props,
     },
-    <span className={`inline text-[${textColor}]`}>
+    <span style={{ color: textColor }} className="inline">
       {displayedText}
     </span>,
     showCursor && (
       <span
         ref={cursorRef}
-        className={`ml-1 inline-block opacity-100 ${shouldHideCursor ? "hidden" : ""} ${cursorClassName}`}
+        className={`ml-1 inline-block opacity-100 ${
+          shouldHideCursor ? "hidden" : ""
+        } ${cursorClassName}`}
       >
         {cursorCharacter}
       </span>
     )
   );
-};
+});
+
+TextType.displayName = 'TextType';
 
 export default TextType;

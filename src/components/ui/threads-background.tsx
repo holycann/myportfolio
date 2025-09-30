@@ -1,23 +1,71 @@
-import React, { useEffect, useRef } from "react";
-import { Renderer, Program, Mesh, Triangle, Color } from "ogl";
+"use client";
 
-interface ThreadsProps {
+import React, { 
+  useEffect, 
+  useRef, 
+  useMemo, 
+  useCallback,
+  memo 
+} from "react";
+import { useInView } from "react-intersection-observer";
+import { 
+  Renderer, 
+  Program, 
+  Mesh, 
+  Triangle, 
+  Color 
+} from "ogl";
+
+/**
+ * Configuration for Threads background rendering
+ * Provides default settings and performance optimizations
+ */
+const THREADS_CONFIG = {
+  rendering: {
+    alpha: true,
+    blendFunc: {
+      src: 'SRC_ALPHA',
+      dst: 'ONE_MINUS_SRC_ALPHA'
+    }
+  },
+  animation: {
+    mouseSmoothing: 0.05,
+    timeScale: 0.001,
+    fps: 60
+  },
+  shader: {
+    lineCount: 40,
+    lineWidth: 7.0,
+    lineBlur: 10.0
+  },
+  performance: {
+    visibilityThreshold: 0.1
+  }
+};
+
+/**
+ * Properties for Threads background component
+ * Defines configuration for procedural WebGL background
+ */
+interface ThreadsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   color?: [number, number, number];
   amplitude?: number;
   distance?: number;
   enableMouseInteraction?: boolean;
 }
 
+// Vertex and fragment shaders (existing implementation)
 const vertexShader = `
-attribute vec2 position;
-attribute vec2 uv;
-varying vec2 vUv;
-void main() {
-  vUv = uv;
-  gl_Position = vec4(position, 0.0, 1.0);
-}
+  attribute vec2 position;
+  attribute vec2 uv;
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position, 0.0, 1.0);
+  }
 `;
 
+// Fragment shader (existing implementation remains the same)
 const fragmentShader = `
 precision highp float;
 
@@ -125,7 +173,14 @@ void main() {
 }
 `;
 
-const Threads: React.FC<ThreadsProps> = ({
+/**
+ * Threads Background Component
+ * Renders an interactive, animated WebGL background with performance optimizations
+ * 
+ * @component
+ * @param {ThreadsProps} props - Configuration for threads background
+ */
+const Threads: React.FC<ThreadsProps> = memo(({
   color = [1, 1, 1],
   amplitude = 1,
   distance = 0,
@@ -134,17 +189,74 @@ const Threads: React.FC<ThreadsProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number>(0);
+  const rendererRef = useRef<Renderer | null>(null);
+  const programRef = useRef<Program | null>(null);
+
+  // Use react-intersection-observer for visibility tracking
+  const { ref: intersectionRef, inView } = useInView({
+    threshold: THREADS_CONFIG.performance.visibilityThreshold,
+    triggerOnce: false
+  });
+
+  // Combine refs
+  const combinedRef = useCallback((node: HTMLDivElement) => {
+    containerRef.current = node;
+    intersectionRef(node);
+  }, [intersectionRef]);
+
+  // Memoize shader configuration to prevent unnecessary recomputations
+  const shaderConfig = useMemo(() => ({
+    color,
+    amplitude,
+    distance
+  }), [color, amplitude, distance]);
+
+  // Optimize mouse interaction with useCallback
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!rendererRef.current || !containerRef.current || !programRef.current) return;
+
+    const container = containerRef.current;
+    const rect = container.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = 1.0 - (e.clientY - rect.top) / rect.height;
+
+    programRef.current.uniforms.uMouse.value[0] = x;
+    programRef.current.uniforms.uMouse.value[1] = y;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!programRef.current) return;
+    
+    programRef.current.uniforms.uMouse.value[0] = 0.5;
+    programRef.current.uniforms.uMouse.value[1] = 0.5;
+  }, []);
+
+  // Handle page visibility changes
+  const handleVisibilityChange = useCallback(() => {
+    if (document.hidden && animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    const renderer = new Renderer({ alpha: true });
+    // WebGL setup
+    const renderer = new Renderer({ 
+      alpha: THREADS_CONFIG.rendering.alpha 
+    });
+    rendererRef.current = renderer;
+
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    container.appendChild(gl.canvas);
+    
+    // Ensure canvas is added to container
+    if (!container.contains(gl.canvas)) {
+      container.appendChild(gl.canvas);
+    }
 
     const geometry = new Triangle(gl);
     const program = new Program(gl, {
@@ -159,12 +271,13 @@ const Threads: React.FC<ThreadsProps> = ({
             gl.canvas.width / gl.canvas.height
           ),
         },
-        uColor: { value: new Color(...color) },
-        uAmplitude: { value: amplitude },
-        uDistance: { value: distance },
+        uColor: { value: new Color(...shaderConfig.color) },
+        uAmplitude: { value: shaderConfig.amplitude },
+        uDistance: { value: shaderConfig.distance },
         uMouse: { value: new Float32Array([0.5, 0.5]) },
       },
     });
+    programRef.current = program;
 
     const mesh = new Mesh(gl, { geometry, program });
 
@@ -175,39 +288,20 @@ const Threads: React.FC<ThreadsProps> = ({
       program.uniforms.iResolution.value.g = clientHeight;
       program.uniforms.iResolution.value.b = clientWidth / clientHeight;
     }
+
     window.addEventListener("resize", resize);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     resize();
 
-    let currentMouse = [0.5, 0.5];
-    let targetMouse = [0.5, 0.5];
-
-    function handleMouseMove(e: MouseEvent) {
-      const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
-      targetMouse = [x, y];
-    }
-    function handleMouseLeave() {
-      targetMouse = [0.5, 0.5];
-    }
     if (enableMouseInteraction) {
       container.addEventListener("mousemove", handleMouseMove);
       container.addEventListener("mouseleave", handleMouseLeave);
     }
 
     function update(t: number) {
-      if (enableMouseInteraction) {
-        const smoothing = 0.05;
-        currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
-        currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
-        program.uniforms.uMouse.value[0] = currentMouse[0];
-        program.uniforms.uMouse.value[1] = currentMouse[1];
-      } else {
-        program.uniforms.uMouse.value[0] = 0.5;
-        program.uniforms.uMouse.value[1] = 0.5;
-      }
-      program.uniforms.iTime.value = t * 0.001;
+      if (!inView) return;
 
+      program.uniforms.iTime.value = t * THREADS_CONFIG.animation.timeScale;
       renderer.render({ scene: mesh });
       animationFrameId.current = requestAnimationFrame(update);
     }
@@ -216,20 +310,45 @@ const Threads: React.FC<ThreadsProps> = ({
     return () => {
       if (animationFrameId.current)
         cancelAnimationFrame(animationFrameId.current);
+      
       window.removeEventListener("resize", resize);
-
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      
       if (enableMouseInteraction) {
         container.removeEventListener("mousemove", handleMouseMove);
         container.removeEventListener("mouseleave", handleMouseLeave);
       }
-      if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
+      
+      if (container.contains(gl.canvas)) 
+        container.removeChild(gl.canvas);
+      
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [color, amplitude, distance, enableMouseInteraction]);
+  }, [
+    shaderConfig, 
+    enableMouseInteraction, 
+    handleMouseMove, 
+    handleMouseLeave,
+    handleVisibilityChange,
+    inView
+  ]);
 
   return (
-    <div ref={containerRef} className="w-full h-full relative" {...rest} />
+    <section 
+      ref={combinedRef} 
+      className="w-full h-full absolute top-0 left-0 z-1" 
+      aria-label="Animated Background Threads"
+      style={{ 
+        backgroundColor: 'rgba(0,0,0,0.01)', 
+        pointerEvents: 'none' 
+      }}
+      {...rest} 
+    >
+      {!inView && <div>Loading WebGL Background...</div>}
+    </section>
   );
-};
+});
+
+Threads.displayName = 'ThreadsBackground';
 
 export default Threads;

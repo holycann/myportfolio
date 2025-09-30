@@ -1,6 +1,6 @@
 "use client";
 import { createPlaceHolder } from "@/lib/utils";
-import { IconArrowNarrowRight } from "@tabler/icons-react";
+import { FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
 import { useState, useRef, useId, useEffect } from "react";
 
@@ -147,7 +147,7 @@ const CarouselControl = ({
       title={title}
       onClick={handleClick}
     >
-      <IconArrowNarrowRight className="text-[var(--color-text-muted)] dark:text-[var(--color-text-secondary)]" />
+      <FaArrowRight className="text-[var(--color-text-muted)] dark:text-[var(--color-text-secondary)]" />
     </button>
   );
 };

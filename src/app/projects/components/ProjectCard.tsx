@@ -66,7 +66,7 @@ export function ProjectCard({ projects }: ProjectCardProps) {
         <Skeleton variant="default" width={300} height={270} />
       ),
     icon: <FaCode className="h-4 w-4 text-neutral-500" />,
-    link: `/projects/${project.id}`,
+    link: `/projects/${project.slug}`,
   }));
 
   return (
@@ -80,22 +80,20 @@ export function ProjectCard({ projects }: ProjectCardProps) {
       />
       <BentoGrid className="mx-auto">
         {projectItems.map((item, i) => (
-          <BentoGridItem
+          <Link
             key={i}
-            title={item.title}
-            description={item.description}
-            header={
-              <Link
-                href={item.link}
-                rel="noopener noreferrer"
-                className="hover:cursor-pointer"
-              >
-                {item.header}
-              </Link>
-            }
-            icon={item.icon}
-            className={`${i === 3 || i === 6 ? "md:col-span-2" : ""} hover:cursor-pointer`}
-          />
+            href={item.link}
+            rel="noopener noreferrer"
+            className="hover:cursor-pointer"
+          >
+            <BentoGridItem
+              title={item.title}
+              description={item.description}
+              header={item.header}
+              icon={item.icon}
+              className={`${i === 3 || i === 6 ? "md:col-span-2" : ""} hover:cursor-pointer`}
+            />
+          </Link>
         ))}
       </BentoGrid>
     </div>

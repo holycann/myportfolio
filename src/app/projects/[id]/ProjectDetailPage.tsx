@@ -1,86 +1,158 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { 
+  useState, 
+  useEffect, 
+  useCallback, 
+  useMemo 
+} from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { Project } from "@/types/Project";
 import { projectService } from "@/services/projectService";
-import LightRays from "@/components/ui/light-rays";
-import ShinyText from "@/components/ui/shiny-text";
-import Badge from "@/components/ui/badge";
-import { PiGithubLogo, PiGlobe, PiTagChevron } from "react-icons/pi";
-import Image from "next/image";
-import { ProgressBar } from "@/components/ui/progress-bar";
-import { Carousel } from "@/components/ui/carousel-image";
-import { AnimatedTechStack } from "../components";
-import { FocusCards } from "@/components/ui/focus-card";
+import { Loading } from "@/components/ui/loading";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const cards = [
-  {
-    title: "Forest Adventure",
-    src: "https://images.unsplash.com/photo-1518710843675-2540dd79065c?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Valley of life",
-    src: "https://images.unsplash.com/photo-1600271772470-bd22a42787b3?q=80&w=3072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Sala behta hi jayega",
-    src: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?q=80&w=3070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Camping is for pros",
-    src: "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "The road not taken",
-    src: "https://images.unsplash.com/photo-1507041957456-9c397ce39c97?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "The First Rule",
-    src: "https://assets.aceternity.com/the-first-rule.png",
-  },
-];
+// Dynamically import heavy components
+const LightRays = dynamic(() => import("@/components/ui/light-rays").then(mod => mod.default), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
 
-const ProjectDetail = ({ id }: { id: string }) => {
+const ShinyText = dynamic(() => import("@/components/ui/shiny-text").then(mod => mod.default), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+
+const Badge = dynamic(() => import("@/components/ui/badge").then(mod => mod.default), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+
+const ProgressBar = dynamic(() => import("@/components/ui/progress-bar").then(mod => mod.ProgressBar), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+
+const Carousel = dynamic(() => import("@/components/ui/carousel-image").then(mod => mod.Carousel), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+
+const FocusCards = dynamic(() => import("@/components/ui/focus-card").then(mod => mod.FocusCards), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+
+const AnimatedTechStack = dynamic(() => import("../components").then(mod => mod.AnimatedTechStack), {
+  loading: () => <Skeleton variant="rounded" />,
+  ssr: false,
+});
+
+// Icons
+import { 
+  PiGithubLogo, 
+  PiGlobe, 
+  PiTagChevron 
+} from "react-icons/pi";
+
+/**
+ * Configuration for Project Detail page
+ * Centralizes styling and performance settings
+ */
+const PROJECT_DETAIL_CONFIG = {
+  dataFetching: {
+    relatedProjectsPageSize: 16,
+    sortBy: 'category',
+    sortOrder: 'desc' as const
+  },
+  styling: {
+    container: "container mx-auto max-w-7xl relative",
+    heroSection: "flex flex-col justify-center items-center",
+    projectImageContainer: "w-full h-full flex justify-center items-center perspective-1000 pb-10",
+    projectImage: "max-w-full w-full h-auto rounded-xl shadow-lg object-cover"
+  }
+};
+
+/**
+ * Project Detail page component
+ * Handles client-side data fetching and rendering
+ */
+export default function ProjectDetail({ slug }: { slug: string }) {
   const [project, setProject] = useState<Project | null>(null);
-  const [relatedProjects, setRelatedProjects] = useState<Project[] | null>(
-    null
-  );
+  const [relatedProjects, setRelatedProjects] = useState<Project[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        const response = await projectService.getProjectById(id);
-        setProject(response.data!);
-      } catch (error) {
-        console.error("Failed to fetch project:", error);
+  // Memoized fetch project function
+  const fetchProject = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await projectService.getProjectBySlug(slug);
+      
+      if (response.data) {
+        setProject(response.data);
+        setError(null);
+      } else {
+        setError("Project not found.");
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch project:", error);
+      setError("Unable to load project details. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [slug]);
 
+  // Memoized fetch related projects function
+  const fetchRelatedProjects = useCallback(async (projectCategory?: string) => {
+    if (!projectCategory) return;
+
+    try {
+      const response = await projectService.getProjects(
+        { per_page: PROJECT_DETAIL_CONFIG.dataFetching.relatedProjectsPageSize },
+        {
+          sort_by: PROJECT_DETAIL_CONFIG.dataFetching.sortBy,
+          sort_order: PROJECT_DETAIL_CONFIG.dataFetching.sortOrder
+        },
+        { category: projectCategory }
+      );
+
+      if (response.data) {
+        setRelatedProjects(response.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch related projects:", error);
+    }
+  }, []);
+
+  // Fetch project on component mount
+  useEffect(() => {
     fetchProject();
-  }, [id]);
+  }, [fetchProject]);
 
+  // Fetch related projects when project is loaded
   useEffect(() => {
-    const fetchRelatedProjects = async () => {
-      try {
-        if (project) {
-          const response = await projectService.getProjects(
-            undefined,
-            undefined,
-            { category: project.category }
-          );
-          setRelatedProjects(response.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch related projects:", error);
-      }
-    };
+    if (project) {
+      fetchRelatedProjects(project.category);
+    }
+  }, [project, fetchRelatedProjects]);
 
-    fetchRelatedProjects();
-  }, [project]);
+  // Memoized project thumbnail
+  const projectThumbnail = useMemo(() => 
+    project?.images?.find((img) => img.is_thumbnail)?.src || project?.images?.[0]?.src
+  , [project]);
 
+  // Render loading state
+  if (isLoading) return <Loading variant="solid" size="lg" label="Loading project details..." />;
+  
+  // Render error state
+  if (error) return <div className="text-red-500 text-center">{error}</div>;
+
+  // Render project details
   return (
-    <main className="container mx-auto max-w-7xl relative">
-      <section className="flex flex-col justify-center items-center">
+    <main className={PROJECT_DETAIL_CONFIG.styling.container}>
+      <section className={PROJECT_DETAIL_CONFIG.styling.heroSection}>
         <LightRays
           raysOrigin="top-center"
           raysSpeed={1.5}
@@ -105,7 +177,7 @@ const ProjectDetail = ({ id }: { id: string }) => {
             </Badge>
             <ShinyText
               text={project.title}
-              className="text-9xl font-bold"
+              className="text-7xl font-bold"
               speed={3}
               shineColor="rgba(139, 111, 71, 1)"
             />
@@ -113,62 +185,75 @@ const ProjectDetail = ({ id }: { id: string }) => {
               {project.subtitle}
             </h1>
             <nav className="flex gap-4 py-2">
-              <div className="flex items-center space-x-2">
-                <a
-                  href={project?.github_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-lg animate-shine cursor-pointer"
-                >
-                  <PiGithubLogo
-                    size={64}
-                    className="text-[var(--color-primary-light)] dark:text-[var(--color-secondary-light)] opacity-80 hover:opacity-100"
-                  />
-                </a>
-              </div>
-              <div className="flex items-center space-x-2">
-                <a
-                  href={project?.web_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-lg animate-shine cursor-pointer"
-                >
-                  <PiGlobe
-                    size={64}
-                    className="text-[var(--color-primary-light)] dark:text-[var(--color-secondary-light)] opacity-80 hover:opacity-100"
-                  />
-                </a>
-              </div>
+              {project.github_url && (
+                <div className="flex items-center space-x-2">
+                  <a
+                    href={project.github_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-lg animate-shine cursor-pointer"
+                  >
+                    <PiGithubLogo
+                      size={64}
+                      className="text-[var(--color-primary-light)] dark:text-[var(--color-secondary-light)] opacity-80 hover:opacity-100"
+                    />
+                  </a>
+                </div>
+              )}
+              {project.web_url && (
+                <div className="flex items-center space-x-2">
+                  <a
+                    href={project.web_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-lg animate-shine cursor-pointer"
+                  >
+                    <PiGlobe
+                      size={64}
+                      className="text-[var(--color-primary-light)] dark:text-[var(--color-secondary-light)] opacity-80 hover:opacity-100"
+                    />
+                  </a>
+                </div>
+              )}
             </nav>
           </header>
         )}
       </section>
-      <article className="w-full h-full flex justify-center items-center perspective-1000 -mt-30 pb-10">
+
+      <article className={PROJECT_DETAIL_CONFIG.styling.projectImageContainer}>
         <div className="w-full h-full flex justify-center items-center transform transition-transform duration-300 hover:rotate-y-6 hover:rotate-x-2 hover:scale-105 hover:shadow-2xl">
           <figure className="relative w-full h-full flex justify-center items-center border-8 rounded-2xl border-amber-800 bg-amber-800/20 shadow-lg transform transition-transform">
-            <Image
-              src={"/images/projects/asamedia/thumbnail.png"}
-              alt={project?.title || "Project Image"}
-              width={500}
-              height={500}
-              className="max-w-full w-full h-auto rounded-xl shadow-lg object-cover"
-            />
-            <Badge
-              variant="default"
-              size="md"
-              rounded="full"
-              className="absolute top-4 left-4 opacity-70 hover:opacity-100 transition-opacity duration-300 bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] border border-[var(--color-border)]"
-            >
-              {project?.progress_status}
-            </Badge>
-            <Badge
-              variant="default"
-              size="md"
-              rounded="full"
-              className="absolute bottom-4 right-4 opacity-70 hover:opacity-100 transition-opacity duration-300 bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] border border-[var(--color-border)]"
-            >
-              {project?.development_status}
-            </Badge>
+            {projectThumbnail && (
+              <Image
+                src={projectThumbnail}
+                alt={project?.title || "Project Image"}
+                width={500}
+                height={500}
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className={PROJECT_DETAIL_CONFIG.styling.projectImage}
+              />
+            )}
+            {project?.progress_status && (
+              <Badge
+                variant="default"
+                size="md"
+                rounded="full"
+                className="absolute top-4 left-4 opacity-70 hover:opacity-100 transition-opacity duration-300 bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] border border-[var(--color-border)]"
+              >
+                {project.progress_status}
+              </Badge>
+            )}
+            {project?.development_status && (
+              <Badge
+                variant="default"
+                size="md"
+                rounded="full"
+                className="absolute bottom-4 right-4 opacity-70 hover:opacity-100 transition-opacity duration-300 bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] border border-[var(--color-border)]"
+              >
+                {project.development_status}
+              </Badge>
+            )}
 
             <AnimatedTechStack
               techStack={
@@ -258,12 +343,24 @@ const ProjectDetail = ({ id }: { id: string }) => {
           }
         />
       </section>
-      <section className="flex flex-col gap-8 py-20">
-        <h2 className="text-4xl">Related Projects</h2>
-        <FocusCards cards={cards} enablePagination={true} itemsPerPage={4} />
-      </section>
+
+      {relatedProjects && relatedProjects.length > 0 && (
+        <section className="flex flex-col gap-8 py-20">
+          <h2 className="text-4xl">Related Projects</h2>
+          <FocusCards
+            cards={
+              relatedProjects.map((project) => ({
+                title: project.title,
+                src:
+                  project.images.find((img) => img.is_thumbnail)?.src ||
+                  project.images[0]?.src,
+              }))
+            }
+            enablePagination={true}
+            itemsPerPage={4}
+          />
+        </section>
+      )}
     </main>
   );
-};
-
-export default ProjectDetail;
+}

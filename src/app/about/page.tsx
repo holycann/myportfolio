@@ -1,44 +1,33 @@
-"use client";
-import ShinyText from "@/components/ui/shiny-text";
-import {
-  AboutImages,
-  AnimatedImageAbout,
-} from "./components/animated-about-image";
-import dynamic from "next/dynamic";
-import { Loading } from "@/components/ui/loading";
-import HeroAbout from "./components/HeroAbout";
+import { Metadata } from "next";
+import { getSEO } from "@/lib/seo";
+import AboutPage from "./AboutPage";
 
-const images: AboutImages[] = [
-  {
-    url: "/images/me/about-5.jpg",
-    alt: "",
-  },
-  {
-    url: "/images/me/about-4.png",
-    alt: "",
-  },
-  {
-    url: "/images/me/about-1.jpg",
-    alt: "",
-  },
-];
-
-const TechStack = dynamic(() => import("./components/TechStackSection"), {
-  loading: () => <Loading variant="solid" size="lg" label="Loading..." />,
-  ssr: true,
+/**
+ * Metadata for About Page
+ * Provides comprehensive SEO configuration
+ */
+export const metadata: Metadata = getSEO({
+  title: "About Me",
+  description: "Explore the journey, skills, and passion of a backend developer and automation engineer",
+  keywords: [
+    "Backend Developer", 
+    "Automation Engineer", 
+    "Software Portfolio", 
+    "Professional Journey"
+  ],
+  openGraph: {
+    title: "About Me | Itsrama — Backend & Automation Engineer",
+    description: "Explore the journey, skills, and passion of a backend developer and automation engineer",
+    type: "profile"
+  }
 });
 
-const Experience = dynamic(() => import("./components/ExperienceSection"), {
-  loading: () => <Loading variant="solid" size="lg" label="Loading..." />,
-  ssr: false, // Complex animations, load client-side only
-});
-
-export default function About() {
-  return (
-    <>
-      <HeroAbout images={images} />
-      <TechStack />
-      <Experience />
-    </>
-  );
+/**
+ * Server-side page component for About section
+ * Renders the AboutPage client-side component
+ * 
+ * @returns {React.ReactElement} About page with server-side metadata
+ */
+export default function Page() {
+  return <AboutPage />;
 }

@@ -252,7 +252,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         return (
           <HoverBorderGradient
             className={cn(buttonClasses, "bg-white text-black")}
-            as="button"
             onClick={handleClick}
             style={dynamicStyles}
             aria-label={props["aria-label"] || String(children)}

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
@@ -84,7 +86,7 @@ export default function LiquidEther({
   const resizeRafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!mountRef.current) return;
+    if (!mountRef.current || typeof window === 'undefined') return;
 
     function makePaletteTexture(stops: string[]): THREE.DataTexture {
       let arr: string[];
@@ -1235,6 +1237,8 @@ export default function LiquidEther({
   ]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const webgl = webglRef.current;
     if (!webgl) return;
     const sim = webgl.output?.simulation;

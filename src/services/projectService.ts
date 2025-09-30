@@ -10,6 +10,7 @@ export class ProjectService extends BaseApiService {
     pagination?: { page?: number; per_page?: number },
     sorting?: { sort_by?: string; sort_order?: "asc" | "desc" },
     query?: {
+      slug?: string;
       category?: string;
     }
   ): Promise<ApiResponse<Project[]>> {
@@ -28,6 +29,27 @@ export class ProjectService extends BaseApiService {
     return this.get<Project>({
       endpoint: `/projects/${id}`,
     });
+  }
+
+  /**
+   * Get details of a specific project
+   */
+  static async getProjectBySlug(slug: string): Promise<ApiResponse<Project>> {
+    const projectsResponse = await this.getProjects(undefined, undefined, {
+      slug: slug,
+    });
+
+    if (!projectsResponse.data || projectsResponse.data.length === 0) {
+      return {
+        ...projectsResponse,
+        data: null,
+      };
+    }
+    
+    return {
+      ...projectsResponse,
+      data: projectsResponse.data[0],
+    };
   }
 
   /**

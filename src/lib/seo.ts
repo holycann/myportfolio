@@ -1,4 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+/**
+ * Centralized SEO Configuration for Muhamad Ramadhan's Portfolio
+ * @module seo
+ * @description Provides comprehensive SEO and metadata management
+ */
 
 // Default metadata for the site
 export const defaultMeta = {
@@ -22,7 +28,7 @@ export const defaultMeta = {
   author: "Itsrama",
 };
 
-// Define OpenGraph type locally
+// Define OpenGraph type
 type OpenGraphType = "website" | "article" | "profile";
 
 // Interface for SEO parameters
@@ -32,13 +38,63 @@ interface SeoParams {
   keywords?: string[];
   image?: string;
   url?: string;
-  type?: OpenGraphType; // Restricted to valid OG types
+  type?: OpenGraphType;
   author?: string;
-  themeColor?: string;
+  openGraph?: Metadata['openGraph'];
 }
 
 /**
+ * Performance Monitoring Configuration
+ * @description Centralized performance settings for the application
+ */
+export const performanceConfig = {
+  maxRenderTime: 500, // ms
+  criticalResourceThreshold: 3,
+  prefetchRoutes: ["/", "/projects", "/about", "/contact"],
+};
+
+/**
+ * Structured Person Data for JSON-LD
+ * @description Provides structured data about the portfolio owner
+ */
+export const structuredPersonData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Muhamad Ramadhan",
+  url: defaultMeta.url,
+  image: defaultMeta.image,
+  sameAs: [
+    "https://twitter.com/ehhramaa_",
+    "https://instagram.com/ehhramaa_",
+    "https://linkedin.com/in/muhamadramadhan",
+  ],
+  jobTitle: "Backend & Automation Engineer",
+  worksFor: {
+    "@type": "Organization",
+    name: "Freelance",
+  },
+  description: defaultMeta.description,
+  skills: [
+    "Backend Development",
+    "Golang",
+    "Node.js",
+    "Automation",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Backend Development",
+    "Golang",
+    "Node.js",
+    "Automation",
+    "Web Development",
+    "Cloud Computing",
+  ],
+};
+
+/**
  * Generate metadata for Next.js pages
+ * @param params SEO configuration parameters
+ * @returns Comprehensive Metadata object
  */
 export function getSEO({
   title = defaultMeta.title,
@@ -48,7 +104,7 @@ export function getSEO({
   url = defaultMeta.url,
   type = "website" as OpenGraphType,
   author = defaultMeta.author,
-  themeColor = "#000000",
+  openGraph,
 }: SeoParams = {}): Metadata {
   // Construct full title
   const fullTitle =
@@ -62,13 +118,7 @@ export function getSEO({
     description,
     keywords,
     authors: [{ name: author }],
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 5,
-    },
     robots: "index, follow",
-    themeColor,
     openGraph: {
       type,
       locale: "en_US",
@@ -84,6 +134,7 @@ export function getSEO({
           alt: fullTitle,
         },
       ],
+      ...openGraph, // Allow custom OpenGraph configuration
     },
     twitter: {
       card: "summary_large_image",
@@ -93,11 +144,27 @@ export function getSEO({
       description,
       images: [absoluteImageUrl],
     },
+    metadataBase: new URL(url),
+  };
+}
+
+/**
+ * Generate viewport configuration
+ * @returns Viewport configuration for responsive design
+ */
+export function getViewport(): Viewport {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    themeColor: "#4A3F3A",
   };
 }
 
 /**
  * Generate SEO meta tags for older Next.js versions or custom head elements
+ * @param params SEO configuration parameters
+ * @returns Object with title and meta tags
  */
 export function generateSeoMeta({
   title = defaultMeta.title,
@@ -128,6 +195,8 @@ export function generateSeoMeta({
 
 /**
  * Generate JSON-LD structured data
+ * @param data Structured data object
+ * @returns JSON-LD representation
  */
 export function generateJsonLd(data: any) {
   return {

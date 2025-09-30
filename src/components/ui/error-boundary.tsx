@@ -1,6 +1,8 @@
 "use client";
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React, { ErrorInfo, ReactNode } from 'react';
+import { motion } from 'framer-motion';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -10,65 +12,101 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   hasError: boolean;
-  error: Error | null;
+  error?: Error;
+  errorInfo?: ErrorInfo;
 }
 
 /**
- * Error boundary component to catch errors in animations and UI components
- * Provides a fallback UI when errors occur
+ * Comprehensive Error Boundary Component
+ * Catches JavaScript errors anywhere in the child component tree
+ * Renders a fallback UI instead of the component tree that crashed
  */
-class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = {
-      hasError: false,
-      error: null
-    };
+    this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    // Update state so the next render will show the fallback UI
-    return {
-      hasError: true,
-      error
-    };
+  static getDerivedStateFromError(error: Error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log the error to an error reporting service
-    console.error("Error caught by ErrorBoundary:", error, errorInfo);
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // You can log the error to an error reporting service
+    console.error("Uncaught error:", error, errorInfo);
     
-    // Call the onError callback if provided
+    // Optional custom error handling
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
   }
 
-  render(): ReactNode {
+  handleRetry = () => {
+    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+  };
+
+  render() {
     if (this.state.hasError) {
-      // Render fallback UI if provided, otherwise a default error message
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
-      
-      return (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-md">
-          <h2 className="text-lg font-medium text-red-800">Something went wrong</h2>
-          <p className="mt-1 text-sm text-red-700">
-            {this.state.error?.message || "An unknown error occurred"}
+      // Custom error fallback can be provided, otherwise use default
+      const DefaultErrorFallback = (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center justify-center min-h-screen bg-red-50 dark:bg-red-900 p-4"
+        >
+          <FaExclamationTriangle className="text-6xl text-red-500 mb-4" />
+          <h1 className="text-2xl font-bold text-red-700 dark:text-red-300 mb-2">
+            Something went wrong
+          </h1>
+          <p className="text-red-600 dark:text-red-400 mb-4 text-center">
+            An unexpected error occurred. Please try again or contact support.
           </p>
-          <button
-            className="mt-3 px-3 py-1 text-sm bg-red-100 hover:bg-red-200 text-red-800 rounded"
-            onClick={() => this.setState({ hasError: false, error: null })}
-          >
-            Try again
-          </button>
-        </div>
+          <div className="flex space-x-4">
+            <button 
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+            >
+              Reload Page
+            </button>
+            <button 
+              onClick={this.handleRetry}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
+              Retry
+            </button>
+          </div>
+          {this.state.error && (
+            <details className="mt-4 text-xs text-gray-600 dark:text-gray-300">
+              <summary>Error Details</summary>
+              <pre className="bg-red-100 dark:bg-red-800 p-2 rounded mt-2">
+                {this.state.error.toString()}
+              </pre>
+            </details>
+          )}
+        </motion.div>
       );
+
+      return this.props.fallback || DefaultErrorFallback;
     }
 
     return this.props.children;
   }
 }
 
-export default ErrorBoundary; 
+/**
+ * Higher-order component to wrap components with error boundary
+ * @param Component - React component to wrap
+ * @param fallbackComponent - Optional custom fallback component
+ */
+export function withErrorBoundary<P extends object>(
+  Component: React.ComponentType<P>, 
+  fallbackComponent?: ReactNode
+) {
+  return (props: P) => (
+    <ErrorBoundary fallback={fallbackComponent}>
+      <Component {...props} />
+    </ErrorBoundary>
+  );
+} 

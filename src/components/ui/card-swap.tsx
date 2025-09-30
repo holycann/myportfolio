@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   Children,
   cloneElement,
@@ -129,7 +131,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const total = refs.length;
-      
+
       // Initial card placement
       const initializeCards = () => {
         refs.forEach((r, i) => {
@@ -220,7 +222,9 @@ const CardSwap: React.FC<CardSwapProps> = ({
         };
         const resume = () => {
           tlRef.current?.play();
-          intervalRef.current = window.setInterval(swap, delay);
+          if (typeof window !== "undefined") {
+            intervalRef.current = window.setInterval(swap, delay);
+          }
         };
 
         node.addEventListener("mouseenter", pause);
@@ -234,7 +238,9 @@ const CardSwap: React.FC<CardSwapProps> = ({
       // Initial setup
       initializeCards();
       swap();
-      intervalRef.current = window.setInterval(swap, delay);
+      if (typeof window !== 'undefined') {
+        intervalRef.current = window.setInterval(swap, delay);
+      }
       const cleanupHoverPause = setupHoverPause();
 
       return () => {

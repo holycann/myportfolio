@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, useRef, useState, useEffect, MutableRefObject } from "react";
 import { mat4, quat, vec2, vec3 } from "gl-matrix";
 
@@ -450,7 +452,9 @@ function makeVertexArray(
 }
 
 function resizeCanvasToDisplaySize(canvas: HTMLCanvasElement): boolean {
-  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const dpr = typeof window !== 'undefined' 
+    ? Math.min(2, window.devicePixelRatio || 1) 
+    : 1;
   const displayWidth = Math.round(canvas.clientWidth * dpr);
   const displayHeight = Math.round(canvas.clientHeight * dpr);
   const needResize =
@@ -677,7 +681,7 @@ class ArcballControl {
   }
 }
 
-interface MenuItem {
+export interface InfiniteMenuItem {
   image: string;
   link?: string;
   title?: string;
@@ -778,7 +782,7 @@ class InfiniteGridMenu {
 
   constructor(
     private canvas: HTMLCanvasElement,
-    private items: MenuItem[],
+    private items: InfiniteMenuItem[],
     private onActiveItemChange: ActiveItemCallback,
     private onMovementChange: MovementChangeCallback,
     onInit?: InitCallback
@@ -1216,7 +1220,7 @@ class InfiniteGridMenu {
   }
 }
 
-const defaultItems: MenuItem[] = [
+const defaultItems: InfiniteMenuItem[] = [
   {
     image: "https://picsum.photos/900/900?grayscale",
     link: "https://google.com/",
@@ -1226,14 +1230,14 @@ const defaultItems: MenuItem[] = [
 ];
 
 interface InfiniteMenuProps {
-  items?: MenuItem[];
+  items?: InfiniteMenuItem[];
 }
 
 const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(
     null
   ) as MutableRefObject<HTMLCanvasElement | null>;
-  const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
+  const [activeItem, setActiveItem] = useState<InfiniteMenuItem | null>(null);
   const [isMoving, setIsMoving] = useState<boolean>(false);
 
   useEffect(() => {
@@ -1262,12 +1266,14 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
       }
     };
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", handleResize);
+      handleResize();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, [items]);
 
   return (

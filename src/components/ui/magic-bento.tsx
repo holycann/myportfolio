@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
@@ -514,22 +516,6 @@ const BentoCardGrid: React.FC<{
   </div>
 );
 
-const useMobileDetection = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () =>
-      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  return isMobile;
-};
-
 const MagicBento: React.FC<BentoProps> = ({
   textAutoHide = true,
   enableStars = true,
@@ -615,8 +601,7 @@ const MagicBento: React.FC<BentoProps> = ({
   ],
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMobileDetection();
-  const shouldDisableAnimations = disableAnimations || isMobile;
+  const shouldDisableAnimations = disableAnimations;
 
   return (
     <>
@@ -1035,7 +1020,7 @@ const MagicBento: React.FC<BentoProps> = ({
                     onClick={() => {
                       const router = useRouter();
                       card.link?.is_external
-                        ? window.open(card.link?.href, "_blank")
+                        ? (typeof window !== 'undefined' ? window.open(card.link?.href, "_blank") : null)
                         : router.push(card.link?.href || "");
                     }}
                     className={`

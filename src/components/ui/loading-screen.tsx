@@ -64,7 +64,7 @@ export const LoadingScreen = () => {
 
       <div className="w-64 h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+          className="h-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary-dark)]"
           initial={{ width: "0%" }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.2 }}
@@ -76,7 +76,7 @@ export const LoadingScreen = () => {
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 3, repeat: Infinity }}
       >
-        Loading Muhamad Ramadhan Portfolio...
+        Loading...
       </motion.p>
     </motion.div>
   );

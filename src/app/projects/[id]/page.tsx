@@ -2,37 +2,51 @@ import { Metadata } from "next";
 import { getSEO } from "@/lib/seo";
 import ProjectDetail from "./ProjectDetailPage";
 import { deslugify } from "@/lib/utils";
+import { projectService } from "@/services/projectService";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const { slug } = params;
-  const deslugifiedTitle = deslugify(slug);
+type Props = {
+  params: { id: string };
+};
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    // Fetch project details to generate dynamic metadata
-    const projectData = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/projects/${slug}`
-    ).then((res) => res.json());
+    const slug = params.id;
+    const { data: project } = await projectService.getProjectBySlug(slug);
 
-    return getSEO({
-      title: projectData.title,
-      description: projectData.description || `Details of ${deslugifiedTitle} project`,
-      image: projectData.coverImage,
-      type: "article"
-    });
-  } catch (error) {
+    if (!project) return { 
+      title: "404", 
+      description: "Project Not Found" 
+    };
+
+    const deslugifiedTitle = deslugify(slug);
+    const thumbnailImage = project.images?.find((img) => img.is_thumbnail)?.src;
+
     return getSEO({
       title: `${deslugifiedTitle} Project`,
-      description: `Details of ${deslugifiedTitle} project`,
+      description: project.description || `Details of ${deslugifiedTitle} project`,
+      keywords: project.project_tech_stack?.map((tech) => tech.tech_stack.name) || [],
+      type: "article",
+      openGraph: {
+        title: `${deslugifiedTitle} - Muhamad Ramadhan's Project`,
+        description: project.description || `Explore the ${deslugifiedTitle} project`,
+        images: thumbnailImage ? [{ 
+          url: thumbnailImage, 
+          width: 1200, 
+          height: 630,
+          alt: `${deslugifiedTitle} project thumbnail`
+        }] : undefined,
+        type: "article"
+      }
     });
+  } catch (error) {
+    console.error("Failed to generate metadata:", error);
+    return {
+      title: "Project Not Found",
+      description: "Unable to retrieve project details",
+    };
   }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-
-  return <ProjectDetail id={slug} />;
+export default async function Page({ params }: Props) {
+  return <ProjectDetail slug={params.id} />;
 }

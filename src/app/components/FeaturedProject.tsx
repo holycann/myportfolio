@@ -46,20 +46,27 @@ const FeaturedProject = React.memo(({ projects }: { projects: Project[] }) => {
                 </Link>
               </div>
               <div className="relative w-full h-full overflow-hidden">
-                <Image
-                  src={
-                    project.images?.find((img) => img.is_thumbnail)?.src ||
-                    "/images/logo.png"
+                <Link 
+                  href={
+                    `projects/${project.slug}` || "http://localhost"
                   }
-                  alt={project.title}
-                  width={600}
-                  height={400}
-                  priority
-                  quality={100}
-                  placeholder="blur"
-                  blurDataURL="/images/logo.png"
-                  className="object-cover w-full h-full aspect-video transition-all duration-300 hover:scale-105"
-                />
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src={
+                      project.images?.find((img) => img.is_thumbnail)?.src ||
+                      "/images/logo.png"
+                    }
+                    alt={project.title}
+                    width={600}
+                    height={400}
+                    priority
+                    quality={100}
+                    placeholder="blur"
+                    blurDataURL="/images/logo.png"
+                    className="object-cover w-full h-full aspect-video transition-all duration-300 hover:scale-105"
+                  />
+                </Link>
                 <div className="absolute top-0 left-0 p-2 flex justify-center items-center">
                   <Badge
                     variant="secondary"
