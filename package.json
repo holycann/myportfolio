@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "clean": "rm -rf .next && rm -rf node_modules && npm install",
-    "build": "next build",
+    "build": "npm rebuild lightningcss && next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
