@@ -5,7 +5,6 @@ import { Loading } from "@/components/ui/loading";
 import { Timeline } from "@/components/ui/timeline";
 import ShinyText from "@/components/ui/shiny-text";
 import { experienceService } from "@/services/experienceService";
-import { Experience } from "@/types/Experience";
 import { useFetchData } from "@/hooks/useFetchData";
 
 /**
@@ -29,7 +28,7 @@ const EXPERIENCE_CONFIG = {
  * Experience section displaying professional journey
  * Supports lazy loading and performance optimization
  */
-export default function Experience() {
+export default function ExperienceSection() {
   const { data: experiences, isLoading, error } = useFetchData(
     () => experienceService.getExperiences(
       { per_page: EXPERIENCE_CONFIG.dataFetching.initialPageSize },
