@@ -5,7 +5,7 @@ import { Loading } from "@/components/ui/loading";
 import { Timeline } from "@/components/ui/timeline";
 import ShinyText from "@/components/ui/shiny-text";
 import { experienceService } from "@/services/experienceService";
-import type { Experience } from "@/types/Experience";
+import { Experience } from "@/types/Experience";
 import { useFetchData } from "@/hooks/useFetchData";
 
 /**

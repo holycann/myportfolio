@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, FormEvent, ChangeEvent } from "react";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import { toast, Toaster } from "react-hot-toast";
 import {
   FaCheck,
