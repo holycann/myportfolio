@@ -33,12 +33,12 @@ const CONTACT_CONFIG = {
   socialLinks: [
     {
       icon: FaLinkedin,
-      href: "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/",
+      href: "https://www.linkedin.com/in/itsramaa/",
       label: "LinkedIn",
     },
     {
       icon: FaGithub,
-      href: "https://github.com/holycann",
+      href: "https://github.com/itsramaa",
       label: "GitHub",
     },
     {

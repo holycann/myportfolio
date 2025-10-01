@@ -7,12 +7,12 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from "react-icons/fa6";
 // Configuration for social links
 const SOCIAL_LINKS = [
   {
-    href: "https://github.com/holyycan",
+    href: "https://github.com/itsramaa",
     icon: FaGithub,
     label: "GitHub",
   },
   {
-    href: "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/",
+    href: "https://www.linkedin.com/in/itsramaa/",
     icon: FaLinkedin,
     label: "LinkedIn",
   },

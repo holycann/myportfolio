@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://holyycan.com
+Host: https://itsrama.kawasan.digital.com
 
 # Sitemaps
-Sitemap: https://holyycan.com/sitemap.xml
+Sitemap: https://itsrama.kawasan.digital.com/sitemap.xml
