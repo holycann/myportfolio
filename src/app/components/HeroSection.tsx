@@ -105,7 +105,7 @@ function Hero() {
 
   // Memoized event handlers to prevent unnecessary re-renders
   const handleResumeClick = useCallback(() => {
-    router.push("/MuhamadRamadhanResume.pdf");
+    router.push("/Resume_Muhamad_Ramadhan_EN.pdf");
   }, [router]);
 
   const handleScrollToBottom = useCallback(() => {
