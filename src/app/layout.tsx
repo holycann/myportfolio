@@ -3,13 +3,14 @@ import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Centralized Configurations
-import { 
-  structuredPersonData, 
+import {
+  structuredPersonData,
   performanceConfig,
   getSEO,
-  getViewport
+  getViewport,
 } from "@/lib/seo";
 import { Providers } from "@/components/ThemeProvider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
@@ -26,7 +27,9 @@ const montserrat = Montserrat({
 // Dynamic Imports with Prefetching
 const Navbar = dynamic(() => import("@/components/Nav"), {
   ssr: true,
-  loading: () => <Loading variant="default" size="lg" label="Loading Navigation..." />,
+  loading: () => (
+    <Loading variant="default" size="lg" label="Loading Navigation..." />
+  ),
 });
 
 const Footer = dynamic(() => import("@/components/Footer"), {
@@ -46,17 +49,17 @@ export const viewport = getViewport();
 
 // Performance Monitoring Setup
 const setupPrefetching = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const routes: string[] = performanceConfig.prefetchRoutes;
-    
+
     // Performance logging
-    console.log('Prefetching routes:', routes);
-    
+    console.log("Prefetching routes:", routes);
+
     routes.forEach((route: string) => {
       // Prefetch critical routes
       if (window.location.pathname !== route) {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
+        const link = document.createElement("link");
+        link.rel = "prefetch";
         link.href = route;
         document.head.appendChild(link);
       }
@@ -65,13 +68,13 @@ const setupPrefetching = () => {
     // Basic performance tracking
     const performanceObserver = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (entry.name === 'first-contentful-paint') {
+        if (entry.name === "first-contentful-paint") {
           console.log(`First Contentful Paint: ${entry.startTime} ms`);
         }
       }
     });
 
-    performanceObserver.observe({ type: 'paint', buffered: true });
+    performanceObserver.observe({ type: "paint", buffered: true });
   }
 };
 
@@ -84,9 +87,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html 
-      lang="en" 
-      suppressHydrationWarning 
+    <html
+      lang="en"
+      suppressHydrationWarning
       className={`${montserrat.className} dark overflow-x-hidden`}
     >
       <head>
@@ -94,22 +97,23 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredPersonData)
+            __html: JSON.stringify(structuredPersonData),
           }}
         />
       </head>
       <body>
+        <SpeedInsights />
         <Providers>
           <Navbar />
           {children}
           <Footer />
           <ScrollToTop />
-          <Toaster 
+          <Toaster
             position="top-right"
             toastOptions={{
               style: {
-                background: '#333',
-                color: '#fff',
+                background: "#333",
+                color: "#fff",
               },
             }}
           />
