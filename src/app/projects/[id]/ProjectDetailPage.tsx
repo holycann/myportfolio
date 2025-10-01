@@ -84,12 +84,12 @@ const PROJECT_DETAIL_CONFIG = {
     sortOrder: 'desc' as const
   },
   styling: {
-    container: "container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
-    heroSection: "flex flex-col justify-center items-center py-12 md:py-16 lg:py-20",
+    container: "container mx-auto max-w-xs xs:max-w-md lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl",
+    heroSection: "relative flex flex-col justify-center items-center w-full h-full pb-50 xs:pb-20 lg:pb-0",
     projectImageContainer: "w-full h-full flex justify-center items-center perspective-1000 pb-10",
     projectImage: "max-w-full w-full h-auto rounded-xl shadow-lg object-cover transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl",
     sectionTitle: "text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary-dark)] animate-text-shimmer",
-    listItem: "text-base sm:text-lg transition-all duration-300 hover:translate-x-2 hover:text-[var(--color-primary-light)] before:content-['→'] before:mr-2 before:text-[var(--color-primary-light)]",
+    listItem: "text-sm sm:text-lg transition-all duration-300 hover:translate-x-2 hover:text-[var(--color-primary-light)] before:content-['→'] before:mr-2 before:text-[var(--color-primary-light)]",
     description: "text-base sm:text-lg md:text-xl leading-relaxed tracking-wide text-justify mb-6",
     badge: "text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5",
     iconLink: "transform transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-lg"
@@ -169,7 +169,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         {project && (
           <header 
             className="absolute flex flex-col justify-center items-center text-center gap-3 sm:gap-4 
-            transition-all duration-500 hover:scale-[1.01] hover:shadow-lg"
+            transition-all duration-500 hover:scale-[1.01] hover:shadow-lg top-1/3"
           >
             <Badge
               variant="default"
@@ -275,7 +275,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                 })) || []
               }
               className="absolute bottom-2"
-              iconSize="lg"
+              iconSize="md"
               containerProps={{
                 initial: { opacity: 0, x: -20, scale: 1.5 },
                 animate: {

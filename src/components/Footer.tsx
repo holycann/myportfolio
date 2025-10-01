@@ -9,23 +9,23 @@ const SOCIAL_LINKS = [
   {
     href: "https://github.com/holyycan",
     icon: FaGithub,
-    label: "GitHub"
+    label: "GitHub",
   },
   {
     href: "https://www.linkedin.com/in/muhamad-ramadhan-bb6289237/",
     icon: FaLinkedin,
-    label: "LinkedIn"
+    label: "LinkedIn",
   },
   {
     href: "https://x.com/ehhramaa_",
     icon: FaTwitter,
-    label: "Twitter"
+    label: "Twitter",
   },
   {
     href: "mailto:muhamad.ramadhan.dev@gmail.com",
     icon: FaEnvelope,
-    label: "Email"
-  }
+    label: "Email",
+  },
 ];
 
 const NAVIGATION_LINKS = {
@@ -33,12 +33,12 @@ const NAVIGATION_LINKS = {
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/project", label: "Project" },
-    { href: "/contact", label: "Contact" }
+    { href: "/contact", label: "Contact" },
   ],
   Extras: [
     { href: "/about#tech-stack", label: "Tech Stack" },
-    { href: "/about#experience", label: "Experience" }
-  ]
+    { href: "/about#experience", label: "Experience" },
+  ],
 };
 
 /**
@@ -67,7 +67,10 @@ const SocialLinks = React.memo(() => (
 const NavigationLinks = React.memo(() => (
   <div className="grid grid-cols-2 gap-6 text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)]">
     {Object.entries(NAVIGATION_LINKS).map(([section, links]) => (
-      <div key={section} className="space-y-4 flex flex-col justify-start items-center text-center">
+      <div
+        key={section}
+        className="space-y-4 flex flex-col justify-start items-center text-center"
+      >
         <h4 className="font-semibold text-lg border-b border-[var(--color-accent)] pb-2">
           {section}
         </h4>
@@ -94,26 +97,27 @@ const NavigationLinks = React.memo(() => (
  */
 const Footer: React.FC = React.memo(() => {
   return (
-    <footer className="pt-20">
+    <footer className="pt-20 px-4 lg:px-0">
       <div className="w-full max-w-7xl mx-auto">
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-light)]/30 to-[var(--color-secondary-light)]/30 blur-2xl rounded-3xl -z-10"></div>
           <div className="relative bg-[var(--color-bg-primary)]/40 backdrop-blur-xl rounded-3xl border border-[var(--color-border)]/20 p-8 shadow-2xl">
             <div className="space-y-4">
-              <div className="flex justify-center items-center gap-4 w-1/2">
-                <Image
-                  src="/images/logo.png"
-                  alt="Muhamad Ramadhan Profile"
-                  width={84}
-                  height={84}
-                  priority={false}
-                />
-                <p className="text-lg font-medium opacity-90">
+              <div className="grid grid-cols-1 lg:flex justify-center items-center gap-4 w-full">
+                <div className="w-full flex justify-center items-center">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Muhamad Ramadhan Profile"
+                    width={84}
+                    height={84}
+                    priority={false}
+                  />
+                </div>
+                <p className="text-md lg:text-lg text-center lg:text-start font-medium opacity-90">
                   I'm Muhamad Ramadhan - a backend and automation engineer
                   passionate about automating manual tasks.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-6 pt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-6">
                 <div className="h-full bg-gradient-to-br from-[var(--color-primary-light)]/10 to-[var(--color-secondary-light)]/10 rounded-xl flex flex-col items-center justify-center p-6 space-y-4 text-center text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)] hover:scale-[1.02] transition-transform duration-300 shadow-md hover:shadow-lg">
                   <div>
                     <h3 className="text-xl font-semibold mb-4">
@@ -134,7 +138,7 @@ const Footer: React.FC = React.memo(() => {
         </div>
       </div>
 
-      <div className="container w-full mx-auto -mt-40">
+      <div className="container w-full mx-auto lg:-mt-20 2xl:-mt-40">
         <div className="flex h-full items-center justify-center">
           <TextHoverEffect text="ITSRAMA" />
         </div>
@@ -153,6 +157,6 @@ const Footer: React.FC = React.memo(() => {
   );
 });
 
-Footer.displayName = 'Footer';
+Footer.displayName = "Footer";
 
 export default Footer;

@@ -508,7 +508,7 @@ const BentoCardGrid: React.FC<{
   gridRef?: React.RefObject<HTMLDivElement | null>;
 }> = ({ children, gridRef }) => (
   <div
-    className={`bento-section grid gap-2 p-3 max-w-7xl select-none relative w-full h-full`}
+    className={`bento-section grid gap-2 select-none relative w-full h-full`}
     style={{ fontSize: "clamp(1rem, 0.9rem + 0.5vw, 1.5rem)" }}
     ref={gridRef}
   >
@@ -787,7 +787,7 @@ const MagicBento: React.FC<BentoProps> = ({
                       {card.title}
                     </h3>
                     <p
-                      className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? "text-clamp-2" : ""}`}
+                      className={`card__description hidden xl:block text-xs leading-5 opacity-90 ${textAutoHide ? "xl:text-clamp-2" : ""}`}
                     >
                       {card.description}
                     </p>
@@ -988,7 +988,7 @@ const MagicBento: React.FC<BentoProps> = ({
                     {card.title}
                   </h3>
                   <p
-                    className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? "text-clamp-2" : ""}`}
+                    className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? "xl:text-clamp-2" : ""}`}
                   >
                     {card.description}
                   </p>

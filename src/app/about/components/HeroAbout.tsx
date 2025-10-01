@@ -197,7 +197,7 @@ const HeroAbout: React.FC<{ images: AboutImages[] }> = React.memo(
     return (
       <section
         id="about"
-        className="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden"
+        className="relative w-full xl:h-screen flex flex-col justify-center items-center overflow-hidden"
       >
         <div className="absolute inset-0 w-full h-full">
           <LiquidEther
@@ -224,7 +224,7 @@ const HeroAbout: React.FC<{ images: AboutImages[] }> = React.memo(
           />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4">
+        <div className="relative z-10 container mx-auto px-4 pt-30 xl:pt-0">
           <div className="flex justify-center mb-8">
             <ShinyText
               text="About Me"
@@ -234,7 +234,7 @@ const HeroAbout: React.FC<{ images: AboutImages[] }> = React.memo(
             />
           </div>
           <AnimatedImageAbout images={images}>
-            <div className="space-y-4 px-6 flex flex-col justify-center">
+            <div className="space-y-4 flex flex-col justify-center">
               <p className="text-lg text-center text-[var(--color-text-primary)] :text-2xl lg:text-3xl leading-relaxed font-extrabold font-['Cascadia_Code'] md:text-start md:py-2">
                 Hi there, I'm{" "}
                 <span className="font-bold text-[var(--color-secondary)] animate-pulse">

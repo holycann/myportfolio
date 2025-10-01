@@ -110,7 +110,7 @@ const MediaRenderer = React.memo(
             loop
             playsInline
             preload="none"
-            className="w-full h-[40vh] rounded-2xl object-cover transition-all duration-300 hover:scale-105"
+            className="w-full h-[40vh] lg:h-[70vh] xl:h-[50vh] 2xl:h-[40vh] rounded-2xl object-cover transition-all duration-300 hover:scale-105"
           />
         </div>
       );

@@ -324,7 +324,7 @@ function StepIndicator({
         ) : status === "active" ? (
           <div className="h-3 w-3 rounded-full bg-[#060010]" />
         ) : (
-          <span className="absolute text-sm w-[8vw]">{stepText || step}</span>
+          <span className="absolute text-sm w-[5rem]">{stepText || step}</span>
         )}
       </motion.div>
     </motion.div>

@@ -111,7 +111,7 @@ const sizeStyles: Record<ButtonSize, string> = {
   sm: "px-3 py-1.5 text-sm",
   md: "px-4 py-2 text-base",
   lg: "px-6 py-3 text-lg",
-  xl: "px-8 py-4 text-xl",
+  lg: "px-8 py-4 text-xl",
   responsive: "px-4 py-2 text-base sm:px-6 sm:py-3 sm:text-lg md:px-8 md:py-4 md:text-xl",
 };
 

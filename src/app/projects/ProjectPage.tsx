@@ -44,7 +44,7 @@ const PROJECTS_CONFIG = {
   },
   styling: {
     heroSection: "relative w-screen min-h-screen overflow-hidden flex items-center justify-center",
-    heroContent: "container absolute w-full flex flex-col items-center justify-center z-10 gap-8 -mt-50",
+    heroContent: "container absolute max-w-xs xs:max-w-md lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl flex flex-col items-center justify-center z-10 gap-8 -mt-50",
     projectSection: "w-full h-full relative flex items-center justify-center -mt-80 bg-gradient-to-b from-bg-black to-[var(--background)] mb-40"
   }
 };

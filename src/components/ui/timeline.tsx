@@ -165,7 +165,7 @@ const TimelineItemDetails = React.memo(({ item }: { item: Experience }) => (
 
 // Separate component for timeline item content
 const TimelineItemContent = React.memo(({ item }: { item: Experience }) => (
-  <div className="relative pl-20 pr-4 md:pl-4 w-full">
+  <div className="relative pl-20 md:pl-4 w-full">
     <TimelineItemMobileDetails item={item} />
     <div>
       <TimelineItemImages item={item} />
@@ -179,15 +179,15 @@ const TimelineItemContent = React.memo(({ item }: { item: Experience }) => (
 // Individual sub-components for better separation of concerns
 const TimelineItemMobileDetails = React.memo(({ item }: { item: Experience }) => (
   <div className="pb-6 lg:hidden">
-    <h3 className="text-md md:text-4xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)]">
+    <h3 className="text-xl md:text-4xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary)]">
       {item.role}
     </h3>
-    <h4 className="text-lg font-semibold text-[var(--color-text-primary)] dark:text-[var(--color-text-muted)]">
+    <h4 className="text-sm font-semibold text-[var(--color-text-primary)] dark:text-[var(--color-text-muted)]">
       {item.company} <span className="mx-2">·</span> {item.job_type}
     </h4>
     <div className="flex justify-start items-center gap-2">
       <HiOutlineCalendarDateRange className="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted)]" />
-      <h5 className="text-md text-[var(--color-text-primary)] dark:text-[var(--color-text-muted)]">
+      <h5 className="text-xs text-[var(--color-text-primary)] dark:text-[var(--color-text-muted)]">
         {item.start_date}{" "}
         <span className="mx-1 font-semibold">-</span>{" "}
         {item.end_date || "Present"}
@@ -195,7 +195,7 @@ const TimelineItemMobileDetails = React.memo(({ item }: { item: Experience }) =>
     </div>
     <div className="flex justify-start items-center gap-2">
       <HiOutlineLocationMarker className="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted)]" />
-      <h5 className="text-md text-[var(--color-text-primary)] dark:text-[var(--color-text-muted)]">
+      <h5 className="text-xs text-[var(--color-text-primary)] dark:text-[var(--color-text-muted)]">
         {item.location} <span className="mx-2 font-bold">·</span>{" "}
         {item.arrangement}
       </h5>
@@ -252,7 +252,7 @@ const TimelineItemImpacts = React.memo(({ item }: { item: Experience }) => (
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
         viewport={{ once: true }}
-        className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-amber-100"
+        className="flex items-center text-neutral-600 dark:text-neutral-400 before:content-['▶'] before:mr-2 before:text-amber-100 text-justify"
       >
         {feature}
       </motion.li>
@@ -272,6 +272,7 @@ const TimelineTechStack = React.memo(({ item }: { item: Experience }) => (
       <Button
         key={tech.tech_stack.id}
         variant="glassmorphic"
+        size="xs"
         className={`
           ${index % 7 === 0 ? 'bg-red-500/20 text-red-600' : 
             index % 7 === 1 ? 'bg-blue-500/20 text-blue-600' : 

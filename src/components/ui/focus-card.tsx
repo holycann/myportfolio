@@ -89,7 +89,7 @@ export function FocusCards({
 
   return (
     <div className="flex flex-col items-center gap-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-7xl mx-auto w-full">
+      <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-10 max-w-7xl mx-auto w-full">
         {paginatedCards.map((card, index) => (
           <Link 
             href={card.url} 

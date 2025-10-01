@@ -60,12 +60,12 @@ export default function HomePage() {
         </header>
       </Suspense>
 
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto max-w-xs xs:max-w-md lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
         <Suspense fallback={<LoadingOverlay />}>
           <section
             id="featured-section"
             aria-labelledby="featured-section-title"
-            className="py-40"
+            className="py-20 xl:py-40"
           >
             <h2 id="featured-section-title" className="sr-only">
               Featured Section
@@ -78,7 +78,7 @@ export default function HomePage() {
           <section
             id="featured-project"
             aria-labelledby="featured-project-title"
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full h-[80vh] items-center py-40"
+            className="grid grid-cols-1 xl:grid-cols-2 gap-8 w-full h-full xl:h-[80vh] items-center py-20 xl:py-40"
           >
             <h2 id="featured-project-title" className="sr-only">
               Featured Projects

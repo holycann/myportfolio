@@ -133,15 +133,15 @@ function Hero() {
     <main
       role="main"
       aria-label="Hero Section"
-      className="w-full h-screen relative overflow-hidden"
+      className="w-full h-full xl:h-screen relative overflow-hidden"
     >
       <section className="absolute top-0 left-0 w-full h-full z-1">
         <Threads amplitude={2} distance={0.1} enableMouseInteraction={false} />
       </section>
 
-      <div className="container mx-auto relative z-2 flex flex-col justify-center items-center min-h-screen w-full overflow-hidden py-25 lg:py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center">
-          <article className="flex flex-col overflow-hidden">
+      <div className="container mx-auto relative z-2 flex flex-col justify-center items-center min-h-screen w-full overflow-hidden pt-25 xl:py-0">
+        <div className="w-full grid grid-cols-1 xl:grid-cols-2 items-center justify-items-center">
+          <article className="flex flex-col overflow-hidden w-full">
             <ContainerHoverAnimation
               titleComponent={
                 <>
@@ -266,8 +266,8 @@ function Hero() {
             </ContainerHoverAnimation>
           </article>
 
-          <div className="w-full max-w-2xl text-center lg:text-left py-6 lg:py-10">
-            <div className="lg:py-10">
+          <div className="w-full max-w-2xl text-center xl:text-left py-6 xl:py-10 xl:px-4">
+            <div className="xl:py-10">
               <div>
                 <motion.h2
                   initial={{ opacity: 0, x: -50 }}
@@ -312,7 +312,7 @@ function Hero() {
                     damping: 10,
                   },
                 }}
-                className="text-sm sm:text-base md:text-lg lg:text-[1.1rem] text-gray-600 dark:text-gray-300 p-6 lg:px-0 text-justify font-['Montserrat'] font-light"
+                className="text-sm sm:text-base md:text-lg lg:text-[1.1rem] text-gray-600 dark:text-gray-300 p-6 xl:px-0 text-center xl:text-justify font-['Montserrat'] font-light"
               >
                 With a strong focus on clean architecture and practical
                 automation. Dedicated to building systems that are efficient,
@@ -331,7 +331,7 @@ function Hero() {
                     damping: 10,
                   },
                 }}
-                className="pb-8 px-6 lg:px-0"
+                className="pb-8 px-6 xl:px-0"
               >
                 <TextType
                   text={[
@@ -364,7 +364,7 @@ function Hero() {
                 whileHover={{
                   opacity: 1,
                 }}
-                className="flex lg:justify-start justify-center items-center"
+                className="flex xl:justify-start justify-center items-center"
               >
                 <AnimatedButton
                   onClick={handleResumeClick}
@@ -401,7 +401,7 @@ function Hero() {
                     damping: 10,
                   },
                 }}
-                className="text-xs sm:text-sm md:text-xl font-bold text-center pt-8 lg:pt-0 font-['Cascadia_Code']"
+                className="text-xs sm:text-sm md:text-xl font-bold text-center pt-8 xl:pt-0 font-['Cascadia_Code']"
               >
                 Fav Tech Stack
               </motion.h2>
@@ -432,7 +432,7 @@ function Hero() {
             }}
             whileTap={{ scale: 0.9 }}
             onClick={handleScrollToBottom}
-            className="hidden lg:flex cursor-pointer p-2 rounded-full bg-gradient-to-r from-[var(--color-secondary)]/20 to-[var(--color-primary)]/20 backdrop-blur-md border border-[var(--color-accent)]/30 hover:from-[var(--color-secondary)]/30 hover:to-[var(--color-primary)]/30 hover:border-[var(--color-accent)]/50 transition-all duration-300 shadow-lg hover:shadow-[var(--color-primary)]/25"
+            className="hidden xl:flex cursor-pointer p-2 rounded-full bg-gradient-to-r from-[var(--color-secondary)]/20 to-[var(--color-primary)]/20 backdrop-blur-md border border-[var(--color-accent)]/30 hover:from-[var(--color-secondary)]/30 hover:to-[var(--color-primary)]/30 hover:border-[var(--color-accent)]/50 transition-all duration-300 shadow-lg hover:shadow-[var(--color-primary)]/25"
           >
             <motion.div
               animate={{

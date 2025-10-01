@@ -100,7 +100,7 @@ const Card = React.memo(({
         scale,
         willChange: "transform, box-shadow",
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[20rem] lg:h-[25rem] w-full border-4 border-[#6C6C6C] p-2 lg:p-4 bg-[#222222] rounded-[30px] shadow-2xl"
+      className="max-w-xs xs:max-w-sm lg:max-w-3xl xl:max-w-xl lg:-mt-12 mx-auto h-[20rem] lg:h-[25rem] w-full border-4 border-[#6C6C6C] p-2 lg:p-4 bg-[#222222] rounded-[30px] shadow-2xl"
     >
       <div className="relative h-full w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl lg:p-4">
         {children}
@@ -167,7 +167,7 @@ export const ContainerHoverAnimation = ({
   }, [rotate, scale]);
 
   return (
-    <div className="flex lg:items-start lg:justify-start sm:items-center sm:justify-center relative p-2 md:px-20 lg:pb-20">
+    <div className="flex lg:items-start lg:justify-start sm:items-center sm:justify-center relative p-2 lg:pb-20 w-full">
       <div className="w-full relative" style={{ perspective: "1000px" }}>
         <Header titleComponent={titleComponent} />
         <Card

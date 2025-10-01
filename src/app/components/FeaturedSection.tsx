@@ -137,7 +137,7 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
             blur={true}
             icon={<HiSparkles />}
             iconPosition="left"
-            className="absolute left-0 top-0 text-white"
+            className="absolute left-0 top-0 text-white hidden xs:inline-flex"
           >
             ITSRAMA
           </Badge>
@@ -286,17 +286,17 @@ export function FeaturedSection({ techStack }: { techStack: TechStack[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 px-4 py-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 py-8">
         <ShinyText
           text="A Universe of Mine"
           textColor="#b5b5b5a4"
           shineColor="rgba(255, 255, 255, 0.8)"
-          className="text-4xl md:text-5xl lg:text-7xl font-bold"
+          className="text-4xl md:text-5xl lg:text-7xl font-bold text-center xl:text-start"
           disabled={false}
           speed={3}
         />
-        <p className="flex justify-center items-center text-justify">
-          A universe of mine is built on code, crypto, and curiosity. As a
+        <p className="flex justify-center items-center text-center xl:text-justify">
+          As a
           backend developer and crypto enthusiast from Indonesia, I strive to
           create scalable systems, explore financial technology, and keep
           learning every day. My goal is to transform ideas into digital

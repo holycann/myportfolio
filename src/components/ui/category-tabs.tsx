@@ -319,7 +319,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         >
           <ul
             ref={tabsRef}
-            className="flex gap-8 list-none p-0 px-4 m-0 relative z-[3]"
+            className="container mx-auto max-w-xs xs:max-w-md lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl flex list-none relative gap-4 z-[3]"
             style={{
               color: "white",
               textShadow: "0 1px 1px hsl(205deg 30% 10% / 0.2)",
@@ -328,7 +328,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
             {items.map((item, index) => (
               <li
                 key={index}
-                className={`rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
+                className={`rounded-full relative flex justify-center items-center cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
                   activeIndex === index ? "active" : ""
                 }`}
               >

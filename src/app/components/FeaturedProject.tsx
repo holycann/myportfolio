@@ -105,7 +105,7 @@ const FeaturedProject = React.memo(({ projects }: { projects: Project[] }) => {
           className="text-5xl font-bold capitalize"
           speed={3}
         />
-        <p className="text-lg text-gray-300 text-justify">
+        <p className="text-sm lg:text-lg text-white text-justify">
           What started as curiosity quickly grew into a universe of experiments
           and solutions. These featured projects capture my passion across
           backend, frontend, and technology. Each one highlighting my pursuit of
@@ -120,7 +120,7 @@ const FeaturedProject = React.memo(({ projects }: { projects: Project[] }) => {
           <Link href={"/projects"}>View All Projects</Link>
         </AnimatedButton>
       </div>
-      <div className="relative h-auto min-h-[25rem] max-h-[35rem]">
+      <div className="relative h-full min-h-[25rem] max-h-[35rem] xs:my-20">
         <CardSwap
           cardDistance={50}
           verticalDistance={90}
