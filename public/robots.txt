@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://itsrama.kawasan.digital.com
+Host: https://itsrama.kawasan.digital
 
 # Sitemaps
-Sitemap: https://itsrama.kawasan.digital.com/sitemap.xml
+Sitemap: https://itsrama.kawasan.digital/sitemap.xml

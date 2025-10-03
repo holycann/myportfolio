@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: "https://itsrama.kawasan.digital.com",
+    siteUrl: "https://itsrama.kawasan.digital",
     generateRobotsTxt: true,
     sitemapSize: 7000,
     changefreq: "monthly",
